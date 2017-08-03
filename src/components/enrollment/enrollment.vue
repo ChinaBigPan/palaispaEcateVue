@@ -3,10 +3,10 @@
 
   .enrollment
     position fixed
-    width: 100%
     top 0
-    left 60px
     bottom 0
+    right 0
+    left 60px
 
 </style>
 

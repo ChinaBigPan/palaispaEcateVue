@@ -9,7 +9,7 @@
 </style>
 
 <template>
-  <div id="app" >
+  <div id="app" @touchmove.prevent>
     <tab-nav></tab-nav>
     <keep-alive>
       <router-view></router-view>

@@ -12,7 +12,7 @@
             height 100%
             position relative
             text-align center
-            color $color-text
+            color $white
             background $palaispa-ligntorange
             display flex
             flex-direction column
