@@ -1,0 +1,85 @@
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/mixin.styl"
+  @import "../../common/stylus/variable.styl"
+
+  .brandSpirit
+    background $white
+    .spirit-list
+      display flex
+      li.splist
+        flex 1
+        margin 30px 10px 10px 10px
+        border 1px solid $palaispa-gray
+        border-radius 5px
+        display flex
+        img
+          position relative
+          bottom 40px
+          flex 0 0 148px
+          max-width 148px
+          max-height 153px
+          margin 20px
+          border-radius 4px
+          box-shadow 2px 2px 5px 0 $palaispa-gray
+        .desc-list
+          flex 1
+          margin 15px 10px
+          list-style-type disc
+          line-height 1.5
+    .history
+      margin 10px
+
+
+</style>
+
+<template>
+  <div class="brandSpirit">
+    <!-- 品牌精神区块开始 -->
+    <ul class="spirit-list">
+      <li class="splist" v-for="(item, index) in spiritPic">
+        <img width="148" height="103" :src="item" :alt="index">
+        <ul class="desc-list">
+          <li v-for="desc in spiritPicDesc[index]">
+            {{ desc }}
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <!-- 品牌精神区块结束 -->
+    <!-- 品牌历史区块开始 -->
+    <ul class="history">
+      <li v-for="(item, index) in historyPic">
+        <img :src="item" :alt="index">
+      </li>
+    </ul>
+    <!-- 品牌历史区块结束 -->   
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+import { getBrandSpiritPic } from '../../api/mainData.js'
+
+export default {
+  name: 'brandSpirit',
+  created() {
+    this._getPic();
+  },
+  data() {	
+    return {
+      spiritPic: [],
+      spiritPicDesc: [],
+      historyPic: []
+    }
+  },
+  methods: {
+    // 获取图片
+    _getPic() {
+      getBrandSpiritPic().then((res) => {
+        this.spiritPic = res.brandSpiritPic;
+        this.spiritPicDesc = res.spiritPicDesc;
+        this.historyPic = res.brandHonor;
+      })
+    }
+  }
+}
+</script>

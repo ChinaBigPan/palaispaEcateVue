@@ -33,29 +33,42 @@
 </style>
 
 <template>
-  <div class="main">
-    <!-- 顶部的宣传语框 -->
-    <div class="top-banner">
-      <h4>{{ bannerSlogan }}</h4>
-    </div>
-    <!-- 轮播图组件 -->
-    <div v-if="sliderImages.length" class="slider-wrapper">
-      <div class="slider-content">
-        <slider ref="slider">
-          <div v-for="item in sliderImages">
-            <a href="#">
-              <img :src="item"></img>
-            </a>  
-          </div>
-        </slider>
+  <scroll ref="mainscroll">
+    <div class="main">
+      <!-- 顶部的宣传语框开始 -->
+      <div class="top-banner">
+        <h4>{{ bannerSlogan }}</h4>
       </div>
+      <!-- 顶部的宣传语框结束 -->   
+      <!-- 轮播图组件开始 -->
+      <div v-if="sliderImages.length" class="slider-wrapper">
+        <div class="slider-content">
+          <slider ref="slider">
+            <div v-for="item in sliderImages">
+              <a href="#">
+                <img :src="item"></img>
+              </a>  
+            </div>
+          </slider>
+        </div>
+      </div>
+      <!-- 轮播图组件结束 -->
+      <!-- 子轮播切换栏开始 -->
+      <maintab></maintab>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+      <!-- 子轮播切换栏结束 -->
     </div>
-  </div>
+  </scroll>
 </template>
 
 <script type="text/ecmascript-6">
-import Slider from '../../base/slider'
+import Scroll from '../../base/scroll/scroll'
+import Slider from '../../base/slider/slider'
+import maintab from '../maintab/maintab'
 import {getMainSlider} from '../../api/mainData.js'
+
 
 export default {
   name: 'main',
@@ -63,9 +76,11 @@ export default {
     this._getSliderPic();
   },
   activated() {
-    // setTimeout(() => {
-    //   this.$refs.slider && this.$refs.slider.refresh();
-    // }, 20);
+    setTimeout(() => {
+      // this.$refs.slider && this.$refs.slider.refresh();
+      // this.$refs.mainscroll && this.$refs.mainscroll.refresh();
+      // console.log(1);
+    }, 20);
   },
   data() {	
     return {
@@ -83,7 +98,9 @@ export default {
 
   },
   components: {
-    Slider
+    Slider,
+    maintab,
+    Scroll
   }
 }
 </script>

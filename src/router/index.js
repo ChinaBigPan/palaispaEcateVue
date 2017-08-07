@@ -9,16 +9,34 @@ import Main from '../components/main/main.vue';
 import Popularize from '../components/popularize/popularize.vue';
 import Treatment from '../components/treatment/treatment.vue';
 
+// 加载main首页的子路由
+import BrandSpirit from '../components/brandSpirit/brandSpirit.vue';
+import BrandHistory from '../components/brandHistory/brandHistory.vue';
+import PromotionVideo from '../components/promotionVideo/promotionVideo.vue';
 
 export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/main'
+      redirect: '/main/BrandSpirit'
     },
     {
       path: '/main',
-      component: Main
+      component: Main,
+      children: [
+        {
+          path: 'brandSpirit',
+          component: BrandSpirit
+        },
+        {
+          path: 'brandHistory',
+          component: BrandHistory
+        },
+        {
+          path: 'promotionVideo',
+          component: PromotionVideo
+        }
+    ]
     },
     {
       path: '/treatment',

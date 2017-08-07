@@ -12,3 +12,17 @@ export function getMainSlider() {
   // 居然忘了这里的return，妈的智障
   return jsonp(url);
 }
+
+// 获取精神荣誉页的图片数据
+export function getBrandSpiritPic() {
+  let picSubURL = "brandSpirit.php";
+  let url = BASEURL + picSubURL;
+  return jsonp(url);
+}
+
+// 获取历史积淀页的图片和文字
+export function getHistory() {
+  let picSubURL = "timeLine.php";
+  let url = BASEURL + picSubURL;
+  return jsonp(url);
+}
