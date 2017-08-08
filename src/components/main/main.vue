@@ -8,6 +8,7 @@
     right 0
     left 60px  
     background $palaispa-lightgray
+    margin-bottom 100px
     // 顶部宣传语框
     .top-banner
       height 40px
@@ -16,7 +17,6 @@
       background $white
       border-radius 2%
       margin 5px
-  
     // 轮播图组件
     .slider-wrapper
       position relative
@@ -45,7 +45,7 @@
         <div class="slider-content">
           <slider ref="slider">
             <div v-for="item in sliderImages">
-              <a href="#">
+              <a href="javascript:alert('敬请期待')">
                 <img :src="item"></img>
               </a>  
             </div>
@@ -56,9 +56,9 @@
       <!-- 子轮播切换栏开始 -->
        <!-- @subRouterSwitch="refreshScroll()" -->
       <maintab></maintab>
-      <keep-alive>
+       <keep-alive>
         <router-view></router-view>
-      </keep-alive>
+       </keep-alive> 
       <!-- 子轮播切换栏结束 -->
     </div>
   </scroll>
@@ -77,15 +77,27 @@ export default {
     this._getSliderPic(); 
   },
   activated() {
-    // setTimeout(() => {
-    //   // this.$refs.slider && this.$refs.slider.refresh();
-    //   this.$refs.mainscroll && this.$refs.mainscroll.refresh();
-    //   // console.log(1);
-    // }, 20);
-    this.$nextTick(() => {
-      this.$refs.mainscroll && this.$refs.mainscroll.refresh();
-      console.log(1);
-    })
+    setTimeout(() => {
+      this.$refs.slider && this.$refs.slider.refresh();
+      this.refreshScroll();
+      // console.log(1);
+    }, 20);
+  },
+  updated() {
+    //  this.refreshScroll();
+  },
+  mounted() {
+    this.refreshScroll();
+  },
+  watch: {
+    // 观察路由的变化
+    '$route': { 
+      handler() {
+        setTimeout(() => {
+          this.refreshScroll();
+        }, 20)  
+      }
+    }
   },
   data() {	
     return {
@@ -99,13 +111,12 @@ export default {
       getMainSlider().then((res) => {
         this.sliderImages = res.mainBanner;
       })
-    }
+    },
     // 根据路由切换,刷新滚动条组件
-    // refreshScroll() {
-    //   setTimeout(() => {
-    //     this.$refs.mainscroll && this.$refs.mainscroll.refresh();
-    //   }, 200)
-    // }
+    refreshScroll() {
+      this.$refs.mainscroll && this.$refs.mainscroll.refresh();
+      console.log("刷新Scroll");
+    }
   },
   components: {
     Slider,

@@ -94,8 +94,9 @@ export default {
   },
   created() {
     // 获取时间轴数据
-    this._getTimeLine();
+    this._getTimeLine();  
   },
+  mounted() {},
   computed: {},
   methods: {
     _getTimeLine() {

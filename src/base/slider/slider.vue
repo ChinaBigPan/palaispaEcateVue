@@ -103,6 +103,10 @@ export default {
     })
   },
   methods: {
+    refresh() {
+      this._setSliderWidth(true)
+      this.slider.refresh()
+    },
     // 首先设置slider宽度
     _setSliderWidth(isResize) {
       this.children = this.$refs.sliderGroup.children;

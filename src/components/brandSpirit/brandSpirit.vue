@@ -4,6 +4,7 @@
 
   .brandSpirit
     background $white
+    padding-bottom 100px
     .spirit-list
       display flex
       li.splist
@@ -28,7 +29,6 @@
           line-height 1.5
     .history
       margin 10px
-
 
 </style>
 
@@ -64,6 +64,7 @@ export default {
   created() {
     this._getPic();
   },
+  mounted() {},
   data() {	
     return {
       spiritPic: [],

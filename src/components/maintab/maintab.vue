@@ -35,13 +35,13 @@
   <div class="maintab">
     <ul>
       <router-link tag="li" to="/main/BrandSpirit">
-        <span @click="switchRouter()">精神荣誉</span>
+        <span>精神荣誉</span>
       </router-link>
       <router-link tag="li" to="/main/BrandHistory">
-        <span @click="switchRouter()">历史积淀</span>
+        <span>历史积淀</span>
       </router-link>
       <router-link tag="li" to="/main/PromotionVideo">
-        <span @click="switchRouter()">宣传视频</span>
+        <span>宣传视频</span>
       </router-link>
     </ul>
   </div>
@@ -57,13 +57,13 @@ export default {
     // 切换路由事件，方便重新计算Scroll的高度
     switchRouter() {
       // this.$emit('subRouterSwitch');
-      // if(!this.switchSubRoute) {
-      //   this.$emit('subRouterSwitch');
-      //   this.switchSubRoute = true;
-      // }
-      // setTimeout(() => {
-      //   this.switchSubRoute = false;
-      // }, 200)
+      if(!this.switchSubRoute) {
+        this.$emit('subRouterSwitch');
+        this.switchSubRoute = true;
+      }
+      setTimeout(() => {
+        this.switchSubRoute = false;
+      }, 200)
     }
   }
 }
