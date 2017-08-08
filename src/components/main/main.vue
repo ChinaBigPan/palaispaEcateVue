@@ -4,7 +4,7 @@
   .main
     position fixed
     top 0
-    bottom 0
+    // bottom 0
     right 0
     left 60px  
     background $palaispa-lightgray
@@ -54,6 +54,7 @@
       </div>
       <!-- 轮播图组件结束 -->
       <!-- 子轮播切换栏开始 -->
+       <!-- @subRouterSwitch="refreshScroll()" -->
       <maintab></maintab>
       <keep-alive>
         <router-view></router-view>
@@ -73,14 +74,18 @@ import {getMainSlider} from '../../api/mainData.js'
 export default {
   name: 'main',
   created() {
-    this._getSliderPic();
+    this._getSliderPic(); 
   },
   activated() {
-    setTimeout(() => {
-      // this.$refs.slider && this.$refs.slider.refresh();
-      // this.$refs.mainscroll && this.$refs.mainscroll.refresh();
-      // console.log(1);
-    }, 20);
+    // setTimeout(() => {
+    //   // this.$refs.slider && this.$refs.slider.refresh();
+    //   this.$refs.mainscroll && this.$refs.mainscroll.refresh();
+    //   // console.log(1);
+    // }, 20);
+    this.$nextTick(() => {
+      this.$refs.mainscroll && this.$refs.mainscroll.refresh();
+      console.log(1);
+    })
   },
   data() {	
     return {
@@ -95,7 +100,12 @@ export default {
         this.sliderImages = res.mainBanner;
       })
     }
-
+    // 根据路由切换,刷新滚动条组件
+    // refreshScroll() {
+    //   setTimeout(() => {
+    //     this.$refs.mainscroll && this.$refs.mainscroll.refresh();
+    //   }, 200)
+    // }
   },
   components: {
     Slider,

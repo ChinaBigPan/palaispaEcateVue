@@ -18,6 +18,13 @@
         border 1px solid $palaispa-blue
         border-radius 2px
         color $palaispa-blue
+        span
+          display flex
+          justify-content center
+          align-items center
+          width 100%
+          height 100%
+          // background red
         &.router-link-active
             transition 100ms all linear 
             color $white
@@ -28,13 +35,13 @@
   <div class="maintab">
     <ul>
       <router-link tag="li" to="/main/BrandSpirit">
-        <span>精神荣誉</span>
+        <span @click="switchRouter()">精神荣誉</span>
       </router-link>
       <router-link tag="li" to="/main/BrandHistory">
-        <span>历史积淀</span>
+        <span @click="switchRouter()">历史积淀</span>
       </router-link>
       <router-link tag="li" to="/main/PromotionVideo">
-        <span>宣传视频</span>
+        <span @click="switchRouter()">宣传视频</span>
       </router-link>
     </ul>
   </div>
@@ -46,7 +53,19 @@ export default {
   data() {	
     return {}
   },
-  methods: {}
+  methods: {
+    // 切换路由事件，方便重新计算Scroll的高度
+    switchRouter() {
+      // this.$emit('subRouterSwitch');
+      // if(!this.switchSubRoute) {
+      //   this.$emit('subRouterSwitch');
+      //   this.switchSubRoute = true;
+      // }
+      // setTimeout(() => {
+      //   this.switchSubRoute = false;
+      // }, 200)
+    }
+  }
 }
 </script>
 
