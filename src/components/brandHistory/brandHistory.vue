@@ -63,7 +63,7 @@
 </style>
 
 <template>
-  <div class="brandHistory">
+  <div class="brandHistory" ref="brandHistory">
     <section class="timeline">
       <ul class="timeline-list">
         <li v-for="(item, index) in timeline">
@@ -96,7 +96,9 @@ export default {
     // 获取时间轴数据
     this._getTimeLine();  
   },
-  mounted() {},
+  mounted() {
+    this._getSelfHeight();
+  },
   computed: {},
   methods: {
     _getTimeLine() {
@@ -113,6 +115,11 @@ export default {
     newYear(index) {
       let newyear = this.foundyear + index;
       return newyear;
+    },
+    // 获取该组件的高度
+    _getSelfHeight() {
+      let height = this.$refs.brandHistory.offsetHeight;
+      console.log(`历史积淀组件的高度${height}`);
     }
   }
 }

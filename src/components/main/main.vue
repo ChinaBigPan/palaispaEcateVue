@@ -8,7 +8,6 @@
     right 0
     left 60px  
     background $palaispa-lightgray
-    margin-bottom 100px
     // 顶部宣传语框
     .top-banner
       height 40px
@@ -54,7 +53,6 @@
       </div>
       <!-- 轮播图组件结束 -->
       <!-- 子轮播切换栏开始 -->
-       <!-- @subRouterSwitch="refreshScroll()" -->
       <maintab></maintab>
        <keep-alive>
         <router-view></router-view>
@@ -76,26 +74,29 @@ export default {
   created() {
     this._getSliderPic(); 
   },
+  data() {
+    // 滚动高度
+    scrollHeight: 0
+  },
   activated() {
     setTimeout(() => {
       this.$refs.slider && this.$refs.slider.refresh();
       this.refreshScroll();
-      // console.log(1);
     }, 20);
   },
   updated() {
-    //  this.refreshScroll();
+    
   },
   mounted() {
-    this.refreshScroll();
+    this.getScrollHeight();
   },
   watch: {
     // 观察路由的变化
-    '$route': { 
+    '$route': {
       handler() {
         setTimeout(() => {
           this.refreshScroll();
-        }, 20)  
+        }, 200)  
       }
     }
   },
@@ -116,6 +117,11 @@ export default {
     refreshScroll() {
       this.$refs.mainscroll && this.$refs.mainscroll.refresh();
       console.log("刷新Scroll");
+    },
+    // 获取scroll的高度
+    getScrollHeight() {
+      let height = this.$refs.mainscroll.clientHeight;
+      console.log(`scroll的高度是：${height}`);
     }
   },
   components: {

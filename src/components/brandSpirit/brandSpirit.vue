@@ -33,7 +33,7 @@
 </style>
 
 <template>
-  <div class="brandSpirit">
+  <div class="brandSpirit" ref="brandSpirit">
     <!-- 品牌精神区块开始 -->
     <ul class="spirit-list">
       <li class="splist" v-for="(item, index) in spiritPic">
@@ -64,7 +64,12 @@ export default {
   created() {
     this._getPic();
   },
-  mounted() {},
+  data() {
+
+  },
+  mounted() {
+    this._getSelfHeight();
+  },
   data() {	
     return {
       spiritPic: [],
@@ -80,6 +85,11 @@ export default {
         this.spiritPicDesc = res.spiritPicDesc;
         this.historyPic = res.brandHonor;
       })
+    },
+    // 获取该组件的高度
+    _getSelfHeight() {
+      let height = this.$refs.brandSpirit.offsetHeight;
+      console.log(`精神荣誉组件的高度${height}`);
     }
   }
 }

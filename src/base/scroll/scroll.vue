@@ -54,11 +54,13 @@ export default {
   data() {	
     return {}
   },
+  created() {},
   mounted() {
     setTimeout(() => {
       this._initScroll();
     }, 20)
   },
+  updated() {},
   methods: {
     _initScroll() {
       // 判定初始wrapper是否存在
@@ -80,6 +82,11 @@ export default {
     },
     refresh() {
       this.scroll && this.scroll.refresh();
+    },
+    // 获取一下高度
+    _getSelfHeight() {
+      let height = this.refs.wrapper.style.height;
+      console.log(`从scroll组件内计算的高度是：${height}`);
     }
   },
   watch: {
