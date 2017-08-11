@@ -26,3 +26,10 @@ export function getHistory() {
   let url = BASEURL + picSubURL;
   return jsonp(url);
 }
+
+// 获取宣传视频
+export function getVideo() {
+  let picSubURL = "video.php";
+  let url = BASEURL + picSubURL;
+  return jsonp(url);
+}

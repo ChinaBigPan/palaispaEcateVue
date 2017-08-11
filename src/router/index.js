@@ -17,6 +17,10 @@ import PromotionVideo from '../components/promotionVideo/promotionVideo.vue';
 export default new Router({
   routes: [
     {
+      path: '/',
+      redirect: '/main/BrandSpirit'
+    },
+    {
       path: '/main',
       redirect: '/main/BrandSpirit'
     },
