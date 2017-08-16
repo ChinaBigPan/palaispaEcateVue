@@ -31,7 +31,7 @@
   <div class="promotionVideo">
     <ul class="video-list">
       <li class="video-item" v-for="(item, index) in video">
-        <img class="video-poster" :src="videoPic[index]" :alt="index">
+        <img @click="showVideo(item, videoPic[index])" class="video-poster" :src="videoPic[index]" :alt="index">
         <div class="video-desc-block">
           <h3 v-html="videoDesc[index].title"></h3>
           <ul class="video-desc-list">
@@ -40,12 +40,13 @@
         </div>
       </li>
     </ul>
+    <promo-video :currentVideoProp="currentVideo" :currentVideoPosterProp="currentVideoPoster" :isShow="exhibitVideo"></promo-video>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import {getVideo} from '../../api/mainData.js'
-
+import promoVideo from '../../base/video/video'
 
 export default {
   name: 'promotionVideo',
@@ -56,7 +57,10 @@ export default {
     return {
       video: [],
       videoPic: [],
-      videoDesc: []
+      videoDesc: [],
+      currentVideo: '',
+      currentVideoPoster: '',
+      exhibitVideo: false
     }
   },
   methods: {
@@ -67,8 +71,22 @@ export default {
         this.videoPic = res.videoCover;
         this.videoDesc = res.videoDesc;
       })
+    },
+    // 显示视频
+    showVideo(item, videoposter) {
+      if(!event._constructed) {
+        console.log(this.currentVideo);
+        console.log(this.currentVideoPoster);
+        this.currentVideo = item; 
+        this.currentVideoPoster = videoposter;
+        setTimeout(() => { 
+          this.exhibitVideo = true;
+        }, 200); 
+      } 
     }
   },
-  components: {}
+  components: {
+    promoVideo
+  }
 }
 </script>
