@@ -46,7 +46,7 @@
             <div v-for="item in sliderImages">
               <a href="javascript:void(0)">
                 <img :src="item"></img>
-              </a>  
+              </a>
             </div>
           </slider>
         </div>
@@ -82,12 +82,10 @@ export default {
   activated() {
     setTimeout(() => {
       this.$refs.slider && this.$refs.slider.refresh();
-      this.refreshScroll();
+      // this.refreshScroll();
     }, 20);
   },
-  updated() {
-    
-  },
+  updated() {},
   mounted() {
     this.getScrollHeight();
   },
@@ -97,7 +95,7 @@ export default {
       handler() {
         setTimeout(() => {
           this.refreshScroll();
-        }, 20)  
+        }, 20)
       }
     }
   },

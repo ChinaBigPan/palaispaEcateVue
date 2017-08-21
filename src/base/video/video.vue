@@ -36,15 +36,18 @@
         left 0
         color $white
         i 
-          font-size 30px
+          font-size 25px
           color $white
+          vertical-align sub
+          padding-right 5px
+
 
 </style>
 
 <template>
   <div v-show="isShow" class="video-component">
     <div class="videoBlock">
-      <div @click.stop.prevent="closeVideo" class="close"><i class="icon-close"></i></div>
+      <div @click.stop.prevent="closeVideo" class="close"><i class="icon-close"></i>关闭</div>
       <video controls @click="pauseVideo" class="videoplayer" ref="videoplayer" :src="currentVideoProp" :poster="currentVideoPosterProp" autoplay="true" ></video>
     </div>
     <div class="mask"></div>

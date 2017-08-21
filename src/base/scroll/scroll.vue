@@ -58,6 +58,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this._initScroll();
+      this._getSelfHeight();
     }, 20)
   },
   updated() {},
@@ -85,7 +86,7 @@ export default {
     },
     // 获取一下高度
     _getSelfHeight() {
-      let height = this.refs.wrapper.style.height;
+      let height = this.$refs.wrapper.style.height;
       console.log(`从scroll组件内计算的高度是：${height}`);
     }
   },

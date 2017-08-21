@@ -28,7 +28,7 @@
 </style>
 
 <template>
-  <div class="promotionVideo">
+  <div ref="promotionVideo" class="promotionVideo">
     <ul class="video-list">
       <li class="video-item" v-for="(item, index) in videoUrl">
         <img @click="showVideo(item, videoPic[index])" class="video-poster" :src="videoPic[index]" :alt="index">
@@ -51,6 +51,9 @@ export default {
   name: 'promotionVideo',
   created() {
     this._getVideo();
+  },
+  mounted() {
+    this._getSelfHeight();
   },
   data() {
     return {
@@ -87,6 +90,11 @@ export default {
     // 关闭视频
     closeVideo() {
       this.exhibitVideo = false;
+    },
+    // 获取该组件的高度
+    _getSelfHeight() {
+      let height = this.$refs.promotionVideo.offsetHeight;
+      console.log(`宣传视频组件的高度${height}`);
     },
     // vuex方法引入
     ...mapMutations({

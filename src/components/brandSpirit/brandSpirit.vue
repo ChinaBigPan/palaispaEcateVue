@@ -64,9 +64,7 @@ export default {
   created() {
     this._getPic();
   },
-  data() {
-
-  },
+  data() {},
   mounted() {
     this._getSelfHeight();
   },

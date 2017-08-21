@@ -39,9 +39,7 @@ import {mapGetters} from 'vuex'
 
 export default {
   name: 'app',
-  updated() {
-    console.log(this.video);
-  },
+  updated() {},
   computed: {
     // vuex的getters就放到计算属性里
     ...mapGetters([
