@@ -1,0 +1,5 @@
+export const SET_VIDEO = "SET_VIDEO";
+
+export const SET_VIDEOPOSTER = "SET_VIDEOPOSTER";
+
+export const SET_EXHIBITVIDEO = "SET_EXHIBITVIDEO";

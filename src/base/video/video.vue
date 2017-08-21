@@ -12,18 +12,24 @@
     .mask 
       width 200%
       height 200%
-      background rgba(0,0,0,.6)
+      background rgba(0,0,0,.8)
       position fixed
       top 0
       z-index 8000
     // 视频播放区块
     .videoBlock
-      position relative
+      position fixed
       z-index 9000
-      width 800px
-      height 400px
-      margin 15% auto
+      width 960px
+      height 540px
+      top 100px
+      left 32px
       // 关闭按钮
+      .videoplayer
+        width 100%
+        height 100%
+        position relative
+        z-index 9050
       .close 
         position absolute
         top -30px
@@ -36,18 +42,17 @@
 </style>
 
 <template>
-
   <div v-show="isShow" class="video-component">
     <div class="videoBlock">
       <div @click.stop.prevent="closeVideo" class="close"><i class="icon-close"></i></div>
-      <my-video :sources="video.sources" :options="video.options"></my-video>
+      <video controls @click="pauseVideo" class="videoplayer" ref="videoplayer" :src="currentVideoProp" :poster="currentVideoPosterProp" autoplay="true" ></video>
     </div>
     <div class="mask"></div>
   </div> 
 </template>
 
 <script type="text/ecmascript-6">
-import myVideo from 'vue-video'
+import {mapMutations} from 'vuex';
 
 export default {
   name: 'video',
@@ -68,41 +73,33 @@ export default {
       default: ''
     }
   },
-  updated() {
-    this._showProps()
-  },
   data() {	
-    return {
-      video: {
-        sources: [{
-          src: this.currentVideoProp,
-          type: 'video/mp4'
-        }],
-        options: {
-          autoplay: true,
-          volume: 0.6,
-          poster: this.currentVideoPosterProp
-        }
-      }
-    }
+    return {}
   },
   computed: {},
   methods: {
-    // 测试下传过来的props
-    _showProps() {
-      setTimeout(function() {
-        console.log(this.isShow);
-        console.log(this.currentVideo);
-        console.log(this.currentVideoPoster);
-      }, 20); 
-    },
     // 关闭视频
     closeVideo() {
       this.$emit('closeVideo');
-    }
+      let player = this.$refs.videoplayer;
+      player.pause();
+      // 关闭显示视频
+      this.setExhibitVideo(false);
+    },
+    // 暂停视频
+    pauseVideo() {
+      let player = this.$refs.videoplayer;
+      if(player.paused) {
+        player.play()
+      } else {
+        player.pause();
+      }
+    },
+    // 引入vuex方法
+    ...mapMutations({
+      setExhibitVideo: 'SET_EXHIBITVIDEO'
+    })
   },
-  components: {
-    myVideo
-  }
+  components: {}
 }
 </script>

@@ -30,7 +30,7 @@
 <template>
   <div class="promotionVideo">
     <ul class="video-list">
-      <li class="video-item" v-for="(item, index) in video">
+      <li class="video-item" v-for="(item, index) in videoUrl">
         <img @click="showVideo(item, videoPic[index])" class="video-poster" :src="videoPic[index]" :alt="index">
         <div class="video-desc-block">
           <h3 v-html="videoDesc[index].title"></h3>
@@ -40,15 +40,12 @@
         </div>
       </li>
     </ul>
-    <!-- 视频播放组件开始 -->
-    <promo-video @closeVideo="closeVideo" :currentVideo="currentVideo" :currentVideoPosterProp="currentVideoPoster" :isShow="exhibitVideo"></promo-video>
-    <!-- 视频播放组件结束 -->
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import {getVideo} from '../../api/mainData.js'
-import promoVideo from '../../base/video/video'
+import {mapMutations} from 'vuex'
 
 export default {
   name: 'promotionVideo',
@@ -57,7 +54,7 @@ export default {
   },
   data() {
     return {
-      video: [],
+      videoUrl: [],
       videoPic: [],
       videoDesc: [],
       currentVideo: '',
@@ -65,11 +62,12 @@ export default {
       exhibitVideo: false
     }
   },
+  computed: {},
   methods: {
     // 获取视频数据
     _getVideo() {
       getVideo().then((res) => {
-        this.video = res.videoUrl;
+        this.videoUrl = res.videoUrl;
         this.videoPic = res.videoCover;
         this.videoDesc = res.videoDesc;
       })
@@ -80,19 +78,23 @@ export default {
         this.currentVideo = item; 
         this.currentVideoPoster = videoposter;
         this.exhibitVideo = true;
-        console.log(this.currentVideo);
-        console.log(this.currentVideoPoster);
-        console.log(this.exhibitVideo);
-        // 派发视频播放事件，并将当前所点击的视频地址派发出去
+        // 修改store数据，vuex真好用哇哈哈
+        this.setVideo(this.currentVideo);
+        this.setVideoPoster(this.currentVideoPoster);
+        this.setExhibitVideo(this.exhibitVideo);
       } 
     },
     // 关闭视频
     closeVideo() {
       this.exhibitVideo = false;
-    }
+    },
+    // vuex方法引入
+    ...mapMutations({
+      setVideo: 'SET_VIDEO',
+      setVideoPoster: 'SET_VIDEOPOSTER',
+      setExhibitVideo: 'SET_EXHIBITVIDEO'
+    })
   },
-  components: {
-    promoVideo
-  }
+  components: {}
 }
 </script>
