@@ -63,7 +63,7 @@ export default {
       }
       setTimeout(() => {
         this.switchSubRoute = false;
-      }, 200)
+      }, 20)
     }
   }
 }

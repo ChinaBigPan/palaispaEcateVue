@@ -44,7 +44,7 @@
         <div class="slider-content">
           <slider ref="slider">
             <div v-for="item in sliderImages">
-              <a href="javascript:alert('敬请期待')">
+              <a href="javascript:void(0)">
                 <img :src="item"></img>
               </a>  
             </div>
@@ -54,9 +54,9 @@
       <!-- 轮播图组件结束 -->
       <!-- 子轮播切换栏开始 -->
       <maintab></maintab>
-       <keep-alive>
+      <keep-alive>
         <router-view></router-view>
-       </keep-alive> 
+      </keep-alive> 
       <!-- 子轮播切换栏结束 -->
     </div>
   </scroll>
@@ -68,15 +68,16 @@ import Slider from '../../base/slider/slider'
 import maintab from '../maintab/maintab'
 import {getMainSlider} from '../../api/mainData.js'
 
-
 export default {
   name: 'main',
   created() {
     this._getSliderPic(); 
   },
   data() {
-    // 滚动高度
-    scrollHeight: 0
+    return {
+      // 滚动高度
+      scrollHeight: 0
+    }  
   },
   activated() {
     setTimeout(() => {
@@ -96,7 +97,7 @@ export default {
       handler() {
         setTimeout(() => {
           this.refreshScroll();
-        }, 200)  
+        }, 20)  
       }
     }
   },

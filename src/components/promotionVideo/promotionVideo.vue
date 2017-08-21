@@ -40,7 +40,9 @@
         </div>
       </li>
     </ul>
-    <promo-video :currentVideoProp="currentVideo" :currentVideoPosterProp="currentVideoPoster" :isShow="exhibitVideo"></promo-video>
+    <!-- 视频播放组件开始 -->
+    <promo-video @closeVideo="closeVideo" :currentVideo="currentVideo" :currentVideoPosterProp="currentVideoPoster" :isShow="exhibitVideo"></promo-video>
+    <!-- 视频播放组件结束 -->
   </div>
 </template>
 
@@ -75,14 +77,18 @@ export default {
     // 显示视频
     showVideo(item, videoposter) {
       if(!event._constructed) {
-        console.log(this.currentVideo);
-        console.log(this.currentVideoPoster);
         this.currentVideo = item; 
         this.currentVideoPoster = videoposter;
-        setTimeout(() => { 
-          this.exhibitVideo = true;
-        }, 200); 
+        this.exhibitVideo = true;
+        console.log(this.currentVideo);
+        console.log(this.currentVideoPoster);
+        console.log(this.exhibitVideo);
+        // 派发视频播放事件，并将当前所点击的视频地址派发出去
       } 
+    },
+    // 关闭视频
+    closeVideo() {
+      this.exhibitVideo = false;
     }
   },
   components: {

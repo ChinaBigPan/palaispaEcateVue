@@ -25,32 +25,39 @@ export default new Router({
       redirect: '/main/BrandSpirit'
     },
     {
+      name: 'main',
       path: '/main',
       component: Main,
       children: [
         {
+          name: 'brandSpirit',
           path: 'brandSpirit',
           component: BrandSpirit
         },
         {
+          name: 'brandHistory',
           path: 'brandHistory',
           component: BrandHistory
         },
         {
+          name: 'promotionVideo',
           path: 'promotionVideo',
           component: PromotionVideo
         }
     ]
     },
     {
+      name: 'treaement',
       path: '/treatment',
       component: Treatment
     },
     {
+      name: 'enrollment',
       path: '/enrollment',
       component: Enrollment
     },
     {
+      mame: 'popularize',
       path: '/popularize',
       component: Popularize
     }
