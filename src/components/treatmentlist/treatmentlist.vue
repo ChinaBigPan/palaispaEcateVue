@@ -29,6 +29,8 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {getAllTreatment} from '../../api/treatmentData'
+
 export default {
   name: 'treatmentlist',
   props: {
@@ -37,12 +39,22 @@ export default {
     }
   },
   data() {	
-    return {}
+    return {
+      treatmentData: []
+    }
   },
   created() {
-
+    this._getTreatmentData();
   },
-  methods: {}
+  methods: {
+    // 获取护理数据
+    _getTreatmentData() {
+      getAllTreatment().then((res) => {
+        this.treatmentData = res;
+        console.log(this.treatmentData);
+      })
+    }
+  }
 }
 </script>
 
