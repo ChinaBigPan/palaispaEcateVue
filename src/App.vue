@@ -40,6 +40,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'app',
   updated() {},
+  mounted() {},
   computed: {
     // vuex的getters就放到计算属性里
     ...mapGetters([
@@ -48,9 +49,7 @@ export default {
       'exhibitVideo'
     ])
   },
-  methods: {
-    
-  },
+  methods: {},
   components: {
     tabNav,
     promoVideo

@@ -57,7 +57,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-import { getBrandSpiritPic } from '../../api/mainData.js'
+import { getBrandSpiritPic } from '../../api/mainData.js';
+import { mapMutations } from 'vuex';
 
 export default {
   name: 'brandSpirit',
@@ -66,7 +67,19 @@ export default {
   },
   data() {},
   mounted() {
-    this._getSelfHeight();
+    setTimeout(() => {
+      this.setShouldMainScrollRefresh(true);
+    }, 20)
+  },
+  activated() {
+    // keep-alive组件激活时调用，这个要写到子路由里面我勒个去
+    setTimeout(() => {
+      this.setShouldMainScrollRefresh(true);
+    }, 20)
+  },
+  deactivated() {
+    // keep-alive组件离开时调用，这个要写到自路由里面我勒个去
+    this.setShouldMainScrollRefresh(false);
   },
   data() {	
     return {
@@ -84,11 +97,10 @@ export default {
         this.historyPic = res.brandHonor;
       })
     },
-    // 获取该组件的高度
-    _getSelfHeight() {
-      let height = this.$refs.brandSpirit.offsetHeight;
-      console.log(`精神荣誉组件的高度${height}`);
-    }
+    // vuex方法引入
+    ...mapMutations({
+      setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
+    })
   }
 }
 </script>

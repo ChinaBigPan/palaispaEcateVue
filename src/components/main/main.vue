@@ -1,38 +1,45 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/variable"
 
-  .main
+  .mainscroll
     position fixed
     top 0
-    // bottom 0
+    bottom 0
     right 0
     left 60px  
-    background $palaispa-lightgray
-    // 顶部宣传语框
-    .top-banner
-      height 40px
-      line-height 40px
-      text-align center
-      background $white
-      border-radius 2%
-      margin 5px
-    // 轮播图组件
-    .slider-wrapper
+    background $white
+    .main
       position relative
-      width 100%
-      // height 0
-      padding-top 26%
-      overflow hidden
-      .slider-content 
-        position absolute
-        top 0
-        left 0
+      top 0
+      // bottom 0
+      right 0
+      left 0  
+      background $palaispa-lightgray
+      // 顶部宣传语框
+      .top-banner
+        height 40px
+        line-height 40px
+        text-align center
+        background $white
+        border-radius 2%
+        margin 5px
+      // 轮播图组件
+      .slider-wrapper
+        position relative
         width 100%
-        // height 100%
+        // height 0
+        padding-top 26%
+        overflow hidden
+        .slider-content 
+          position absolute
+          top 0
+          left 0
+          width 100%
+          // height 100%
 </style>
 
 <template>
-  <scroll ref="mainscroll">
+  <scroll class="mainscroll" ref="mainscroll">
     <div class="main">
       <!-- 顶部的宣传语框开始 -->
       <div class="top-banner">
@@ -67,6 +74,7 @@ import Scroll from '../../base/scroll/scroll'
 import Slider from '../../base/slider/slider'
 import maintab from '../maintab/maintab'
 import {getMainSlider} from '../../api/mainData.js'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   name: 'main',
@@ -77,26 +85,34 @@ export default {
     return {
       // 滚动高度
       scrollHeight: 0
-    }  
+    }
+  },
+  computed: {
+    // vuex的getters就放到计算属性里
+    ...mapGetters([
+      'shouldMainScrollRefresh'
+    ])
   },
   activated() {
     setTimeout(() => {
       this.$refs.slider && this.$refs.slider.refresh();
-      // this.refreshScroll();
+      this.refreshMainScroll();  
     }, 20);
   },
   updated() {},
   mounted() {
-    this.getScrollHeight();
+    this.refreshMainScroll();
+    // setTimeout(() => {
+    //   this.setShouldMainScrollRefresh(true);
+    // }, 20)
   },
   watch: {
-    // 观察路由的变化
-    '$route': {
-      handler() {
+    'shouldMainScrollRefresh'(oldShouldMainScrollRefresh, newShouldMainScrollRefresh) {
+      if(newShouldMainScrollRefresh) {
         setTimeout(() => {
-          this.refreshScroll();
+          this.refreshMainScroll();
         }, 20)
-      }
+      } 
     }
   },
   data() {	
@@ -112,16 +128,14 @@ export default {
         this.sliderImages = res.mainBanner;
       })
     },
-    // 根据路由切换,刷新滚动条组件
-    refreshScroll() {
+    // 根据路由切换,刷新main的大滚动条组件
+    refreshMainScroll() {
       this.$refs.mainscroll && this.$refs.mainscroll.refresh();
-      console.log("刷新Scroll");
     },
-    // 获取scroll的高度
-    getScrollHeight() {
-      let height = this.$refs.mainscroll.clientHeight;
-      console.log(`scroll的高度是：${height}`);
-    }
+    // 引入vuex方法
+    ...mapMutations({
+      setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
+    })
   },
   components: {
     Slider,

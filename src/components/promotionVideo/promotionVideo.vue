@@ -53,7 +53,12 @@ export default {
     this._getVideo();
   },
   mounted() {
-    this._getSelfHeight();
+    setTimeout(() => {
+      this.setShouldMainScrollRefresh(true);
+    }, 20)
+  },
+  mounted() {
+    // this._getSelfHeight();
   },
   data() {
     return {
@@ -66,6 +71,16 @@ export default {
     }
   },
   computed: {},
+  activated() {
+    // keep-alive组件激活时调用，这个要写到子路由里面我勒个去
+    setTimeout(() => {
+      this.setShouldMainScrollRefresh(true);
+    }, 20)
+  },
+  deactivated() {
+    // keep-alive组件离开时调用，这个要写到自路由里面我勒个去
+    this.setShouldMainScrollRefresh(false);
+  },
   methods: {
     // 获取视频数据
     _getVideo() {
@@ -91,16 +106,12 @@ export default {
     closeVideo() {
       this.exhibitVideo = false;
     },
-    // 获取该组件的高度
-    _getSelfHeight() {
-      let height = this.$refs.promotionVideo.offsetHeight;
-      console.log(`宣传视频组件的高度${height}`);
-    },
     // vuex方法引入
     ...mapMutations({
       setVideo: 'SET_VIDEO',
       setVideoPoster: 'SET_VIDEOPOSTER',
-      setExhibitVideo: 'SET_EXHIBITVIDEO'
+      setExhibitVideo: 'SET_EXHIBITVIDEO',
+      setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
     })
   },
   components: {}

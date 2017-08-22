@@ -1,6 +1,10 @@
 import * as types from './mutation-types';
 
 const mutations = {
+  // 设置是否刷新main页面的Scroll组件
+  [types.SET_SHOULD_MAIN_SCROLL_REFRESH](state, shouldMainScrollRefresh) {
+    state.shouldMainScrollRefresh = shouldMainScrollRefresh;
+  },
   // 设置当前播放的video
   [types.SET_VIDEO](state, video) {
     state.video = video;
