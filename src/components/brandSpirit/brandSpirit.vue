@@ -69,7 +69,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.setShouldMainScrollRefresh(true);
-    }, 20)
+    }, 100)
   },
   activated() {
     // keep-alive组件激活时调用，这个要写到子路由里面我勒个去

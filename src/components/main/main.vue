@@ -11,7 +11,7 @@
     .main
       position relative
       top 0
-      // bottom 0
+      bottom 0
       right 0
       left 0  
       background $palaispa-lightgray
@@ -40,7 +40,7 @@
 
 <template>
   <scroll class="mainscroll" ref="mainscroll">
-    <div class="main">
+    <div @touchmove="mainPageScroll()" ref="mainpage" class="main">
       <!-- 顶部的宣传语框开始 -->
       <div class="top-banner">
         <h4>{{ bannerSlogan }}</h4>
@@ -52,7 +52,7 @@
           <slider ref="slider">
             <div v-for="item in sliderImages">
               <a href="javascript:void(0)">
-                <img :src="item"></img>
+                <img @load="loadImage()" :src="item"></img>
               </a>
             </div>
           </slider>
@@ -60,7 +60,9 @@
       </div>
       <!-- 轮播图组件结束 -->
       <!-- 子轮播切换栏开始 -->
-      <maintab></maintab>
+      <div ref="maintab">
+        <maintab></maintab>
+      </div>
       <keep-alive>
         <router-view></router-view>
       </keep-alive> 
@@ -96,29 +98,29 @@ export default {
   activated() {
     setTimeout(() => {
       this.$refs.slider && this.$refs.slider.refresh();
-      this.refreshMainScroll();  
+      this.refreshMainScroll();
     }, 20);
   },
   updated() {},
-  mounted() {
-    this.refreshMainScroll();
-    // setTimeout(() => {
-    //   this.setShouldMainScrollRefresh(true);
-    // }, 20)
+  mounted() {  
+    setTimeout(() => {
+      this.refreshMainScroll();
+    }, 100)
   },
   watch: {
     'shouldMainScrollRefresh'(oldShouldMainScrollRefresh, newShouldMainScrollRefresh) {
       if(newShouldMainScrollRefresh) {
         setTimeout(() => {
           this.refreshMainScroll();
-        }, 20)
+        }, 100)
       } 
     }
   },
   data() {	
     return {
       bannerSlogan: "Make A Better Life",
-      sliderImages: []
+      sliderImages: [],
+      notCruise: true
     }
   },
   methods: {
@@ -130,7 +132,28 @@ export default {
     },
     // 根据路由切换,刷新main的大滚动条组件
     refreshMainScroll() {
-      this.$refs.mainscroll && this.$refs.mainscroll.refresh();
+      this.$refs.mainscroll && this.$refs.mainscroll.refresh();     
+    },
+    // 横向轮播图的图片读取事件
+    loadImage() {
+      if (!this.checkloaded) {
+        this.checkloaded = true
+        setTimeout(() => {
+          this.refreshMainScroll()
+        }, 20)
+      }
+    },
+    // 页面上下滚动的事件
+    mainPageScroll() {
+      // 获得子路由切换maintab，距离屏幕上方的距离
+      let maintabTop = this.$refs.maintab.offsetTop;
+      // 获取y方向滚动的距离
+      let scrollY = Math.abs(this.$refs.mainscroll.scroll.y);
+      if (scrollY >= maintabTop) {
+        console.log('滚动距离大于导航栏');
+      } else {
+        console.log('滚动距离小于导航栏');
+      }
     },
     // 引入vuex方法
     ...mapMutations({
