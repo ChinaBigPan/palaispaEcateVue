@@ -15,7 +15,7 @@
     // 皮肤测试
     .skinTest
       border none
-      background-color $palaispa-lightgreen
+      background-color $palaispa-lightorange
       color $white
       text-align center
       margin 5px
@@ -28,6 +28,7 @@
         font-size 25px
         display inline-block
         animation: pulse 1s infinite alternate;
+
 
   // 悬浮动画
   @keyframes pulse {
@@ -49,12 +50,13 @@
       <i class="icon-color"></i><span>皮肤测试 看看什么护理适合您</span>
     </section>
     <section class="treatList">
-      护理列表
+      <treatmentlist></treatmentlist>
     </section>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import treatmentlist from '../treatmentlist/treatmentlist';
 import {getTreatmentBanner} from '../../api/treatmentData.js'
 
 export default {
@@ -82,6 +84,9 @@ export default {
     toSkinTest() {
       console.log('前往皮肤测试页');
     }
+  },
+  components: {
+    treatmentlist
   }
 }
 </script>

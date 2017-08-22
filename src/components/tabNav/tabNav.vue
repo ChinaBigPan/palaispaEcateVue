@@ -13,7 +13,7 @@
             position relative
             text-align center
             color $white
-            background $palaispa-ligntorange
+            background $palaispa-lightorange
             display flex
             flex-direction column
             img
@@ -25,7 +25,7 @@
                 height 100%
                 display flex
                 flex-direction column
-                background $palaispa-ligntorange
+                background $palaispa-lightorange
                 align-items center
                 overflow hidden
                 li 
