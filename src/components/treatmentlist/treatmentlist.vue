@@ -13,7 +13,7 @@
     .treatkind-wrapper
       flex 0 0 100px
       width 100px
-      background $palaispa-lightgray
+      background $white
       margin-bottom 160px
       .treatkind-item
         display block
@@ -32,6 +32,9 @@
           background $white
           border-bottom 1px solid rgba(0,0,0,.1)
           border-left 4px solid $palaispa-blue
+          &.current 
+            background $palaispa-blue
+            color $white
           i
             display inline-block
             vertical-align top
@@ -53,6 +56,9 @@
             line-height 20px
             border-left 4px solid $palaispa-lightgreen
             border-bottom 1px solid rgba(0,0,0,.1)
+            &.current
+              // background $palaispa-lightgreen
+              color green
             .subkindname
               font-size 16px
 
@@ -115,29 +121,33 @@
     <scroll ref="treatkindwrapper" class="treatkind-wrapper">
       <!-- 左侧列表开始 -->
       <ul>
-        <li class="treatkind-item" :key="index" v-for="(item, index) in treatKind">
-          <div class="text">
+        <li class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
+          <div class="text" :class="{'current' : currentFirstIndex === index}">
             <i class="icon-wxbpinpaibao" v-show="index === 'HotRecommend'"></i>{{item.kindname}}
+            {{index}}
           </div>
           <!-- 子项列表开始 -->
           <ul class="treatkind-itemul">
-            <li :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist">
+            <li @click="currentDataIndex($event)" ref="ttlist" :class="{'current' : currentSecondIndex === subindex}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist treatkind-itemlist-hook">
               <h4 class="subkindname">{{subkind.subkindname}}</h4>
+              {{subindex}}
             </li>
           </ul>
-          <!-- 子项列表结束 --> 
+          <!-- 子项列表结束 -->
         </li>
       </ul>
       <!-- 左侧列表结束 -->
     </scroll>
-    <scroll ref="treatlistwrapper" class="treatlist-wrapper">
+    <scroll @scroll="scrollRightList" :probeType="probeType" :listenScroll="listenScroll" ref="treatlistwrapper" class="treatlist-wrapper">
       <!-- 右侧列表开始 -->
       <ul>
-        <li class="treatlist-item" :key="index" v-for="(item, index) in treatKind">
+        <li class="treatlist-item treatlist-item-hook" :key="index" v-for="(item, key, index) in treatKind">
           <!-- 标题区块列表开始 -->
+          <!-- {{index}} -->
           <ul>
-            <li :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatlist-itemlist">
+            <li :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatlist-itemlist treatlist-itemlist-hook">
               <h4 class="subkindname">{{subkind.subkindname}}</h4>
+              <!-- {{subindex}} -->
               <!-- 护理列表开始 -->
               <ul class="treat-thirdlist">
                 <li :key="thirdindex" v-for="(thirdkind, thirdindex) in subkind.data">
@@ -174,20 +184,61 @@ export default {
     return {
       // 护理类型
       treatKind: [],
-      // 护理列表
-      treatList:[]
+      // 右侧列表的区间高度（大）
+      listHeightBig: [],
+      // 右侧列表高度区间（小）
+      listHeightSmall: [],
+      // 列表的滚动的距离
+      scrollY: 0,
+      // 向Scroll组件传入的属性
+      probeType: 3,
+      listenScroll: true
     }
+  },
+  computed: {
+    // 看看当前列表所在哪个一级区间
+    currentFirstIndex() {
+      for(let i=0; i<this.listHeightBig.length;i++) {
+        let height1 = this.listHeightBig[i];
+        let height2 = this.listHeightBig[i+1];
+        if(!height2 || (this.scrollY >= height1 && this.scrollY <= height2)) {
+          return i;
+        }
+      }
+      return 0;
+    },
+    // 子列表所在哪个二级区间
+    currentSecondIndex() {
+      for(let i=0; i<this.listHeightSmall.length;i++) {
+        let height1 = this.listHeightSmall[i];
+        let height2 = this.listHeightSmall[i+1];
+        if(!height2 || (this.scrollY >= height1 && this.scrollY <= height2)) {
+          return i;
+        }
+      }
+      return 0;
+    }   
   },
   created() {
     this._getTreatmentData();
   },
   mounted() {
     setTimeout(() => {
-      // 初始化Scroll
       this._initScroll();
+      this._addDataIndex();
+      this._calculateHeight();
     }, 200)
   },
   methods: {
+    // 获取自定义的data-index
+    currentDataIndex($event) {
+      if(!event._constructed) {
+        let dataIndex = $event.currentTarget.getAttribute("data-index");
+        let dataIndexNum = Number(dataIndex);
+        console.log(dataIndexNum);
+        return dataIndexNum; 
+      }  
+    },
     // 获取护理数据
     _getTreatmentData() {
       getAllTreatment().then((res) => {
@@ -199,6 +250,43 @@ export default {
     _initScroll() {
       this.$refs.treatkindwrapper && this.$refs.treatkindwrapper.refresh();
       this.$refs.treatlistwrapper && this.$refs.treatlistwrapper.refresh();
+    },
+    // 为左侧小列表添加自定义的index
+    _addDataIndex() {
+      // 获取左侧小列表的元素
+      let treatkindItemlist = document.getElementsByClassName("treatkind-itemlist-hook");
+      for(let i=0;i<treatkindItemlist.length;i++){
+        treatkindItemlist[i].setAttribute("data-index", i);
+      }
+    },
+    // 获取右侧列表的高度区间（分为外侧大列表和内测小列表两种）
+    _calculateHeight() {
+      let heightBig = 0;
+      let heightSmall = 0;
+      // 右侧列表添加了treatlist-itemlist-hook的钩子, 获取这些元素集合的数组（大列表）
+      let itemlistBig = document.getElementsByClassName("treatlist-item-hook");
+      this.listHeightBig.push(heightBig);
+      // 将各个列表项距离外部的高度添加进数组
+      for(let i = 0; i < itemlistBig.length; i++) {
+        let item = itemlistBig[i];
+        heightBig += item.clientHeight;
+        this.listHeightBig.push(heightBig);
+      }
+      // console.log("左侧大列表数组" + this.listHeightBig);
+      // 右侧列表添加了treatlist-itemlist-hook的钩子, 获取这些元素集合的数组（小列表）
+      let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");     
+      this.listHeightSmall.push(heightSmall);
+      // 将各个列表项距离外部的高度添加进数组
+      for(let j = 0; j < itemlistSmall.length; j++) {
+        let item = itemlistSmall[j];
+        heightSmall += item.clientHeight;
+        this.listHeightSmall.push(heightSmall);
+      }
+      // console.log("左侧小列表数组" + this.listHeightSmall);
+    },
+    // 右侧列表滚动时触发的事件
+    scrollRightList(pos) {
+      this.scrollY = Math.abs(Math.round(pos.y));
     }
   },
   components: {
