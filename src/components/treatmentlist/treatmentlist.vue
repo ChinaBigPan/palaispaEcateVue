@@ -35,6 +35,9 @@
           &.current 
             background $palaispa-blue
             color $white
+            i 
+              color yellow
+
           i
             display inline-block
             vertical-align top
@@ -123,12 +126,12 @@
       <ul>
         <li class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
           <div class="text" :class="{'current' : currentFirstIndex === index}">
-            <i class="icon-wxbpinpaibao" v-show="index === 'HotRecommend'"></i>{{item.kindname}}
-            {{index}}
+            <i class="icon-wxbpinpaibao" v-show="key === 'HotRecommend'"></i>{{item.kindname}}
+            <!-- {{index}} -->
           </div>
           <!-- 子项列表开始 -->
           <ul class="treatkind-itemul">
-            <li @click="currentDataIndex($event)" ref="ttlist" :class="{'current' : currentSecondIndex === subindex}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist treatkind-itemlist-hook">
+            <li @click="currentDataIndex($event.currentTarget)" ref="ttlist" :class="{'current' : currentSecondIndex === subindex}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist treatkind-itemlist-hook">
               <h4 class="subkindname">{{subkind.subkindname}}</h4>
               {{subindex}}
             </li>
@@ -182,6 +185,8 @@ export default {
   },
   data() {	
     return {
+      // 子列表数组
+      treatkindItemlist: [],
       // 护理类型
       treatKind: [],
       // 右侧列表的区间高度（大）
@@ -231,12 +236,13 @@ export default {
   },
   methods: {
     // 获取自定义的data-index
-    currentDataIndex($event) {
+    currentDataIndex(param) {
       if(!event._constructed) {
-        let dataIndex = $event.currentTarget.getAttribute("data-index");
+        let dataIndex = param.getAttribute("data-index");
         let dataIndexNum = Number(dataIndex);
         console.log(dataIndexNum);
         return dataIndexNum; 
+        // console.log(param);
       }  
     },
     // 获取护理数据
@@ -255,6 +261,7 @@ export default {
     _addDataIndex() {
       // 获取左侧小列表的元素
       let treatkindItemlist = document.getElementsByClassName("treatkind-itemlist-hook");
+      this.treatkindItemlist = treatkindItemlist;
       for(let i=0;i<treatkindItemlist.length;i++){
         treatkindItemlist[i].setAttribute("data-index", i);
       }
