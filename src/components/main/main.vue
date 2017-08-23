@@ -50,7 +50,7 @@
       <div v-if="sliderImages.length" class="slider-wrapper">
         <div class="slider-content">
           <slider ref="slider">
-            <div v-for="item in sliderImages">
+            <div :key="index" v-for="(item, index) in sliderImages">
               <a href="javascript:void(0)">
                 <img @load="loadImage()" :src="item"></img>
               </a>
