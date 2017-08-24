@@ -61,8 +61,8 @@
             border-left 2px solid $palaispa-lightgreen
             border-bottom 1px solid rgba(0,0,0,.1)
             &.current
-              // background $palaispa-lightgreen
-              color green
+              background $palaispa-lightgreen
+              color $white
               transition all 500ms
             .subkindname
               font-size 16px
@@ -71,7 +71,7 @@
     .treatlist-wrapper
       background $white
       flex 1
-      margin-bottom 160px
+      margin-bottom 480px
       .treatlist-item
         background $white
         margin-bottom 5px
@@ -134,9 +134,8 @@
           </div>
           <!-- 子项列表开始 -->
           <ul class="treatkind-itemul">
-            <li @click="currentDataIndex($event)" ref="subkindlist" :class="{'current' : currentSecondIndex === subkindIndex}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist">
+            <li @click="currentDataIndex($event)" ref="subkindlist" :class="{'current' : currentSecondIndex === subkindIndex(subkind)}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist">
               <h4 class="subkindname">{{subkind.subkindname}}</h4>
-              {{subkindIndex}}
             </li>
           </ul>
           <!-- 子项列表结束 -->
@@ -192,6 +191,8 @@ export default {
       treatKind: [],
       // 左侧子列表数组
       treatsubkindItemlist: [],
+      // 左侧子列表数组名字
+      treatsubkindItemlistname: new Set(),
       // 右侧列表的区间高度（大）
       listHeightBig: [],
       // 右侧列表高度区间（小）
@@ -225,14 +226,7 @@ export default {
         }
       }
       return 0;
-    },
-    // 左侧子列表索引
-    subkindIndex() {
-      for(let i = 0; i < this.treatsubkindItemlist.length; i++) {
-        let selfIndex = this.treatsubkindItemlist[i].index;
-        return selfIndex;
-      }
-    } 
+    }
   },
   created() {
     this._getTreatmentData();
@@ -248,16 +242,25 @@ export default {
     }, 200)
   },
   methods: {
+    // 左侧子列表索引
+    subkindIndex(subkind) {
+      let name = subkind.subkindname;
+      // treatsubkindItemlistname是Set结构,然后再将其转换为数组结构
+      let nameSet = this.treatsubkindItemlistname.add(subkind.subkindname);
+      let nameArray = Array.from(this.treatsubkindItemlistname);
+      let nameIndex =  nameArray.indexOf(name);
+      return nameIndex;
+    },
     // 获取左侧子列表的实例数组
     _getSubkindList() {
       let subkindlist = this.$refs.subkindlist;
       this.treatsubkindItemlist = subkindlist;
-      console.log(subkindlist);
+      // console.log(subkindlist);
     },
     // 获取自定义的data-index
     currentDataIndex($event) {
       if(!event._constructed) {
-        let dataIndex = $event.currentTarget.getAttribute("data-index");
+        let dataIndex = $event.currentTarget.id;
         let dataIndexNum = Number(dataIndex);
         console.log(dataIndexNum);
         return dataIndexNum;
@@ -284,7 +287,7 @@ export default {
       let treatkindItemlist = this.$refs.subkindlist;
       this.treatkindItemlist = treatkindItemlist;
       for(let i=0;i<treatkindItemlist.length;i++){
-        treatkindItemlist[i].setAttribute("data-index", i);
+        treatkindItemlist[i].setAttribute("id", i);
       }
     },
     // 获取右侧列表的高度区间（分为外侧大列表和内测小列表两种）
