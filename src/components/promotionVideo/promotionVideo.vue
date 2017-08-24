@@ -30,8 +30,8 @@
 <template>
   <div ref="promotionVideo" class="promotionVideo">
     <ul class="video-list">
-      <li class="video-item" v-for="(item, index) in videoUrl">
-        <img @click="showVideo(item, videoPic[index])" class="video-poster" :src="videoPic[index]" :alt="index">
+      <li :key="index" class="video-item" v-for="(item, index) in videoUrl">
+        <img @click="showVideo(item, videoPic[index])" class="video-poster" v-lazy="videoPic[index]" :alt="index">
         <div class="video-desc-block">
           <h3 v-html="videoDesc[index].title"></h3>
           <ul class="video-desc-list">
@@ -40,10 +40,12 @@
         </div>
       </li>
     </ul>
+    <loading v-show="!videoUrl.length"></loading>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import Loading from '../../base/loading/loading'
 import {getVideo} from '../../api/mainData.js'
 import {mapMutations} from 'vuex'
 
@@ -111,6 +113,8 @@ export default {
       setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
     })
   },
-  components: {}
+  components: {
+    Loading
+  }
 }
 </script>

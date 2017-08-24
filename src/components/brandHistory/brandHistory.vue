@@ -68,7 +68,7 @@
       <ul class="timeline-list">
         <li v-for="(item, index) in timeline">
           <div class="time-block" :class="{needleft: _listLeft(index)}">
-            <img :src="item" :alt="index">
+            <img v-lazy="item" :alt="index">
             <span>{{ timelineDesc[index] }}</span>
           </div>
           <div class="time-sign">
@@ -77,10 +77,12 @@
         </li>
       </ul>
     </section>
+    <loading v-show="!timeline.length"></loading>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import Loading from '../../base/loading/loading'
 import { getHistory } from '../../api/mainData.js';
 import { mapMutations } from 'vuex';
 
@@ -134,6 +136,9 @@ export default {
     ...mapMutations({
       setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
     })
+  },
+  components: {
+    Loading
   }
 }
 </script>

@@ -36,7 +36,7 @@
   <div class="brandSpirit" ref="brandSpirit">
     <!-- 品牌精神区块开始 -->
     <ul class="spirit-list">
-      <li class="splist" v-for="(item, index) in spiritPic">
+      <li :key="index" class="splist" v-for="(item, index) in spiritPic">
         <img width="148" height="103" :src="item" :alt="index">
         <ul class="desc-list">
           <li v-for="desc in spiritPicDesc[index]">
@@ -48,15 +48,17 @@
     <!-- 品牌精神区块结束 -->
     <!-- 品牌历史区块开始 -->
     <ul class="history">
-      <li v-for="(item, index) in historyPic">
-        <img :src="item" :alt="index">
+      <li :key="index" v-for="(item, index) in historyPic">
+        <img v-lazy="item" :alt="index">
       </li>
     </ul>
-    <!-- 品牌历史区块结束 -->   
+    <!-- 品牌历史区块结束 --> 
+    <loading v-show="!spiritPic.length || !historyPic.length"></loading>  
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import Loading from '../../base/loading/loading'
 import { getBrandSpiritPic } from '../../api/mainData.js';
 import { mapMutations } from 'vuex';
 
@@ -65,7 +67,6 @@ export default {
   created() {
     this._getPic();
   },
-  data() {},
   mounted() {
     setTimeout(() => {
       this.setShouldMainScrollRefresh(true);
@@ -81,7 +82,7 @@ export default {
     // keep-alive组件离开时调用，这个要写到自路由里面我勒个去
     this.setShouldMainScrollRefresh(false);
   },
-  data() {	
+  data() {
     return {
       spiritPic: [],
       spiritPicDesc: [],
@@ -101,6 +102,9 @@ export default {
     ...mapMutations({
       setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
     })
+  },
+  components: {
+    Loading
   }
 }
 </script>

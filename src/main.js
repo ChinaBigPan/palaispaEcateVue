@@ -11,6 +11,12 @@ Vue.config.productionTip = false
 
 import './common/stylus/index.styl'
 
+// 应用fastclick
+fastclick.attach(document.body);
+// 应用Vue-lazyload
+Vue.use(VueLazyload, {
+  loading: require('./common/images/blank.jpg')
+})
 
 /* eslint-disable no-new */
 new Vue({

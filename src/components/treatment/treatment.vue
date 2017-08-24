@@ -44,18 +44,20 @@
 <template>
   <div class="treatment">
     <section class="treatBanner">
-      <img @click="toPromoTreat" :src="banner" alt="">
+      <img @click="toPromoTreat" v-lazy="banner" alt="">
     </section>
     <section @click="toSkinTest" class="skinTest">
       <i class="icon-color"></i><span>皮肤测试 看看什么护理适合您</span>
     </section>
-    <section class="treatList">
+    <section @treatSuccess="loadTreatSuccess" class="treatList">
       <treatmentlist></treatmentlist>
     </section>
+    <loading title="正在加载护理数据..." v-show="isTreatLoad"></loading>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import Loading from '../../base/loading/loading'
 import treatmentlist from '../treatmentlist/treatmentlist';
 import {getTreatmentBanner} from '../../api/treatmentData.js'
 
@@ -66,7 +68,8 @@ export default {
   },
   data() {	
     return {
-      banner: ""
+      banner: "",
+      isTreatLoad: false
     }
   },
   methods: {
@@ -75,6 +78,10 @@ export default {
       getTreatmentBanner().then((res) => {
         this.banner = res.treatmentBanner;
       })
+    },
+    // 护理读取成功
+    loadTreatSuccess() {
+      this.isTreatLoad = true;
     },
     // 前往推荐护理页
     toPromoTreat() {
@@ -86,7 +93,8 @@ export default {
     }
   },
   components: {
-    treatmentlist
+    treatmentlist,
+    Loading
   }
 }
 </script>

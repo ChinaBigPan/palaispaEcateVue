@@ -59,19 +59,21 @@
         </div>
       </div>
       <!-- 轮播图组件结束 -->
-      <!-- 子轮播切换栏开始 -->
+     
       <div ref="maintab">
         <maintab></maintab>
       </div>
+      <!-- 子轮播切换栏开始 -->
       <keep-alive>
         <router-view></router-view>
       </keep-alive> 
-      <!-- 子轮播切换栏结束 -->
+      <!-- 子轮播切换栏结束 --> 
     </div>
   </scroll>
 </template>
 
 <script type="text/ecmascript-6">
+import Loading from '../../base/loading/loading'
 import Scroll from '../../base/scroll/scroll'
 import Slider from '../../base/slider/slider'
 import maintab from '../maintab/maintab'
@@ -163,7 +165,8 @@ export default {
   components: {
     Slider,
     maintab,
-    Scroll
+    Scroll,
+    Loading
   }
 }
 </script>

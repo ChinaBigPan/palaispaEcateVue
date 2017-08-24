@@ -31,10 +31,11 @@
           font-size 17px
           background $white
           border-bottom 1px solid rgba(0,0,0,.1)
-          border-left 4px solid $palaispa-blue
+          border-left 2px solid $palaispa-blue
           &.current 
             background $palaispa-blue
             color $white
+            transition all 500ms
             i 
               color yellow
 
@@ -57,11 +58,12 @@
             background $white
             height 50px
             line-height 20px
-            border-left 4px solid $palaispa-lightgreen
+            border-left 2px solid $palaispa-lightgreen
             border-bottom 1px solid rgba(0,0,0,.1)
             &.current
               // background $palaispa-lightgreen
               color green
+              transition all 500ms
             .subkindname
               font-size 16px
 
@@ -82,8 +84,9 @@
             border-left 4px solid $palaispa-lightgreen
             vertical-align middle
             padding-left 10px
-            padding-top 5px
-            padding-bottom 5px
+            padding-top 8px
+            padding-bottom 8px
+            font-size 16px
             color gray
             flex 1
           .treat-thirdlist
@@ -93,29 +96,29 @@
             // 护理单项区块
             .thirdlist-item-block
               width 200px
-              height 220px
-              border 1px solid $palaispa-gray
+              height 230px
               border-radius 5px
-              margin 6px
+              margin 10px 6px 5px
+              box-shadow 0 1px 2px 0 $palaispa-gray
               display inline-block
-              white-space:nowrap; 
-              overflow:hidden; 
-              text-overflow:ellipsis;
+              white-space nowrap 
+              overflow hidden 
+              text-overflow ellipsis
               .treat-avatar
                 display block
-                width 180px
-                margin 8px auto 6px
+                margin 0 auto 6px
                 border-radius 4px
               .treat-name
                 margin-top 10px
                 margin-left 8px
                 color $black
-                white-space:nowrap; 
-                overflow:hidden;
-                text-overflow:ellipsis;
+                white-space nowrap
+                overflow hidden
+                text-overflow ellipsis
               .treat-brand
-                margin-top 6px
+                margin-top 8px
                 margin-left 8px
+                font-size 14px
                 color $palaispa-treatgray
 </style>
 
@@ -131,9 +134,9 @@
           </div>
           <!-- 子项列表开始 -->
           <ul class="treatkind-itemul">
-            <li @click="currentDataIndex($event.currentTarget)" ref="ttlist" :class="{'current' : currentSecondIndex === subindex}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist treatkind-itemlist-hook">
+            <li @click="currentDataIndex($event)" ref="subkindlist" :class="{'current' : currentSecondIndex === subkindIndex}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist">
               <h4 class="subkindname">{{subkind.subkindname}}</h4>
-              {{subindex}}
+              {{subkindIndex}}
             </li>
           </ul>
           <!-- 子项列表结束 -->
@@ -155,9 +158,9 @@
               <ul class="treat-thirdlist">
                 <li :key="thirdindex" v-for="(thirdkind, thirdindex) in subkind.data">
                   <div class="thirdlist-item-block">
-                    <img width="200" height="174" class="treat-avatar" :src="thirdkind.avatar" :alt="thirdkind.treatName">
+                    <img class="treat-avatar" v-lazy="thirdkind.avatar" :alt="thirdkind.treatName">
                     <p class="treat-name">{{thirdkind.treatName}}</p>
-                    <p class="treat-brand">{{thirdkind.brand}}</p>
+                    <p class="treat-brand">{{thirdkind.brand}} - {{thirdkind.duration}}分</p>
                   </div>
                 </li>
               </ul>
@@ -185,10 +188,10 @@ export default {
   },
   data() {	
     return {
-      // 子列表数组
-      treatkindItemlist: [],
       // 护理类型
       treatKind: [],
+      // 左侧子列表数组
+      treatsubkindItemlist: [],
       // 右侧列表的区间高度（大）
       listHeightBig: [],
       // 右侧列表高度区间（小）
@@ -222,7 +225,14 @@ export default {
         }
       }
       return 0;
-    }   
+    },
+    // 左侧子列表索引
+    subkindIndex() {
+      for(let i = 0; i < this.treatsubkindItemlist.length; i++) {
+        let selfIndex = this.treatsubkindItemlist[i].index;
+        return selfIndex;
+      }
+    } 
   },
   created() {
     this._getTreatmentData();
@@ -232,24 +242,35 @@ export default {
       this._initScroll();
       this._addDataIndex();
       this._calculateHeight();
+
+      // 测试一下
+      this._getSubkindList();
     }, 200)
   },
   methods: {
+    // 获取左侧子列表的实例数组
+    _getSubkindList() {
+      let subkindlist = this.$refs.subkindlist;
+      this.treatsubkindItemlist = subkindlist;
+      console.log(subkindlist);
+    },
     // 获取自定义的data-index
-    currentDataIndex(param) {
+    currentDataIndex($event) {
       if(!event._constructed) {
-        let dataIndex = param.getAttribute("data-index");
+        let dataIndex = $event.currentTarget.getAttribute("data-index");
         let dataIndexNum = Number(dataIndex);
         console.log(dataIndexNum);
-        return dataIndexNum; 
-        // console.log(param);
+        return dataIndexNum;
       }  
     },
     // 获取护理数据
     _getTreatmentData() {
       getAllTreatment().then((res) => {
-        this.treatKind = res;
-        console.log(this.treatKind);
+        if(res) {
+          this.treatKind = res;
+          // 派发护理读取成功的事件
+          this.$emit('treatSuccess');
+        }
       })
     },
     // 初始化列表
@@ -260,7 +281,7 @@ export default {
     // 为左侧小列表添加自定义的index
     _addDataIndex() {
       // 获取左侧小列表的元素
-      let treatkindItemlist = document.getElementsByClassName("treatkind-itemlist-hook");
+      let treatkindItemlist = this.$refs.subkindlist;
       this.treatkindItemlist = treatkindItemlist;
       for(let i=0;i<treatkindItemlist.length;i++){
         treatkindItemlist[i].setAttribute("data-index", i);
