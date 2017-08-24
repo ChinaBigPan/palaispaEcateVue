@@ -29,15 +29,17 @@
           vertical-align middle
           text-align center
           font-size 17px
-          background $white
+          background $palaispa-lightgray
           border-bottom 1px solid rgba(0,0,0,.1)
-          border-left 2px solid $palaispa-blue
-          &.current 
-            background $palaispa-blue
-            color $white
-            transition all 500ms
-            i 
-              color yellow
+          border-left 1px solid $palaispa-blue
+          &.current
+            background $white
+            transition background 500ms
+            border-bottom none
+            margin-top -1px
+            box-shadow 0 1px 0px black
+            border-left 3px solid $palaispa-blue
+            font-weight bold
 
           i
             display inline-block
@@ -55,15 +57,18 @@
             align-self center
             justify-content center
             align-items center
-            background $white
+            background $palaispa-lightgray
             height 50px
             line-height 20px
-            border-left 2px solid $palaispa-lightgreen
+            border-left 1px solid $palaispa-lightgreen
             border-bottom 1px solid rgba(0,0,0,.1)
             &.current
-              background $palaispa-lightgreen
-              color $white
-              transition all 500ms
+              border-left 3px solid $palaispa-lightgreen
+              border-bottom none
+              margin-top -1px
+              box-shadow 0 1px 0px black
+              background $white
+              transition background 500ms
             .subkindname
               font-size 16px
 
@@ -127,14 +132,14 @@
     <scroll ref="treatkindwrapper" class="treatkind-wrapper">
       <!-- 左侧列表开始 -->
       <ul>
-        <li class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
+        <li @click.stop="selectTreatKind(index, $event)" class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
           <div class="text" :class="{'current' : currentFirstIndex === index}">
             <i class="icon-wxbpinpaibao" v-show="key === 'HotRecommend'"></i>{{item.kindname}}
             <!-- {{index}} -->
           </div>
           <!-- 子项列表开始 -->
           <ul class="treatkind-itemul">
-            <li @click="currentDataIndex($event)" ref="subkindlist" :class="{'current' : currentSecondIndex === subkindIndex(subkind)}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist">
+            <li @click.stop="selectTreatSubKind(subkindIndex(subkind), $event)" ref="subkindlist" :class="{'current' : currentSecondIndex === subkindIndex(subkind)}" :key="subindex" v-for="(subkind, subindex) in item.subkind" class="treatkind-itemlist">
               <h4 class="subkindname">{{subkind.subkindname}}</h4>
             </li>
           </ul>
@@ -210,7 +215,7 @@ export default {
       for(let i=0; i<this.listHeightBig.length;i++) {
         let height1 = this.listHeightBig[i];
         let height2 = this.listHeightBig[i+1];
-        if(!height2 || (this.scrollY >= height1 && this.scrollY <= height2)) {
+        if(!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           return i;
         }
       }
@@ -221,7 +226,7 @@ export default {
       for(let i=0; i<this.listHeightSmall.length;i++) {
         let height1 = this.listHeightSmall[i];
         let height2 = this.listHeightSmall[i+1];
-        if(!height2 || (this.scrollY >= height1 && this.scrollY <= height2)) {
+        if(!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           return i;
         }
       }
@@ -234,11 +239,8 @@ export default {
   mounted() {
     setTimeout(() => {
       this._initScroll();
-      this._addDataIndex();
-      this._calculateHeight();
-
-      // 测试一下
       this._getSubkindList();
+      this._calculateHeight();
     }, 200)
   },
   methods: {
@@ -257,15 +259,6 @@ export default {
       this.treatsubkindItemlist = subkindlist;
       // console.log(subkindlist);
     },
-    // 获取自定义的data-index
-    currentDataIndex($event) {
-      if(!event._constructed) {
-        let dataIndex = $event.currentTarget.id;
-        let dataIndexNum = Number(dataIndex);
-        console.log(dataIndexNum);
-        return dataIndexNum;
-      }  
-    },
     // 获取护理数据
     _getTreatmentData() {
       getAllTreatment().then((res) => {
@@ -281,15 +274,6 @@ export default {
       this.$refs.treatkindwrapper && this.$refs.treatkindwrapper.refresh();
       this.$refs.treatlistwrapper && this.$refs.treatlistwrapper.refresh();
     },
-    // 为左侧小列表添加自定义的index
-    _addDataIndex() {
-      // 获取左侧小列表的元素
-      let treatkindItemlist = this.$refs.subkindlist;
-      this.treatkindItemlist = treatkindItemlist;
-      for(let i=0;i<treatkindItemlist.length;i++){
-        treatkindItemlist[i].setAttribute("id", i);
-      }
-    },
     // 获取右侧列表的高度区间（分为外侧大列表和内测小列表两种）
     _calculateHeight() {
       let heightBig = 0;
@@ -302,8 +286,7 @@ export default {
         let item = itemlistBig[i];
         heightBig += item.clientHeight;
         this.listHeightBig.push(heightBig);
-      }
-      // console.log("左侧大列表数组" + this.listHeightBig);
+      };
       // 右侧列表添加了treatlist-itemlist-hook的钩子, 获取这些元素集合的数组（小列表）
       let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");     
       this.listHeightSmall.push(heightSmall);
@@ -312,12 +295,31 @@ export default {
         let item = itemlistSmall[j];
         heightSmall += item.clientHeight;
         this.listHeightSmall.push(heightSmall);
-      }
-      // console.log("左侧小列表数组" + this.listHeightSmall);
+      };
     },
     // 右侧列表滚动时触发的事件
     scrollRightList(pos) {
       this.scrollY = Math.abs(Math.round(pos.y));
+    },
+    // 点击左侧大列表
+    selectTreatKind(index, event) {
+      // better-scroll的event._construced属性处理
+      // if(!event._constructed) {
+      //   return;
+      // }
+      let itemlistBig = document.getElementsByClassName("treatlist-item-hook");
+      let el = itemlistBig[index];
+      this.$refs.treatlistwrapper.scrollToElement(el, 300);
+    },
+    // 点击左侧小列表
+    selectTreatSubKind(index, event) {
+      // better-scroll的event._construced属性处理
+      // if(!event._constructed) {
+      //   return;
+      // }
+      let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");     
+      let el = itemlistSmall[index];
+      this.$refs.treatlistwrapper.scrollToElement(el, 300);
     }
   },
   components: {
