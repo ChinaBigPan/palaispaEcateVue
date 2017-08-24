@@ -125,6 +125,7 @@
                 margin-left 8px
                 font-size 14px
                 color $palaispa-treatgray
+
 </style>
 
 <template>
@@ -160,11 +161,11 @@
               <!-- {{subindex}} -->
               <!-- 护理列表开始 -->
               <ul class="treat-thirdlist">
-                <li :key="thirdindex" v-for="(thirdkind, thirdindex) in subkind.data">
+                <li @click="selectTreat(thirdkind, $event)" :key="thirdindex" v-for="(thirdkind, thirdindex) in subkind.data">
                   <div class="thirdlist-item-block">
                     <img class="treat-avatar" v-lazy="thirdkind.avatar" :alt="thirdkind.treatName">
                     <p class="treat-name">{{thirdkind.treatName}}</p>
-                    <p class="treat-brand">{{thirdkind.brand}} - {{thirdkind.duration}}分</p>
+                    <p class="treat-brand">{{thirdkind.brand}} - {{thirdkind.price}}元</p>
                   </div>
                 </li>
               </ul>
@@ -204,6 +205,8 @@ export default {
       listHeightSmall: [],
       // 列表的滚动的距离
       scrollY: 0,
+      // 所选的护理
+      selectedTreat: {},
       // 向Scroll组件传入的属性
       probeType: 3,
       listenScroll: true
@@ -237,28 +240,14 @@ export default {
     this._getTreatmentData();
   },
   mounted() {
+    // 300毫秒是为了刷新时点击事件能够正确作用
     setTimeout(() => {
-      this._initScroll();
-      this._getSubkindList();
+      this._initScroll();      
       this._calculateHeight();
-    }, 200)
+      this._getSubkindList();
+    }, 300)
   },
   methods: {
-    // 左侧子列表索引
-    subkindIndex(subkind) {
-      let name = subkind.subkindname;
-      // treatsubkindItemlistname是Set结构,然后再将其转换为数组结构
-      let nameSet = this.treatsubkindItemlistname.add(subkind.subkindname);
-      let nameArray = Array.from(this.treatsubkindItemlistname);
-      let nameIndex =  nameArray.indexOf(name);
-      return nameIndex;
-    },
-    // 获取左侧子列表的实例数组
-    _getSubkindList() {
-      let subkindlist = this.$refs.subkindlist;
-      this.treatsubkindItemlist = subkindlist;
-      // console.log(subkindlist);
-    },
     // 获取护理数据
     _getTreatmentData() {
       getAllTreatment().then((res) => {
@@ -269,7 +258,7 @@ export default {
         }
       })
     },
-    // 初始化列表
+     // 初始化列表
     _initScroll() {
       this.$refs.treatkindwrapper && this.$refs.treatkindwrapper.refresh();
       this.$refs.treatlistwrapper && this.$refs.treatlistwrapper.refresh();
@@ -297,6 +286,21 @@ export default {
         this.listHeightSmall.push(heightSmall);
       };
     },
+    // 获取左侧子列表的实例数组
+    _getSubkindList() {
+      let subkindlist = this.$refs.subkindlist;
+      this.treatsubkindItemlist = subkindlist;
+    }, 
+    // 左侧子列表索引
+    subkindIndex(subkind) {
+      let name = subkind.subkindname;
+      // treatsubkindItemlistname是Set结构,然后再将其转换为数组结构
+      let nameSet = this.treatsubkindItemlistname.add(subkind.subkindname);
+      let nameArray = Array.from(this.treatsubkindItemlistname);
+      let nameIndex =  nameArray.indexOf(name);
+      return nameIndex;
+    },
+
     // 右侧列表滚动时触发的事件
     scrollRightList(pos) {
       this.scrollY = Math.abs(Math.round(pos.y));
@@ -320,6 +324,14 @@ export default {
       let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");     
       let el = itemlistSmall[index];
       this.$refs.treatlistwrapper.scrollToElement(el, 300);
+    },
+    // 点击护理区块
+    selectTreat(treat, event) {
+      // better-scroll的event._construced属性处理
+      // if(!event._constructed) {
+      //   return;
+      // }
+      console.log(treat);
     }
   },
   components: {

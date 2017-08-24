@@ -6,7 +6,9 @@ const state =  {
   // 当前播放的视频的封面图
   videoposter: '',
   // 是否展示视频
-  exhibitVideo: false
+  exhibitVideo: false,
+  // 所选择的护理的详情
+  selectedTreatment: {}
 }
 
 export default state;

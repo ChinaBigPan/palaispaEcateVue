@@ -6,3 +6,5 @@ export const videoposter = state => state.videoposter;
 export const exhibitVideo = state => state.exhibitVideo;
 
 export const shouldMainScrollRefresh = state => state.shouldMainScrollRefresh;
+
+export const selectedTreatment = state => state.selectedTreatment;

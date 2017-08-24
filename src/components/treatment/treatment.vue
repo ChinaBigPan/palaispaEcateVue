@@ -9,6 +9,7 @@
     left 60px
     // 顶部banner图
     .treatBanner
+      // width 100%
       margin 5px
       overflow hidden
       border-radius 5px
@@ -27,8 +28,7 @@
         margin-right 10px
         font-size 25px
         display inline-block
-        animation: pulse 1s infinite alternate;
-
+        animation: pulse 1s infinite alternate
 
   // 悬浮动画
   @keyframes pulse {
@@ -38,7 +38,14 @@
     100% {
         transform: translate3D(0, 4px, 0);
     }
-  }      
+  }
+
+  // 滑动效果
+  .slide-enter-active, .slide-leave-active
+    transition: all 0.3s
+
+  .slide-enter, .slide-leave-to
+    transform: translate3d(100%, 0, 0)     
 </style>
 
 <template>

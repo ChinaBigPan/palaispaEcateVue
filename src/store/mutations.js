@@ -16,6 +16,10 @@ const mutations = {
   // 设置是否播放视频
   [types.SET_EXHIBITVIDEO](state, exhibitVideo) {
     state.exhibitVideo = exhibitVideo;
+  },
+  // 设置所选的护理详情
+  [types.SET_SELECTED_TREATMENT](state, selectedTreatment) {
+    state.selectedTreatment = selectedTreatment;
   }
 }
 
