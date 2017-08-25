@@ -9,19 +9,26 @@
     left 60px
     // 顶部banner图
     .treatBanner
-      // width 100%
-      margin 5px
+      width 800px
+      height 64px
+      margin 5px 0 5px 5px
       overflow hidden
       border-radius 5px
+      float left
+      img
+        width 100%
+
     // 皮肤测试
     .skinTest
+      float right
       border none
       background-color $palaispa-lightorange
       color $white
       text-align center
       margin 5px
-      height 50px
-      line-height 50px
+      height 64px
+      padding 0 15px
+      line-height 64px
       font-size 20px
       border-radius 5px
       i
@@ -49,21 +56,23 @@
 </style>
 
 <template>
-  <div class="treatment">
+  <article class="treatment">
     <section class="treatBanner">
       <img @click="toPromoTreat" v-lazy="banner" alt="">
     </section>
     <section @click="toSkinTest" class="skinTest">
-      <i class="icon-color"></i><span>皮肤测试 看看什么护理适合您</span>
+      <i class="icon-color"></i><span>皮肤测试</span>
     </section>
+    <clear-float></clear-float>
     <section @treatSuccess="loadTreatSuccess" class="treatList">
       <treatmentlist></treatmentlist>
     </section>
     <loading title="正在加载护理数据..." v-show="isTreatLoad"></loading>
-  </div>
+  </article>
 </template>
 
 <script type="text/ecmascript-6">
+import clearFloat from '../../base/clearfloat/clearfloat';
 import Loading from '../../base/loading/loading'
 import treatmentlist from '../treatmentlist/treatmentlist';
 import {getTreatmentBanner} from '../../api/treatmentData.js'
@@ -101,7 +110,8 @@ export default {
   },
   components: {
     treatmentlist,
-    Loading
+    Loading,
+    clearFloat
   }
 }
 </script>

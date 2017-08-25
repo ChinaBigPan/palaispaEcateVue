@@ -56,8 +56,8 @@
 </style>
 
 <template>
-    <div class="side-nav-wrapper">
-        <div id="side-nav">
+    <nav class="side-nav-wrapper">
+        <section id="side-nav">
             <img :src="logo"></img>
             <ul class="nav-list">
                 <router-link tag="li" to="/main">
@@ -73,9 +73,8 @@
                     <div><i class="icon-good"></i><br />推广</div>
                 </router-link>
             </ul>
-        </div>        
-        
-    </div>
+        </section>    
+    </nav>
 </template>
 
 <script type="text/ecmascript-6">

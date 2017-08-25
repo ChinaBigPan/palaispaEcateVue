@@ -9,14 +9,52 @@
     right 0
     z-index 100
     width 100%
-    background $white
+    background $palaispa-lightgray
+    // 左侧区块
+    .treat-detail-left
+      width 70%
+      height 100%
+      background $palaispa-lightgray
+      float left
+      // 护理详情图区块
+      .treat-img-block
+        width 100%
+        height 60%
+        background $white
+        overflow hidden
 
+      // 护理详情信息区块
+      .treat-info-block
+        width 100%
+        height 39%
+        margin-top 1%
+        background $white
+    // 右侧区块
+    .treat-detail-right
+      width 29%
+      height 100%
+      background $white
+      float right
 </style>
 
 <template>
-  <div v-show="showFlag" class="treatment-detail">
+  <article class="treatment-detail">
+    <section class="treat-detail-left">
+      <scroll ref="detailscroll" class="treat-img-block">
+        <ul>
+          <li :key="index" v-for="(item, index) in treatmentDetail.detail">
+            <img :src="item" :alt="index">
+          </li>
+        </ul>
+      </scroll>
+      <div class="treat-info-block">
 
-  </div>
+      </div>
+    </section>
+    <aside class="treat-detail-right">
+
+    </aside>
+  </article>
 </template>
 
 <script type="text/ecmascript-6">
@@ -27,16 +65,25 @@ export default {
   props: {
     treatmentDetail: {
       type: Object
-    },
-    showFlag: {
-      type: Boolean,
-      default: false
     }
+  },
+  mounted() {
+    setTimeout(() => {
+      this._initScroll();
+    }, 20)
   },
   data() {	
     return {}
   },
-  methods: {},
+  updated() {
+
+  },
+  methods: {
+    // 刷新Scroll组件
+    _initScroll() {
+      this.$refs.detailscroll && this.$refs.detailscroll.refresh();
+    }
+  },
   components: {
     Scroll
   }

@@ -8,3 +8,5 @@ export const exhibitVideo = state => state.exhibitVideo;
 export const shouldMainScrollRefresh = state => state.shouldMainScrollRefresh;
 
 export const selectedTreatment = state => state.selectedTreatment;
+
+export const showTreatmentDetail = state => state.showTreatmentDetail;

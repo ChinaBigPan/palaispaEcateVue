@@ -40,11 +40,11 @@
 
 <template>
   <scroll class="mainscroll" ref="mainscroll">
-    <div @touchmove="mainPageScroll()" ref="mainpage" class="main">
+    <article @touchmove="mainPageScroll()" ref="mainpage" class="main">
       <!-- 顶部的宣传语框开始 -->
-      <div class="top-banner">
+      <section class="top-banner">
         <h4>{{ bannerSlogan }}</h4>
-      </div>
+      </section>
       <!-- 顶部的宣传语框结束 -->   
       <!-- 轮播图组件开始 -->
       <div v-if="sliderImages.length" class="slider-wrapper">
@@ -60,15 +60,15 @@
       </div>
       <!-- 轮播图组件结束 -->
      
-      <div ref="maintab">
+      <section ref="maintab">
         <maintab></maintab>
-      </div>
+      </section>
       <!-- 子轮播切换栏开始 -->
       <keep-alive>
         <router-view></router-view>
       </keep-alive> 
       <!-- 子轮播切换栏结束 --> 
-    </div>
+    </article>
   </scroll>
 </template>
 

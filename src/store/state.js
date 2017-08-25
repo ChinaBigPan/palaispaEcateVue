@@ -8,7 +8,9 @@ const state =  {
   // 是否展示视频
   exhibitVideo: false,
   // 所选择的护理的详情
-  selectedTreatment: {}
+  selectedTreatment: {},
+  // 是否展示护理详情
+  showTreatmentDetail: false
 }
 
 export default state;

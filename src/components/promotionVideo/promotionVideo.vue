@@ -28,7 +28,7 @@
 </style>
 
 <template>
-  <div ref="promotionVideo" class="promotionVideo">
+  <article ref="promotionVideo" class="promotionVideo">
     <ul class="video-list">
       <li :key="index" class="video-item" v-for="(item, index) in videoUrl">
         <img @click="showVideo(item, videoPic[index])" class="video-poster" v-lazy="videoPic[index]" :alt="index">
@@ -41,7 +41,7 @@
       </li>
     </ul>
     <loading v-show="!videoUrl.length"></loading>
-  </div>
+  </article>
 </template>
 
 <script type="text/ecmascript-6">

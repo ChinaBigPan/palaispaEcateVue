@@ -20,6 +20,10 @@ const mutations = {
   // 设置所选的护理详情
   [types.SET_SELECTED_TREATMENT](state, selectedTreatment) {
     state.selectedTreatment = selectedTreatment;
+  },
+  // 设置是否展示护理详情
+  [types.SET_SHOW_TREATMENT_DETAIL](state, showTreatmentDetail) {
+    state.showTreatmentDetail = showTreatmentDetail;
   }
 }
 

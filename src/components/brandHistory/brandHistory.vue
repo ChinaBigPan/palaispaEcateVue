@@ -63,10 +63,10 @@
 </style>
 
 <template>
-  <div class="brandHistory" ref="brandHistory">
+  <article class="brandHistory" ref="brandHistory">
     <section class="timeline">
       <ul class="timeline-list">
-        <li v-for="(item, index) in timeline">
+        <li :key="index" v-for="(item, index) in timeline">
           <div class="time-block" :class="{needleft: _listLeft(index)}">
             <img v-lazy="item" :alt="index">
             <span>{{ timelineDesc[index] }}</span>
@@ -78,7 +78,7 @@
       </ul>
     </section>
     <loading v-show="!timeline.length"></loading>
-  </div>
+  </article>
 </template>
 
 <script type="text/ecmascript-6">

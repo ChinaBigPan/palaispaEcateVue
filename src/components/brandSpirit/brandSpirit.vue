@@ -33,7 +33,7 @@
 </style>
 
 <template>
-  <div class="brandSpirit" ref="brandSpirit">
+  <article class="brandSpirit" ref="brandSpirit">
     <!-- 品牌精神区块开始 -->
     <ul class="spirit-list">
       <li :key="index" class="splist" v-for="(item, index) in spiritPic">
@@ -54,7 +54,7 @@
     </ul>
     <!-- 品牌历史区块结束 --> 
     <loading v-show="!spiritPic.length || !historyPic.length"></loading>  
-  </div>
+  </article>
 </template>
 
 <script type="text/ecmascript-6">

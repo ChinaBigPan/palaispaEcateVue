@@ -182,6 +182,7 @@
 
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
+import {mapMutations} from 'vuex'
 import {getAllTreatment} from '../../api/treatmentData'
 
 export default {
@@ -245,7 +246,7 @@ export default {
       this._initScroll();      
       this._calculateHeight();
       this._getSubkindList();
-    }, 300)
+    }, 400)
   },
   methods: {
     // 获取护理数据
@@ -271,20 +272,20 @@ export default {
       let itemlistBig = document.getElementsByClassName("treatlist-item-hook");
       this.listHeightBig.push(heightBig);
       // 将各个列表项距离外部的高度添加进数组
-      for(let i = 0; i < itemlistBig.length; i++) {
-        let item = itemlistBig[i];
-        heightBig += item.clientHeight;
-        this.listHeightBig.push(heightBig);
-      };
+      this._pushHeightToData(heightBig, itemlistBig, this.listHeightBig);
       // 右侧列表添加了treatlist-itemlist-hook的钩子, 获取这些元素集合的数组（小列表）
       let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");     
       this.listHeightSmall.push(heightSmall);
       // 将各个列表项距离外部的高度添加进数组
-      for(let j = 0; j < itemlistSmall.length; j++) {
-        let item = itemlistSmall[j];
-        heightSmall += item.clientHeight;
-        this.listHeightSmall.push(heightSmall);
-      };
+      this._pushHeightToData(heightSmall, itemlistSmall, this.listHeightSmall);
+    },
+    // 将各个列表项距离外部的高度添加到data对应的数组里
+    _pushHeightToData(initHeight, array, dataArray) {
+      for(let i = 0; i < array.length; i++) {
+        let item = array[i];
+        initHeight += item.clientHeight;
+        dataArray.push(initHeight);
+      }
     },
     // 获取左侧子列表的实例数组
     _getSubkindList() {
@@ -331,8 +332,15 @@ export default {
       // if(!event._constructed) {
       //   return;
       // }
-      console.log(treat);
-    }
+      this.setSelectedTreatment(treat);
+      this.setShowTreatmentDetail(true);
+      // console.log(treat);
+    },
+    // vuex方法引入
+    ...mapMutations({
+      setSelectedTreatment: "SET_SELECTED_TREATMENT",
+      setShowTreatmentDetail: "SET_SHOW_TREATMENT_DETAIL"
+    })
   },
   components: {
     Scroll

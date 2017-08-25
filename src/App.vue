@@ -8,22 +8,22 @@
 
     // 渐变效果
     .fade-enter-active, .fade-leave-active {
-      transition: opacity .5s
+      transition opacity .5s
     }
     .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-      opacity: 0
+      opacity 0
     }
 
     // 滑动效果
     .slide-enter-active, .slide-leave-active
-      transition: all 0.3s
+      transition all 0.3s
 
     .slide-enter, .slide-leave-to
-      transform: translate3d(100%, 0, 0)
+      transform translate3d(100%, 0, 0)
 </style>
 
 <template>
-  <div id="app" @touchmove.prevent>
+  <article id="app" @touchmove.prevent>
     <tab-nav></tab-nav>
     <keep-alive>
       <router-view></router-view>
@@ -38,10 +38,10 @@
     <!-- 视频播放组件结束 -->
     <!-- 护理详情部分开始 -->
     <transition name="slide">
-      <treatment-detail :showFlag="showFlag"></treatment-detail>
+      <treatment-detail v-show="showTreatmentDetail" :showFlag="showTreatmentDetail" :treatmentDetail="selectedTreatment"></treatment-detail>
     </transition>
-    <!-- 护理详情部分结束 --> 
-  </div>
+    <!-- 护理详情部分结束 -->
+  </article>
 </template>
 
 <script type="text/ecmascript-6">
@@ -61,15 +61,18 @@ export default {
       'video',
       'videoposter',
       'exhibitVideo',
-      'selectedTreatment'
+      'selectedTreatment',
+      'showTreatmentDetail'
     ])
   },
   data() {
     return {
-      showFlag: false
+      
     }  
   },
-  methods: {},
+  methods: {
+
+  },
   components: {
     tabNav,
     promoVideo,
