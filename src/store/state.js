@@ -10,7 +10,9 @@ const state =  {
   // 所选择的护理的详情
   selectedTreatment: {},
   // 是否展示护理详情
-  showTreatmentDetail: false
+  showTreatmentDetail: false,
+  // 护理详情的侧边列表所显示的护理
+  treatDetailAside: {}
 }
 
 export default state;

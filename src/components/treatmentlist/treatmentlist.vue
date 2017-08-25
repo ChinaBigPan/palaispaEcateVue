@@ -161,7 +161,7 @@
               <!-- {{subindex}} -->
               <!-- 护理列表开始 -->
               <ul class="treat-thirdlist">
-                <li @click="selectTreat(thirdkind, $event)" :key="thirdindex" v-for="(thirdkind, thirdindex) in subkind.data">
+                <li @click="selectTreat(thirdkind, item.subkind[subindex], $event)" :key="thirdindex" v-for="(thirdkind, thirdindex) in subkind.data">
                   <div class="thirdlist-item-block">
                     <img class="treat-avatar" v-lazy="thirdkind.avatar" :alt="thirdkind.treatName">
                     <p class="treat-name">{{thirdkind.treatName}}</p>
@@ -327,19 +327,20 @@ export default {
       this.$refs.treatlistwrapper.scrollToElement(el, 300);
     },
     // 点击护理区块
-    selectTreat(treat, event) {
+    selectTreat(treat, subkind, event) {
       // better-scroll的event._construced属性处理
       // if(!event._constructed) {
       //   return;
       // }
       this.setSelectedTreatment(treat);
       this.setShowTreatmentDetail(true);
-      // console.log(treat);
+      this.setTreatDetailAside(subkind);
     },
     // vuex方法引入
     ...mapMutations({
       setSelectedTreatment: "SET_SELECTED_TREATMENT",
-      setShowTreatmentDetail: "SET_SHOW_TREATMENT_DETAIL"
+      setShowTreatmentDetail: "SET_SHOW_TREATMENT_DETAIL",
+      setTreatDetailAside: "SET_TREAT_DETAIL_ASIDE"
     })
   },
   components: {

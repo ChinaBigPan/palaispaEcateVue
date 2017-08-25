@@ -24,6 +24,10 @@ const mutations = {
   // 设置是否展示护理详情
   [types.SET_SHOW_TREATMENT_DETAIL](state, showTreatmentDetail) {
     state.showTreatmentDetail = showTreatmentDetail;
+  },
+  // 设置护理详情侧边列表所显示的护理
+  [types.SET_TREAT_DETAIL_ASIDE](state, treatDetailAside) {
+    state.treatDetailAside = treatDetailAside;
   }
 }
 

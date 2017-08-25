@@ -10,3 +10,5 @@ export const shouldMainScrollRefresh = state => state.shouldMainScrollRefresh;
 export const selectedTreatment = state => state.selectedTreatment;
 
 export const showTreatmentDetail = state => state.showTreatmentDetail;
+
+export const treatDetailAside = state => state.treatDetailAside;

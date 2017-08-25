@@ -38,7 +38,11 @@
     <!-- 视频播放组件结束 -->
     <!-- 护理详情部分开始 -->
     <transition name="slide">
-      <treatment-detail v-show="showTreatmentDetail" :showFlag="showTreatmentDetail" :treatmentDetail="selectedTreatment"></treatment-detail>
+      <treatment-detail
+         v-show="showTreatmentDetail" 
+         :showFlag="showTreatmentDetail" 
+         :treatmentDetail="selectedTreatment"
+         :treatmentAside="treatDetailAside"></treatment-detail>
     </transition>
     <!-- 护理详情部分结束 -->
   </article>
@@ -62,7 +66,8 @@ export default {
       'videoposter',
       'exhibitVideo',
       'selectedTreatment',
-      'showTreatmentDetail'
+      'showTreatmentDetail',
+      'treatDetailAside'
     ])
   },
   data() {

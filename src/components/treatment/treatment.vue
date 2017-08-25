@@ -61,7 +61,7 @@
       <img @click="toPromoTreat" v-lazy="banner" alt="">
     </section>
     <section @click="toSkinTest" class="skinTest">
-      <i class="icon-color"></i><span>皮肤测试</span>
+      <i class="icon-text"></i><span>皮肤测试</span>
     </section>
     <clear-float></clear-float>
     <section @treatSuccess="loadTreatSuccess" class="treatList">
