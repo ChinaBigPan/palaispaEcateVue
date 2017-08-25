@@ -335,6 +335,7 @@ export default {
       this.setSelectedTreatment(treat);
       this.setShowTreatmentDetail(true);
       this.setTreatDetailAside(subkind);
+      // this.$router.push(treat.code);
     },
     // vuex方法引入
     ...mapMutations({

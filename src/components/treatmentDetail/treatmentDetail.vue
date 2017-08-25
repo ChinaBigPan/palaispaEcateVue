@@ -74,23 +74,27 @@
             line-height 1.5
             height 70px
             overflow hidden
-          .detail
+          .detailinfoscroll
+            width 100%
+            height 150px
             overflow hidden
-            margin-top 20px
-            li
-              width 100%
-              float left
-              font-size 16px
-              line-height 1.5
-              margin 5px 0
-              i
-                font-size 20px
-                vertical-align top
-                color $palaispa-orange
-                font-weight 700
-                margin-right 10px
-              &.price,&.duration
-                width 50%
+            .detail
+              overflow hidden
+              margin-top 10px
+              li
+                width 100%
+                float left
+                font-size 16px
+                line-height 1.5
+                margin 5px 0
+                i
+                  font-size 20px
+                  vertical-align top
+                  color $palaispa-orange
+                  font-weight 700
+                  margin-right 10px
+                &.price,&.duration
+                  width 50%
           
     // 右侧区块
     .treat-detail-right
@@ -99,11 +103,11 @@
       background $palaispa-lightgray
       float right
       // 您刚刚浏览的护理区块
-      .just-watch
-        width 100%
-        height 100px
-        background $white
-        margin-bottom 10px
+      // .just-watch
+      //   width 100%
+      //   height 100px
+      //   background $white
+      //   margin-bottom 10px
       // 同类护理区块
       .samekind-treat
         width 100%
@@ -112,13 +116,22 @@
         padding-top 5px
         .title
           text-align center
-          background $palaispa-orange
-          width 50%
-          margin 5px auto
-          color $white
-          border-radius 5px
+          position relative
+          z-index 300
+          background $white
           font-size 16px
           padding 10px 5px
+          box-shadow 0 1px 2px $palaispa-gray
+          p
+            color $white
+            background $palaispa-orange
+            display block
+            padding 10px 5px
+            width 50%
+            height 100%
+            margin 0 auto
+            border-radius 5px
+
         .samekind-scroll
           width 100%
           height 768px
@@ -126,7 +139,7 @@
           .samekind-list
             padding 0 5px
             overflow hidden
-            padding-bottom 160px
+            padding-bottom 50px
             li
               display flex
               height 120px
@@ -159,7 +172,8 @@
                 .fit
                   display block
                   font-size 15px
-                  height 70px
+                  height 60px
+                  margin-bottom 5px
                   line-height 1.4
                   padding-right 5px
                   color $palaispa-treatgray
@@ -204,24 +218,26 @@
             <div>{{treatmentDetail.effect}}</div>
           </scroll>
           <hr>
-          <ul class="detail">
-            <li class="price"><i class="icon-jiage"></i>{{treatmentDetail.price}} 元</li>
-            <li class="duration"><i class="icon-time"></i>{{dealDuration(treatmentDetail.duration)}}</li>
-            <li class="step"><i class="icon-buzhou"></i>{{treatmentDetail.step}}</li>
-            <li class="fit"><i class="icon-shiyongrenqun"></i>{{treatmentDetail.fit}}</li>
-          </ul>
+          <scroll ref="detailinfoscroll" class="detailinfoscroll">
+            <ul class="detail">
+              <li class="price"><i class="icon-jiage"></i>{{treatmentDetail.price}} 元</li>
+              <li class="duration"><i class="icon-time"></i>{{dealDuration(treatmentDetail.duration)}}</li>
+              <li class="step"><i class="icon-buzhou"></i>{{treatmentDetail.step}}</li>
+              <li class="fit"><i class="icon-shiyongrenqun"></i>{{treatmentDetail.fit}}</li>
+            </ul>
+          </scroll>  
         </scroll>
       </section>
     </section>
     <aside class="treat-detail-right">
-      <div class="just-watch">
-
-      </div>
+      <!-- <div class="just-watch"></div> -->
       <section class="samekind-treat">
-        <p class="title">同类护理</p>
+        <div @click="scrollToTop" class="title">
+          <p>同类护理</p>
+        </div>
         <scroll ref="samekindscroll" class="samekind-scroll">
           <ul class="samekind-list">
-            <li :key="item.treatName" v-for="(item, index) in treatmentAside.data">
+            <li @click.stop="pickSamekindTreat(item)" :key="item.treatName" v-for="(item, index) in treatmentAside.data">
               <div class="avatar">
                 <img :src="item.avatar" :alt="item.treatName">
               </div>
@@ -256,7 +272,6 @@ export default {
   mounted() {
     setTimeout(() => {
       this._initScroll();
-      this._showSamekind();
     }, 400)
   },
   data() {	
@@ -277,15 +292,20 @@ export default {
       this.$refs.detailscroll && this.$refs.detailscroll.refresh();
       this.$refs.informationblock && this.$refs.informationblock.refresh();
       this.$refs.informationeffect && this.$refs.informationeffect.refresh();
-      this.$refs.samekindscroll && this.$refs.samekindscroll.refresh(); 
+      this.$refs.samekindscroll && this.$refs.samekindscroll.refresh();
+      this.$refs.detailinfoscroll && this.$refs.detailinfoscroll.refresh();
     },
     // 关闭详情页
     closeTreatDetail() {
       this.setShowTreatmentDetail(false);
     },
     // 同类护理
-    _showSamekind() {
-      console.log(this.treatmentAside);
+    pickSamekindTreat(item) {
+      this.setSelectedTreatment(item);
+    },
+    // 同类护理滚动到最上方
+    scrollToTop() {
+      this.$refs.samekindscroll.scrollTo(0,0,300);
     },
     // vuex方法引入
     ...mapMutations({
