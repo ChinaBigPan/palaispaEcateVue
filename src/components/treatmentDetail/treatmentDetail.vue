@@ -34,10 +34,12 @@
       float left
       // 护理详情图区块
       .treat-img-block
+        position relative
         width 100%
         height 60%
         background $white
         overflow hidden
+        
 
       // 护理详情信息区块
       .treat-info-block
