@@ -39,6 +39,12 @@
         height 60%
         background $white
         overflow hidden
+        margin-bottom 0
+        // 当迷你区块显示时添加该Class
+        &.showMini
+          height 100%
+          margin-bottom 100px
+          transition height 100ms linear
         
 
       // 护理详情信息区块
@@ -68,6 +74,7 @@
             border none
             border-bottom 1px dashed $palaispa-gray
           .name
+            font-weight bold
             margin-top 20px
             margin-bottom 10px
             font-size 20px
@@ -97,7 +104,67 @@
                   margin-right 10px
                 &.price,&.duration
                   width 50%
-          
+
+      // 迷你文字区块
+      .mini-info
+        width 70%
+        height 60px
+        position absolute
+        bottom 0
+        z-index 1000
+        background $white
+        box-shadow 0 -1px 2px 1px $palaispa-treatgray
+        .mini-avatar
+          position absolute
+          width 80px
+          height 80px
+          overflow hidden
+          border-radius 50%
+          background $white
+          display flex
+          align-items center
+          justify-content center
+          z-index 1001
+          box-shadow 0 0 3px 1px $palaispa-treatgray
+          // border 2px solid $palaispa-treatgray
+          border-left none
+          border-bottom none
+          border-right none
+          top -45px
+          left 20px
+          padding 5px
+          img 
+            display block
+            width 80px
+            height 80px
+            border-radius 50%
+            
+        .mini-name
+          margin 20px auto
+          text-align center
+          font-size 18px
+          font-weight 700
+          line-height 1.2
+          p 
+            display inline-block
+            max-width 400px
+            overflow hidden
+            white-space nowrap 
+            text-overflow ellipsis
+            text-indent 70px
+          .mini-data
+            display inline-block
+            vertical-align top
+            float right
+            li
+              display inline-block
+              text-align center
+              margin 0 6px
+              i
+                color $palaispa-orange
+                font-weight bold
+                margin-right 10px
+
     // 右侧区块
     .treat-detail-right
       width 29%
@@ -194,6 +261,14 @@
       transform translate3d(-3px, 0, 0)
     }
   }
+
+  // 渐变效果
+  .fade-enter-active, .fade-leave-active {
+    transition opacity .5s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    opacity 0
+  }
 </style>
 
 <template>
@@ -201,7 +276,9 @@
     <div @click="closeTreatDetail" class="close-btn">
       <i class="icon-arrowleft"></i>
     </div>
-    <section class="treat-detail-left">
+    <!-- 左侧护理详情区块开始 -->
+    <article class="treat-detail-left">
+      <!-- 详情图区块开始 -->
       <scroll ref="detailscroll" class="treat-img-block">
         <ul>
           <li :key="index" v-for="(item, index) in treatmentDetail.detail">
@@ -209,35 +286,58 @@
           </li>
         </ul>
       </scroll>
-      <section class="treat-info-block">
-        <div class="avatar-block">
-          <img :src="treatmentDetail.avatar" alt="护理头图">
-        </div>
-        <scroll ref="informationblock" class="information-block">
-          <h3 class="name">{{treatmentDetail.treatName}}</h3>
-          <hr>
-          <scroll ref="informationeffect" class="effect">
-            <div>{{treatmentDetail.effect}}</div>
+      <!-- 详情图区块结束 -->
+      <!-- 文字区块开始 -->
+      <transition name="fade">
+        <section @click="toggleMini" v-show="!showMini" class="treat-info-block">
+          <div class="avatar-block">
+            <img :src="treatmentDetail.avatar" alt="护理头图">
+          </div>
+          <scroll ref="informationblock" class="information-block">
+            <h3 class="name">{{treatmentDetail.treatName}}</h3>
+            <hr>
+            <scroll ref="informationeffect" class="effect">
+              <div>{{treatmentDetail.effect}}</div>
+            </scroll>
+            <hr>
+            <scroll ref="detailinfoscroll" class="detailinfoscroll">
+              <ul class="detail">
+                <li class="price"><i class="icon-jiage"></i>{{treatmentDetail.price}} 元</li>
+                <li class="duration"><i class="icon-time"></i>{{dealDuration(treatmentDetail.duration)}}</li>
+                <li class="step"><i class="icon-buzhou"></i>{{treatmentDetail.step}}</li>
+                <li class="fit"><i class="icon-shiyongrenqun"></i>{{treatmentDetail.fit}}</li>
+              </ul>
+            </scroll>
           </scroll>
-          <hr>
-          <scroll ref="detailinfoscroll" class="detailinfoscroll">
-            <ul class="detail">
-              <li class="price"><i class="icon-jiage"></i>{{treatmentDetail.price}} 元</li>
-              <li class="duration"><i class="icon-time"></i>{{dealDuration(treatmentDetail.duration)}}</li>
-              <li class="step"><i class="icon-buzhou"></i>{{treatmentDetail.step}}</li>
-              <li class="fit"><i class="icon-shiyongrenqun"></i>{{treatmentDetail.fit}}</li>
-            </ul>
-          </scroll>  
-        </scroll>
-      </section>
-    </section>
+        </section>
+      </transition>
+      <!-- 文字区块结束 -->
+      <!-- 迷你护理文字区块开始 -->
+      <transition name="fade">
+        <section @click="toggleMini" v-show="showMini" class="mini-info">
+          <div class="mini-avatar">
+            <img :src="treatmentDetail.avatar" alt="护理小头图" >
+          </div>
+          <div class="mini-name">
+            <p>{{treatmentDetail.treatName}}</p>
+            <ul class="mini-data">
+              <li><i class="icon-jiage"></i>{{treatmentDetail.price}} 元</li>
+              <li><i class="icon-time"></i>{{dealDuration(treatmentDetail.duration)}}</li>
+            </ul>  
+          </div>  
+        </section>
+      </transition>
+      <!-- 迷你护理文字区块结束 -->      
+    </article>
+    <!-- 左侧护理详情区块结束 -->
+    <!-- 侧边同类护理列表开始 -->
     <aside class="treat-detail-right">
       <!-- <div class="just-watch"></div> -->
       <section class="samekind-treat">
         <div @click="scrollToTop" class="title">
-          <p>同类护理</p>
+          <p>{{asideTitle}}</p>
         </div>
-        <scroll ref="samekindscroll" class="samekind-scroll">
+        <scroll @scroll="scrollAsideList" :probeType="probeType" :listenScroll="listenScroll" ref="samekindscroll" class="samekind-scroll">
           <ul class="samekind-list">
             <li @click.stop="pickSamekindTreat(item)" :key="item.treatName" v-for="(item, index) in treatmentAside.data">
               <div class="avatar">
@@ -253,6 +353,7 @@
         </scroll>  
       </section>
     </aside>
+    <!-- 侧边同类护理列表结束 -->
   </article>
 </template>
 
@@ -277,7 +378,19 @@ export default {
     }, 400)
   },
   data() {	
-    return {}
+    return {
+      // 是否显示迷你区块
+      showMini: false,
+      // 侧边栏标题文字
+      asideTitle: "同类护理",
+      // 护理详情图滚动距离
+      picScrollY: 0,
+      // 侧边栏滚动距离
+      asideScrollY: 0,
+      // 向Scroll组件传入的属性
+      probeType: 3,
+      listenScroll: true
+    }
   },
   computed: {},
   updated() {
@@ -285,6 +398,11 @@ export default {
       this._initScroll();
     }, 440)
   },
+  // watch: {
+  //   picScrollY(newPicScrollY) {
+  //     console.log(newPicScrollY);
+  //   }
+  // },
   methods: {
     dealDuration(duration) {
       return judgeDuration(duration);
@@ -308,6 +426,24 @@ export default {
     // 同类护理滚动到最上方
     scrollToTop() {
       this.$refs.samekindscroll.scrollTo(0,0,300);
+    },
+    // 点击切换文字区域和迷你文字区域
+    toggleMini() {
+      this.showMini = !this.showMini;
+      let picClasslist = this.$refs.detailscroll.$el.classList;
+      picClasslist.toggle("showMini");
+      this.$nextTick(() => {
+        this.$refs.detailscroll.refresh()
+      })
+    },
+    // 监听侧边栏滚动
+    scrollAsideList(pos) {
+      let scrollAsideY = Math.round(pos.y);
+      if(scrollAsideY < 0) {
+        this.asideTitle = "点击回顶部"
+      } else {
+        this.asideTitle = "同类护理"
+      }
     },
     // vuex方法引入
     ...mapMutations({
