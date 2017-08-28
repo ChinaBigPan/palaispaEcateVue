@@ -113,7 +113,7 @@
         bottom 0
         z-index 1000
         background $white
-        box-shadow 0 -1px 2px 1px $palaispa-treatgray
+        box-shadow 0 -1px 1px 0 $palaispa-treatgray
         .mini-avatar
           position absolute
           width 80px
@@ -264,9 +264,9 @@
 
   // 渐变效果
   .fade-enter-active, .fade-leave-active {
-    transition opacity .5s
+    transition opacity .4s
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+  .fade-enter, .fade-leave-to {
     opacity 0
   }
 </style>
@@ -319,7 +319,7 @@
       <!-- 迷你护理文字区块开始 -->
       <transition name="fade">
         <section @click="toggleMini" v-show="showMini" class="mini-info">
-          <div class="mini-avatar">
+          <div ref="miniavatar" class="mini-avatar">
             <img :src="treatmentDetail.avatar" alt="护理小头图" >
           </div>
           <div class="mini-name">
@@ -460,7 +460,7 @@ export default {
           transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
         },
         60: {
-          transform: `translate3d(0,0,0) scale(1.05)`
+          transform: `translate3d(0,0,0) scale(1.02)`
         },
         100: {
           transform: `translate3d(0,0,0) scale(1)`
@@ -472,7 +472,7 @@ export default {
         name: 'avatarMove',
         animation,
         presets: {
-          duration: 500,
+          duration: 400,
           easing: 'linear'
         }
       })
@@ -486,10 +486,14 @@ export default {
       this.$refs.avatarWrapper.style.animation = "";
     },
     leave(el, done) {
-      this.$refs.avatarWrapper.style.transition = "all 500ms";
+      this.$refs.avatarWrapper.style.transition = "all 400ms";
       const {x,y,scale} = this._getPosAndScale();
       this.$refs.avatarWrapper.style['transform'] = `translate3d(${x}px,${y}px,0) scale(${scale})`;
-      this.$refs.avatarWrapper.addEventListener("transitionend", done);
+      const timer = setTimeout(done, 400);
+      this.$refs.avatarWrapper.addEventListener("transitionend", () => {
+        clearTimeout(timer);
+        done()
+      });
     },
     afterLeave() {
       this.$refs.avatarWrapper.style.transition = "";
@@ -497,17 +501,17 @@ export default {
     },
     // 获取位置方法
     _getPosAndScale() {
-      // 迷你头像的数据
-      let targetWidth = 80
-      let paddingLeft = 60
-      let paddingBottom = 80
+      // 目标头图的数据
+      let targetWidth = 90
+      let paddingLeft = 65
+      let paddingBottom = 60
       // 大头像的数据
       const paddingTop = 488
       const width = 170
       // 缩放比例
       const scale = targetWidth / width
       // 位置
-      const x = -(window.innerWidth / 2 - paddingLeft + targetWidth / 2)
+      const x = -(window.innerWidth / 7.5 - paddingLeft)
       const y = window.innerHeight - paddingTop - width / 2 - paddingBottom
       return {x, y, scale}
     },
