@@ -47,7 +47,7 @@ export default new Router({
     ]
     },
     {
-      name: 'treaement',
+      name: 'treatment',
       path: '/treatment',
       component: Treatment
     },
@@ -57,7 +57,7 @@ export default new Router({
       component: Enrollment
     },
     {
-      mame: 'popularize',
+      name: 'popularize',
       path: '/popularize',
       component: Popularize
     }

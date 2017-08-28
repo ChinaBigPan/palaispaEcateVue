@@ -60,16 +60,16 @@
         <section id="side-nav">
             <img :src="logo"></img>
             <ul class="nav-list">
-                <router-link tag="li" to="/main">
+                <router-link tag="li" :to="{name: 'main'}">
                     <div><i class="icon-wxbzhuye"></i><br />首页</div>
                 </router-link>
-                <router-link tag="li" to="/treatment">
+                <router-link tag="li" :to="{name: 'treatment'}">
                     <div><i class="icon-buzou"></i><br />护理</div>
                 </router-link>
-                <router-link tag="li" to="/enrollment">
+                <router-link tag="li" :to="{name: 'enrollment'}">
                     <div><i class="icon-ruhui"></i><br />入会</div>
                 </router-link>
-                <router-link tag="li" to="/popularize">
+                <router-link tag="li" :to="{name: 'popularize'}">
                     <div><i class="icon-good"></i><br />推广</div>
                 </router-link>
             </ul>
