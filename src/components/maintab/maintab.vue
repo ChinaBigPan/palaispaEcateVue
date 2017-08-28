@@ -34,13 +34,13 @@
 <template>
   <div class="maintab">
     <ul>
-      <router-link tag="li" to="/main/BrandSpirit">
+      <router-link tag="li" :to="{name: 'brandSpirit'}">
         <span>精神荣誉</span>
       </router-link>
-      <router-link tag="li" to="/main/BrandHistory">
+      <router-link tag="li" :to="{name: 'brandHistory'}">
         <span>历史积淀</span>
       </router-link>
-      <router-link tag="li" to="/main/PromotionVideo">
+      <router-link tag="li" :to="{name: 'promotionVideo'}">
         <span>宣传视频</span>
       </router-link>
     </ul>
