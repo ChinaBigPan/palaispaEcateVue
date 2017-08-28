@@ -288,9 +288,13 @@
       </scroll>
       <!-- 详情图区块结束 -->
       <!-- 文字区块开始 -->
-      <transition name="fade">
+      <transition name="fade"
+                  @enter="enter"
+                  @after-enter="afterEnter"
+                  @leave="leave"
+                  @after-leave="afterLeave">
         <section @click="toggleMini" v-show="!showMini" class="treat-info-block">
-          <div class="avatar-block">
+          <div ref="avatarWrapper" class="avatar-block">
             <img :src="treatmentDetail.avatar" alt="护理头图">
           </div>
           <scroll ref="informationblock" class="information-block">
@@ -360,6 +364,7 @@
 <script type="text/ecmascript-6">
 import {judgeDuration} from '../../common/js/util'
 import Scroll from '../../base/scroll/scroll'
+import animations from 'create-keyframe-animation'
 import {mapMutations} from 'vuex'
 
 export default {
@@ -444,6 +449,67 @@ export default {
       } else {
         this.asideTitle = "同类护理"
       }
+    },
+    // 动画相关的函数
+    enter(el, done) {
+      let {x,y,scale} = this._getPosAndScale();
+      
+      // 定义动画属性
+      let animation = {
+        0: {
+          transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
+        },
+        60: {
+          transform: `translate3d(0,0,0) scale(1.05)`
+        },
+        100: {
+          transform: `translate3d(0,0,0) scale(1)`
+        }
+      }
+
+      // 应用create-keyframe-animation
+      animations.registerAnimation({
+        name: 'avatarMove',
+        animation,
+        presets: {
+          duration: 500,
+          easing: 'linear'
+        }
+      })
+
+      let bigAvatar = this.$refs.avatarWrapper;
+      // 运行动画
+      animations.runAnimation(bigAvatar, 'avatarMove', done);
+    },
+    afterEnter() {
+      animations.unregisterAnimation('avatarMove');
+      this.$refs.avatarWrapper.style.animation = "";
+    },
+    leave(el, done) {
+      this.$refs.avatarWrapper.style.transition = "all 500ms";
+      const {x,y,scale} = this._getPosAndScale();
+      this.$refs.avatarWrapper.style['transform'] = `translate3d(${x}px,${y}px,0) scale(${scale})`;
+      this.$refs.avatarWrapper.addEventListener("transitionend", done);
+    },
+    afterLeave() {
+      this.$refs.avatarWrapper.style.transition = "";
+      this.$refs.avatarWrapper.style['transform'] = "";
+    },
+    // 获取位置方法
+    _getPosAndScale() {
+      // 迷你头像的数据
+      let targetWidth = 80
+      let paddingLeft = 60
+      let paddingBottom = 80
+      // 大头像的数据
+      const paddingTop = 488
+      const width = 170
+      // 缩放比例
+      const scale = targetWidth / width
+      // 位置
+      const x = -(window.innerWidth / 2 - paddingLeft + targetWidth / 2)
+      const y = window.innerHeight - paddingTop - width / 2 - paddingBottom
+      return {x, y, scale}
     },
     // vuex方法引入
     ...mapMutations({
