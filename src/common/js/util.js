@@ -13,3 +13,12 @@ export function judgeDuration(duration) {
     return duration
   }
 }
+
+/**
+ * 合并多个数组
+ * @param {被连接的数组} array 
+ * @param {连接的数组} targetArray 
+ */
+export function concatArrays(array, ...targetArray) {
+  return _.concat(array, ...targetArray)
+}
