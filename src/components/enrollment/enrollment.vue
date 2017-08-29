@@ -92,11 +92,22 @@
       // 右侧图表
       .right-echart
         flex 1
-      
+  
+
+  // 渐变效果
+  .fade-enter-active, .fade-leave-active {
+    transition opacity .3s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    opacity 0
+  }
 </style>
 
 <template>
   <article class="enrollment">
+    <transition name="fade">
+      <membership @hideMemberTable="hideMemberTable()" v-show="showMembership"></membership>
+    </transition>
     <!-- 表格和会员卡图区块开始 -->
     <section class="top-block">
       <div class="left">
@@ -146,6 +157,8 @@ export default {
   },
   data() {	
     return {
+      // 是否显示总表
+      showMembership: false,
       // 会员卡图片
       memberImage: [],
       // 会员卡属性
@@ -173,7 +186,11 @@ export default {
     },
     // 展示总表
     showMemberTable() {
-      console.log('点击了总表按钮');
+      this.showMembership = true;
+    },
+    // 隐藏总表
+    hideMemberTable() {
+      this.showMembership = false;
     },
     // 展示备注
     showRemark() {
@@ -182,7 +199,8 @@ export default {
   },
   components: {
     Scroll,
-    echarts
+    echarts,
+    Membership
   }
 }
 </script>

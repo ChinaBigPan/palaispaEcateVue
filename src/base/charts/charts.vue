@@ -53,53 +53,40 @@ export default {
             text: '疗程折扣'
           },
           tooltip: {},
-          color: ["#050101","#F0F0F0","#426F8b","#671a3b","#899e5f"],
           legend:{
-            data: ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员']
+            data: ['疗程折扣'],
+            textStyle: {
+              fontSize: 18
+            }
           },
           xAxis: {
             type: 'category',
-            data: [
-              {
-                value: '黑珍珠会员'
-              },{
-                value: '白珍珠会员'
-              },{
-                value: '百合会员'
-              },{
-                value: '玫瑰会员'
-              },{
-                value: '普通会员'
-              }
-            ]
+            data: ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员']
           },
           yAxis: {},
-          series: [{
-            name: '黑珍珠会员',
+          series: {
+            name: '疗程折扣',
             type: 'bar',
-            data: [5],
-            barWidth: 40
-          },{
-            name: '白珍珠会员',
-            type: 'bar',
-            data: [5],
-            barWidth: 40
-          },{
-            name: '百合会员',
-            type: 'bar',
-            data: [5.5],
-            barWidth: 40
-          },{
-            name: '玫瑰会员',
-            type: 'bar',
-            data: [5.5],
-            barWidth: 40
-          },{
-            name: '普通会员',
-            type: 'bar',
-            data: [7.5],
-            barWidth: 40
-          }]
+            data: [5, 5, 5.5, 5.5, 7.5],
+            // 设置柱子宽度
+            barWidth: 40,
+            // 配置样式
+            itemStyle: {
+              // 通常情况下：
+              normal: {
+                color: function (params) {
+                  let colorList = ["#050101","#F0F0F0","#426F8b","#671a3b","#899e5f"];
+                  return colorList[params.dataIndex];
+                }
+              },
+              // 鼠标悬停或点击时
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
         }
       }
     }
@@ -129,7 +116,9 @@ export default {
     resizeChart() {
       window.onresize = () => {
         // 调用echarts的resize方法
-        this.echarts.resize();
+        // let myChart = this.echarts;
+        // myChart.resize();
+        console.log("改变了视窗大小");
       }
     },
     // 渲染图表
@@ -139,45 +128,6 @@ export default {
       // 初始化
       let myChart = echarts.init(this.$refs.memberchart);
       myChart.setOption(chartOption);
-
-
-      // {
-      //   name: '疗程折扣',
-      //   type: 'bar',
-      //   data: [5, 5, 5.5, 5.5, 7.5],
-      //   // 设置柱子宽度
-      //   barWidth: 40,
-      //   label: {
-      //     show: true,
-      //     position: 'top',
-      //     formatter: '{b}\n{c}'
-      //   },
-      //   // 配置样式
-      //   itemStyle: {
-      //     // 通常情况下：
-      //     normal: {
-      //       color: function (params) {
-      //         let colorList = [
-      //           "#050101",
-      //           "#F0F0F0",
-      //           "#426F8b",
-      //           "#671a3b",
-      //           "#899e5f"
-      //         ];
-      //         return colorList[params.dataIndex];
-      //       }
-      //     },
-      //     // 鼠标悬停或点击时
-      //     emphasis: {
-      //       shadowBlur: 10,
-      //       shadowOffsetX: 0,
-      //       shadowColor: 'rgba(0, 0, 0, 0.5)'
-      //     }
-      //   }
-      // }
-
-
-
     }
   }
 }
