@@ -11,9 +11,9 @@
 </style>
 
 <template>
-  <div class="popularize">
-    <h1>我是推广页</h1>
-  </div>
+  <article class="popularize">
+    <h1>我是推广页面</h1>
+  </article>
 </template>
 
 <script type="text/ecmascript-6">

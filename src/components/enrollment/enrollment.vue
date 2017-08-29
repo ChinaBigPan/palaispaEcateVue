@@ -7,108 +7,96 @@
     bottom 0
     right 0
     left 60px
-    .membership-table
-      width 100%
-      text-align center
-      th
-        text-align center
-        line-height 1.5
-        color $palaispa-blue
-      .caption
-        background $palaispa-blue
-        color $white
-        font-size 21px
-        padding 10px 0
-        line-height 1.4
-        p
+    background $palaispa-lightgray
+    // 表格和会员卡图区块
+    .top-block
+      display flex
+      height 20%
+      background $white
+      .left
+        flex 0 0 180px
+        width 180px
+        background $white
+        padding 15px 0
+        .btn
+          width 80%
+          margin 15px auto
+          text-align center
+          padding 6%
           font-size 18px
+          box-shadow 0 0 2px $palaispa-gray
+          border-radius 5px
+          i
+            font-size 20px
+            vertical-align center
+            color $palaispa-orange
+            margin-right 10px
 
-  [v-cloak] {
-    display: none;
-  }
+      .member-card
+        flex 1
+        display flex
+        background $white
+        .card-block
+          flex 1
+          display flex
+          align-self center
+          align-items center
+          justify-content center
+          padding 0 5px
+          img
+            display block
+            position relative
+            background transparent
+            border-radius 5px
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .3), 0 0 40px rgba(0, 0, 0, .1) inset
+            &:after, &:before
+              content ''
+              position: absolute
+              z-index -1
+              top 50%
+              right 30px
+              bottom 0
+              left 30px
+              border-radius 100px / 10px
+              box-shadow 0 0 20px rgba(0, 0, 0, .8)
+
+
+
+
+    // 项目和数据视图区开始
+    .bottom-block
+      display flex
+      margin-top 1%
+      height 79%
+      background $white
 </style>
 
 <template>
   <article class="enrollment">
-    <scroll ref="tablescroll">
-      <table border="1" cellspacing="0" cellpadding="2" class="membership-table">
-        <caption class="caption">· {{tableTitle}} ·<p>{{englishTitle}}</p></caption>
-        <tr v-if="totalName">
-          <th colspan="2" rowspan="2"> {{totalName.text}} </th>
-          <th colspan="2">{{ totalName.VIPpearl.text }}<br/>{{ totalName.VIPpearl.subtext }}</th>
-          <th colspan="2">{{ totalName.VIPflower.text }}<br/>{{ totalName.VIPflower.subtext }}</th>
-          <th>{{ totalName.ExpCard.text }}<br/>{{ totalName.ExpCard.subtext }}</th>
-        </tr>
-        <tr v-if="totalName">
-          <th>{{ totalName.VIPpearl.children[0].name }}</th>
-          <th>{{ totalName.VIPpearl.children[1].name }}</th>
-          <th>{{ totalName.VIPflower.children[0].name }}</th>
-          <th>{{ totalName.VIPflower.children[1].name }}</th>
-          <th>{{ totalName.ExpCard.children[0].name }}</th> 
-        </tr>
-        <tr v-if="tableItem">
-          <td rowspan="6">{{ tableItem.memberUnique.name }}</td>
-          <td>{{tableItem.memberUnique.subitem[0].name}}</td>
-          <td :key="key" v-for="(item, key, index) in tableItem.memberUnique.subitem[0].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td>{{tableItem.memberUnique.subitem[1].name}}</td>
-          <td :key="index" v-for="(item, key, index) in tableItem.memberUnique.subitem[1].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td>{{tableItem.memberUnique.subitem[2].name}}</td>
-          <td :key="index" v-for="(item, key, index) in tableItem.memberUnique.subitem[2].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td>{{tableItem.memberUnique.subitem[3].name}}</td>
-          <td :key="index" v-for="(item, key, index) in tableItem.memberUnique.subitem[3].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td>{{tableItem.memberUnique.subitem[4].name}}</td>
-          <td :key="index" v-for="(item, key, index) in tableItem.memberUnique.subitem[4].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td>{{tableItem.memberUnique.subitem[5].name}}</td>
-          <td :key="index" v-for="(item, key, index) in tableItem.memberUnique.subitem[5].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td rowspan="2">{{ tableItem.integral.name }}</td>
-          <td>{{tableItem.integral.subitem[0].name}}</td>
-          <td :key="key" v-for="(item, key, index) in tableItem.integral.subitem[0].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td>{{tableItem.integral.subitem[1].name}}</td>
-          <td :key="key" v-for="(item, key, index) in tableItem.integral.subitem[1].data">
-            {{item}}
-          </td>
-        </tr>
-        <tr v-if="tableItem">
-          <td rowspan="10">{{ tableItem.memberCourtesy.name }}</td>
-        </tr>
-        <tr v-if="tableItem">
-          <td colspan="6">{{tableItem.memberCourtesy.subitem[0].name}}<br />{{ tableItem.memberCourtesy.subitem[0].subtext }}</td>
-        </tr>
-      </table>
-    </scroll>
+    <!-- 表格和会员卡图区块开始 -->
+    <section class="top-block">
+      <div class="left">
+        <div class="btn"><i class="icon-biaoge1"></i>总表</div>
+        <div class="btn"><i class="icon-buzou"></i>备注</div>
+      </div>
+      <ul class="member-card">
+        <li :key="index" v-for="(item, index) in memberImage" class="card-block">
+          <img :src="item" :alt="index">
+        </li>
+      </ul>
+    </section>
+    <!-- 表格和会员卡图区块结束 --> 
+    <!-- 项目和数据视图区开始 -->
+    <section class="bottom-block">
+      下部
+    </section>
+    <!-- 项目和数据视图区结束 -->    
   </article>
 </template>
 
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
+import Membership from '../membership/membership'
 import {getEnrollment} from '../../api/enrollmentData'
 
 export default {
@@ -116,21 +104,10 @@ export default {
   created() {
     this._getEnrollmentData();
   },
-  mounted() {
-    setTimeout(() => {
-      this.$refs.tablescroll && this.$refs.tablescroll.refresh()
-    }, 20)
-  },
   data() {	
     return {
-      // 表格标题
-      tableTitle: "贝黎诗会籍方案",
-      // 表格标题英语
-      englishTitle: "Membership",
-      // 会籍数据
-      totalName: "",
-      tableItem: "",
-      remarks: ""
+      // 会员卡图片
+      memberImage: []
     }
   },
   methods: {
@@ -138,16 +115,12 @@ export default {
     _getEnrollmentData() {
       getEnrollment().then((res) => {
         if (res) {
-          this.totalName = res.totalName;
-          this.tableItem = res.tableItem;
-          this.remarks = res.remarks;        
+          this.memberImage = res.memberImage;
+          // console.log(res);
+          console.log(this.memberImage);          
         }
       })
     }
-  },
-  components: {
-    Scroll
   }
 }
 </script>
-
