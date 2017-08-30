@@ -5,7 +5,7 @@
     width 100%
     height 100%
     position relative
-    z-index 100
+    z-index 200
     background $white
     // 回退按钮
     .close-btn
@@ -273,12 +273,12 @@ export default {
   mounted() {
     setTimeout(() => {
       this.refreshScroll()
-    }, 200)
+    }, 20)
   },
   updated() {
     setTimeout(() => {
       this.refreshScroll()
-    }, 200)
+    }, 20)
   },
   data() {	
     return {}

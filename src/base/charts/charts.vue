@@ -38,12 +38,15 @@ export default {
   },
   mounted() {
     this.resizeChart();
-    this.renderChart();
+    this.renderChart();   
   },
   updated() {
   },
   props: {
-    // 从父组件传入的数据
+    transferedData: {
+      type: Object
+    },
+    // 测试数据
     chartData: {
       type: Object,
       default: function() {
@@ -52,13 +55,18 @@ export default {
           title: {
             text: '疗程折扣'
           },
-          tooltip: {},
+          tooltip: {
+            trigger: 'axis'
+          },
           legend:{
             data: ['疗程折扣'],
             textStyle: {
               fontSize: 18
             }
           },
+          grid: {  
+            containLabel: true  
+          }, 
           xAxis: {
             type: 'category',
             data: ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员'],
@@ -66,17 +74,30 @@ export default {
               fontSize : 16
             }
           },
-          yAxis: {},
+          yAxis: {
+            name : '单位：折 ',
+            nameTextStyle: {
+              fontSize : 16
+            }
+          },
           series: {
             name: '疗程折扣',
             type: 'bar',
             data: [5, 5, 5.5, 5.5, 7.5],
             // 设置柱子宽度
             barWidth: 40,
+            // 显示上部标签
+            label: {
+              normal: {  
+                show: true,  
+                position: 'top'  
+              }  
+            },
             // 配置样式
             itemStyle: {
               // 通常情况下：
               normal: {
+                barBorderRadius: [5, 5, 0, 0],
                 color: function (params) {
                   let colorList = ["#050101","#F0F0F0","#426F8b","#671a3b","#899e5f"];
                   return colorList[params.dataIndex];
@@ -84,7 +105,7 @@ export default {
               },
               // 鼠标悬停或点击时
               emphasis: {
-                shadowBlur: 10,
+                shadowBlur: 8,
                 shadowOffsetX: 0,
                 shadowColor: 'rgba(0, 0, 0, 0.5)'
               }
@@ -112,7 +133,10 @@ export default {
         this.renderChart();
       },
       deep:true
-    }
+    },
+    transferedData() {
+      this.test()
+    },
   },
   methods: {
     // 监听窗口高度变化，从而改变图表尺寸
@@ -131,6 +155,10 @@ export default {
       // 初始化
       let myChart = echarts.init(this.$refs.memberchart);
       myChart.setOption(chartOption);
+    },
+    // 测试传过来的数据
+    test() {     
+      console.log(this.transferedData);     
     }
   }
 }

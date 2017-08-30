@@ -62,11 +62,6 @@
             position relative
             border-radius 5px
             box-shadow: 0 1px 4px rgba(0, 0, 0, .3), 0 0 10px rgba(0, 0, 0, .1) inset
-            
-              
-
-
-
 
     // 项目和数据视图区开始
     .bottom-block
@@ -121,7 +116,7 @@
       </div>
       <ul class="member-card">
         <li :key="index" v-for="(item, index) in memberImage" class="card-block">
-          <img :src="item" :alt="index">
+          <img v-lazy="item" :alt="index">
         </li>
       </ul>
     </section>
@@ -130,13 +125,13 @@
     <section class="bottom-block">
       <scroll ref="memberscroll" class="member-scroll">
         <ul class="item-list">
-          <li :key="index" v-for="(item, index) in memberItem" class="list">
+          <li @click="sendMemberData(item)" :key="index" v-for="(item, index) in memberItem" class="list">
             {{item.name}}
           </li>
         </ul>
       </scroll>
       <div class="right-echart">
-        <echarts></echarts>
+        <echarts :transferedData="transferedData"></echarts>
       </div>
     </section>
     <!-- 项目和数据视图区结束 -->    
@@ -160,14 +155,23 @@ export default {
       this._initScroll();
     }, 200)
   },
-  data() {	
+  updated() {
+    setTimeout(() => {
+      this._initScroll();
+    }, 200)
+  },
+  data() {
     return {
       // 是否显示总表
       showMembership: false,
       // 会员卡图片
       memberImage: [],
-      // 会员卡属性
-      memberItem: []
+      // 会员卡全属性
+      memberItem: [],
+      // 向图表中传输的数据
+      transferedData: {},
+      // 是否展示无数据板
+      isShowNoDataPad: false
     }
   },
   methods: {
@@ -200,6 +204,10 @@ export default {
     // 展示备注
     showRemark() {
       console.log('点击了备注按钮');
+    },
+    // 向charts传输数据
+    sendMemberData(item) {
+      this.transferedData = item;  
     }
   },
   components: {
