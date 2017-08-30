@@ -5,8 +5,10 @@
     width 100%
     height 100%
     position relative
+    overflow hidden
     z-index 200
     background $white
+    // overflow hidden
     // 回退按钮
     .close-btn
       position absolute
@@ -23,12 +25,16 @@
       i
         display block
         animation waggle 1s infinite alternate
+
     .membership-wrapper
       width 100%
       height 100%
       overflow hidden
+      position relative
       .membership-table
         width 100%
+        // height 100%
+        // overflow hidden
         text-align center
         th
           text-align center
@@ -269,16 +275,26 @@ import Scroll from '../../base/scroll/scroll'
 
 export default {
   name: 'membership',
-  created() {},
+  created() {
+  },
   mounted() {
     setTimeout(() => {
       this.refreshScroll()
     }, 20)
   },
-  updated() {
-    setTimeout(() => {
-      this.refreshScroll()
-    }, 20)
+  updated() {},
+  props: {
+    showMembership: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    showMembership() {
+      setTimeout(() => {
+        this.refreshScroll()
+      }, 20)
+    }    
   },
   data() {	
     return {}
@@ -290,7 +306,7 @@ export default {
     },
     // 刷新滚动组件
     refreshScroll() {
-      this.$refs.tablescroll && this.$refs.tablescroll.refresh()
+      this.$refs.tablescroll && this.$refs.tablescroll.refresh();
     }
   },
   components: {

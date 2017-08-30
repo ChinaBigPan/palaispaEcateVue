@@ -7,6 +7,7 @@
     bottom 0
     right 0
     left 60px
+    overflow hidden
     background $palaispa-lightgray
     // 表格和会员卡图区块
     .top-block
@@ -129,7 +130,7 @@
 <template>
   <article class="enrollment">
     <transition name="fade">
-      <membership @hideMemberTable="hideMemberTable()" v-show="showMembership"></membership>
+      <membership :showMembership="showMembership" @hideMemberTable="hideMemberTable()" v-show="showMembership"></membership>
     </transition>
     <!-- 表格和会员卡图区块开始 -->
     <section class="top-block">
