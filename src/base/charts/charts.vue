@@ -2,22 +2,22 @@
   @import "../../common/stylus/variable"
 
   .charts-wrapper
-    // width 100%
+    width 100%
     height 100%
-    padding 20px 30px
     background $white
     border-left 1px solid $palaispa-gray
     .member-chart
       width 100%
       height 100%
+      padding-top 20px
+      padding-left 10px
 
 </style>
 
 <template>
-  <article class="charts-wrapper">
+  <article ref="chartswrapper" class="charts-wrapper">
     <!-- 要渲染的图表 -->
-    <section ref="memberchart" class="member-chart">
-
+    <section v-if="transferedData" ref="memberchart" class="member-chart">
     </section>
   </article>
 </template>
@@ -32,111 +32,48 @@ require('echarts/lib/chart/radar')
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/legend')
 
+// 会员卡各常量
+const CARD_COLOR = ["#050101","#F0F0F0","#426F8b","#671a3b","#899e5f"];
+const MEMBER_CATEGORY = ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员'];
+
 export default {
   name: 'charts',
-  created() {
-  },
+  created() {},
   mounted() {
-    this.resizeChart();
-    this.renderChart();   
+    // this.resizeChart();
+    // 在这里初始化然后在后面渲染
+    echarts.init(this.$refs.memberchart);
+    setTimeout(() => {
+      this.renderChart(this.transferedData);  
+    }, 20)  
   },
-  updated() {
-  },
+  updated() {},
   props: {
     transferedData: {
-      type: Object
-    },
-    // 测试数据
-    chartData: {
       type: Object,
       default: function() {
-        // 用于测试的默认数据
         return {
-          title: {
-            text: '疗程折扣'
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          legend:{
-            data: ['疗程折扣'],
-            textStyle: {
-              fontSize: 18
-            }
-          },
-          grid: {  
-            containLabel: true  
-          }, 
-          xAxis: {
-            type: 'category',
-            data: ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员'],
-            nameTextStyle: {
-              fontSize : 16
-            }
-          },
-          yAxis: {
-            name : '单位：折 ',
-            nameTextStyle: {
-              fontSize : 16
-            }
-          },
-          series: {
-            name: '疗程折扣',
-            type: 'bar',
-            data: [5, 5, 5.5, 5.5, 7.5],
-            // 设置柱子宽度
-            barWidth: 40,
-            // 显示上部标签
-            label: {
-              normal: {  
-                show: true,  
-                position: 'top'  
-              }  
-            },
-            // 配置样式
-            itemStyle: {
-              // 通常情况下：
-              normal: {
-                barBorderRadius: [5, 5, 0, 0],
-                color: function (params) {
-                  let colorList = ["#050101","#F0F0F0","#426F8b","#671a3b","#899e5f"];
-                  return colorList[params.dataIndex];
-                }
-              },
-              // 鼠标悬停或点击时
-              emphasis: {
-                shadowBlur: 8,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-              }
-            }
-          }
+          name: "疗程折扣",
+          unit: "单位：折",
+          data: [5, 5, 5.5, 6.5, 7.5]
         }
       }
     }
   },
   data() {	
-    return {
-      title: {},
-      tooltip: {},
-      legend: {},
-      xAxis: {},
-      yAxis: {},
-      series:[]
-    }
+    return {}
   },
+  computed: {},
   watch: {
     // 深度监听传入的数据变化
-    chartData: {
-      handler(newVal, val) {
-        console.log(`newVal = ${newVal}; val=${val}`);
-        this.renderChart();
+    transferedData: {
+      handler(newVal) {
+        setTimeout(() => {
+          this.renderChart(newVal);
+        })  
       },
       deep:true
-    },
-    transferedData() {
-      this.test()
-    },
+    }
   },
   methods: {
     // 监听窗口高度变化，从而改变图表尺寸
@@ -149,16 +86,73 @@ export default {
       }
     },
     // 渲染图表
-    renderChart() {
+    renderChart(val) {
       // 图表设置
-      let chartOption = this.chartData;
-      // 初始化
-      let myChart = echarts.init(this.$refs.memberchart);
-      myChart.setOption(chartOption);
-    },
-    // 测试传过来的数据
-    test() {     
-      console.log(this.transferedData);     
+      let chartOption =  {
+        title: {
+          text: val.name ? val.name : "疗程折扣"
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend:{
+          data: [val.name ? val.name : "疗程折扣"],
+          textStyle: {
+            fontSize: 18
+          }
+        },
+        grid: {  
+          containLabel: true  
+        }, 
+        xAxis: {
+          type: 'category',
+          data: MEMBER_CATEGORY,
+          nameTextStyle: {
+            fontSize : 16
+          }
+        },
+        yAxis: {
+          name : val.unit ? val.unit : "单位：折",
+          nameTextStyle: {
+            fontSize : 16
+          }
+        },
+        series: {
+          name: val.name ? val.name : "疗程折扣",
+          type: 'bar',
+          data: val.data ? val.data : [5, 5, 5.5, 6.5, 7.5],
+          // 设置柱子宽度
+          barWidth: 40,
+          // 显示上部标签
+          label: {
+            normal: {  
+              show: true,  
+              position: 'top'
+            }  
+          },
+          // 配置样式
+          itemStyle: {
+            // 通常情况下：
+            normal: {
+              barBorderRadius: [5, 5, 0, 0],
+              color: function (params) {
+                let colorList = CARD_COLOR;
+                return colorList[params.dataIndex];
+              }
+            },
+            // 鼠标悬停或点击时
+            emphasis: {
+              shadowBlur: 8,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      };
+      // 初始化放到外面，然后这里找到DOM然后重新渲染
+      let chartDom = echarts.getInstanceByDom(this.$refs.memberchart);   
+      // let myChart = echarts.init(this.$refs.memberchart);
+      chartDom.setOption(chartOption);
     }
   }
 }

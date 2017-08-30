@@ -86,7 +86,7 @@
             box-shadow 0 1px 1px rgba(0,0,0,.06)
             &.selected
               background $white
-              box-shadow 0 1px 1px rgba(0,0,0,.1)
+              box-shadow 0 1px 2px rgba(0,0,0,.5)
               transition all 400ms linear
 
       // 右侧图表
@@ -125,7 +125,7 @@
     <section class="bottom-block">
       <scroll ref="memberscroll" class="member-scroll">
         <ul class="item-list">
-          <li @click="sendMemberData(item)" :key="index" v-for="(item, index) in memberItem" class="list">
+          <li @click="sendMemberData(item, index)" :class="{ 'selected' : selectedMemberData === index }" :key="index" v-for="(item, index) in memberItem" class="list">
             {{item.name}}
           </li>
         </ul>
@@ -170,6 +170,8 @@ export default {
       memberItem: [],
       // 向图表中传输的数据
       transferedData: {},
+      // 所选择的列表的索引值
+      selectedMemberData: 0,
       // 是否展示无数据板
       isShowNoDataPad: false
     }
@@ -181,7 +183,7 @@ export default {
         if (res) {
           this.memberImage = res.memberImage;
           this.memberItem = this.getMemberItem(this.memberItem, res.memberUnique, res.integral, res.memberCourtesy, res.memberAct, res.memberCard);
-          console.log(res);
+          // console.log(res);
         }
       })
     },
@@ -205,9 +207,10 @@ export default {
     showRemark() {
       console.log('点击了备注按钮');
     },
-    // 向charts传输数据
-    sendMemberData(item) {
-      this.transferedData = item;  
+    // 向charts传输数据及添加selected类名
+    sendMemberData(item, index) {
+      this.transferedData = item;
+      this.selectedMemberData = index;
     }
   },
   components: {
