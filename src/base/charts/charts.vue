@@ -61,7 +61,10 @@ export default {
           },
           xAxis: {
             type: 'category',
-            data: ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员']
+            data: ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员'],
+            nameTextStyle: {
+              fontSize : 16
+            }
           },
           yAxis: {},
           series: {

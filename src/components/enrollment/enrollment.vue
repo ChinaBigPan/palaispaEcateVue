@@ -17,12 +17,14 @@
         flex 0 0 180px
         width 180px
         background $white
-        padding 15px 0
+        display flex
+        flex-direction column
+        justify-content center
         .btn
           width 60%
-          margin 15px auto
+          margin 10px auto
           text-align center
-          padding 6%
+          padding 10px
           font-size 18px
           box-shadow 0 0 2px $palaispa-gray
           border-radius 5px
@@ -34,6 +36,7 @@
 
       .member-card
         flex 1
+        height 100%
         display flex
         background $white
         .card-block
@@ -43,22 +46,24 @@
           align-items center
           justify-content center
           padding 0 5px
-          img
-            display block
-            position relative
-            background transparent
-            border-radius 5px
-            box-shadow: 0 1px 4px rgba(0, 0, 0, .3), 0 0 40px rgba(0, 0, 0, .1) inset
-            &:after, &:before
+          position relative
+          &:after, &:before
               content ''
               position: absolute
               z-index -1
               top 50%
-              right 30px
+              right 10px
               bottom 0
-              left 30px
+              left 10px
               border-radius 100px / 10px
-              box-shadow 0 0 20px rgba(0, 0, 0, .8)
+              box-shadow 0 0 12px rgba(0, 0, 0, .8)
+          img
+            display block
+            position relative
+            border-radius 5px
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .3), 0 0 10px rgba(0, 0, 0, .1) inset
+            
+              
 
 
 
