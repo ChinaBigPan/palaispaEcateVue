@@ -73,7 +73,7 @@
     <div @click="hideMemberTable()" class="close-btn">
       <i class="icon-arrowleft"></i>
     </div>
-    <scroll ref="tablescroll" class="membership-wrapper">
+    <scroll v-if="memberItem != ''" ref="tablescroll" class="membership-wrapper">
       <table border="1" cellspacing="0" cellpadding="2" class="membership-table">
         <caption class="caption">· 会籍方案 ·<p>Membership</p></caption>
         <tr>
