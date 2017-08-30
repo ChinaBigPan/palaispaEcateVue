@@ -35,6 +35,7 @@
         width 100%
         // height 100%
         // overflow hidden
+        line-height 1.5
         text-align center
         td.titled
           padding 10px 0
@@ -140,7 +141,7 @@
         </tr>
         <tr>
           <td class="titled" rowspan="10">会员礼遇</td>
-          <td colspan="6">
+          <td class="titled" colspan="6">
             专享礼券<br/>
             (入会/升级/续卡获得，二选一)
           </td>

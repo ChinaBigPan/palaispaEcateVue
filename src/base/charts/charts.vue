@@ -33,7 +33,7 @@ require('echarts/lib/component/tooltip')
 require('echarts/lib/component/legend')
 
 // 会员卡各常量
-const CARD_COLOR = ["#050101","#F0F0F0","#426F8b","#671a3b","#899e5f"];
+const CARD_COLOR = ["#050101","#C0C0C0","#426F8b","#671a3b","#899e5f"];
 const MEMBER_CATEGORY = ['黑珍珠会员','白珍珠会员','百合会员','玫瑰会员','普通会员'];
 
 export default {
