@@ -92,13 +92,36 @@
       // 右侧图表
       .right-echart
         flex 1
+        position relative
+        .emptyData
+          position absolute
+          top 0
+          left 0
+          right 0
+          bottom 0
+          z-index 10
+          background $white
+          align-items center
+          justify-content center
+          line-height 2
+          font-size 18px
+          padding-top 100px
+          li
+            margin 20px
+            float left
+            text-align center
+            img
+              display block
+              position relative
+              border-radius 8px
+              box-shadow: 0 1px 4px rgba(0, 0, 0, .3), 0 0 10px rgba(0, 0, 0, .1) inset
   
 
   // 渐变效果
   .fade-enter-active, .fade-leave-active {
     transition opacity .3s
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+  .fade-enter, .fade-leave-to {
     opacity 0
   }
 </style>
@@ -132,9 +155,15 @@
       </scroll>
       <div class="right-echart">
         <echarts :transferedData="transferedData"></echarts>
+        <ul v-show="isShowNoDataPad" class="emptyData">
+          <li :key="index" v-for="(item, index) in memberImage">
+            <img v-lazy="item" alt="index">
+            <p>{{noDataDesc[index]}}</p>
+          </li>
+        </ul>
       </div>
     </section>
-    <!-- 项目和数据视图区结束 -->    
+    <!-- 项目和数据视图区结束 -->
   </article>
 </template>
 
@@ -173,7 +202,9 @@ export default {
       // 所选择的列表的索引值
       selectedMemberData: 0,
       // 是否展示无数据板
-      isShowNoDataPad: false
+      isShowNoDataPad: false,
+      // 无数据展板文字描述
+      noDataDesc: ["免费体验一次", "优先特价体验一次", "无此体验", "无此体验", "无此体验"]
     }
   },
   methods: {
@@ -211,6 +242,13 @@ export default {
     sendMemberData(item, index) {
       this.transferedData = item;
       this.selectedMemberData = index;
+      if(item.subtext && item.unit === "") {
+        // 显示新护理体验的无数据展板（特殊处理）
+        this.isShowNoDataPad = true
+      } else {
+        this.isShowNoDataPad = false
+      }
+
     }
   },
   components: {
