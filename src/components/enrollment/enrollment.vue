@@ -130,7 +130,7 @@
 <template>
   <article class="enrollment">
     <transition name="fade">
-      <membership :showMembership="showMembership" @hideMemberTable="hideMemberTable()" v-show="showMembership"></membership>
+      <membership :memberItem="memberItem" :showMembership="showMembership" @hideMemberTable="hideMemberTable()" v-show="showMembership"></membership>
     </transition>
     <!-- 表格和会员卡图区块开始 -->
     <section class="top-block">
@@ -215,7 +215,7 @@ export default {
         if (res) {
           this.memberImage = res.memberImage;
           this.memberItem = this.getMemberItem(this.memberItem, res.memberUnique, res.integral, res.memberCourtesy, res.memberAct, res.memberCard);
-          // console.log(res);
+          console.log(this.memberItem);
         }
       })
     },
@@ -248,8 +248,7 @@ export default {
         this.isShowNoDataPad = true
       } else {
         this.isShowNoDataPad = false
-      }
-
+      };
     }
   },
   components: {

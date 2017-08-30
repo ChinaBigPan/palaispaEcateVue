@@ -36,6 +36,9 @@
         // height 100%
         // overflow hidden
         text-align center
+        td.titled
+          padding 10px 0
+          color $palaispa-blue
         th
           text-align center
           line-height 1.5
@@ -86,184 +89,144 @@
           <th>普通会员</th>
         </tr>
         <tr>
-          <td rowspan="6">会员专属权益</td>
-          <td>疗程折扣</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="titled" rowspan="6">会员专属权益</td>
+          <td >{{memberItem[0].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[0].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>产品折扣</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[1].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[1].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>新护理体验<br />（生活美容）</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[2].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[2].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>专属房间</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[3].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[3].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>专属用品</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[4].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[4].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>护理免费停车</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[5].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[5].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td rowspan="2">储值积分</td>
-          <td>入会充值</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="titled" rowspan="2">储值积分</td>
+          <td>{{memberItem[6].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[6].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>续卡充值</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[7].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[7].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td rowspan="10">会员礼遇</td>
+          <td class="titled" rowspan="10">会员礼遇</td>
           <td colspan="6">
             专享礼券<br/>
             (入会/升级/续卡获得，二选一)
           </td>
         </tr>
         <tr>
-          <td>护理券</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[8].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[8].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>产品券</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[9].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[9].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td colspan="6">
+          <td class="titled" colspan="6">
             生日礼<br/>
             (生日当月使用)
           </td>
         </tr>
         <tr>
-          <td>积分翻倍</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[10].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[10].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>护理券</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[11].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[11].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>产品折扣</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[12].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[12].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>生日礼</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[13].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[13].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td colspan="6">其他礼品</td>
+          <td class="titled" colspan="6">其他礼品</td>
         </tr>
         <tr>
-          <td>旅行护肤套装</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[14].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[14].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td rowspan="3">会员活动</td>
-          <td>特色旅行</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="titled" rowspan="3">会员活动</td>
+          <td>{{memberItem[15].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[15].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>珍珠会员活动</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[16].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[16].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>品牌活动</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[17].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[17].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td rowspan="2">会员卡</td>
-          <td>储值金额</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td class="titled" rowspan="2">会员卡</td>
+          <td>{{memberItem[18].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[18].data">
+            {{item}}
+          </td>
         </tr>
         <tr>
-          <td>有效期</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td>{{memberItem[19].name}}</td>
+          <td :key="index" v-for="(item, index) in memberItem[19].data">
+            {{item}}
+          </td>
         </tr>
       </table>
     </scroll>
@@ -287,6 +250,10 @@ export default {
     showMembership: {
       type: Boolean,
       default: false
+    },
+    memberItem: {
+      type: Array,
+      default: []
     }
   },
   watch: {
