@@ -120,7 +120,7 @@
 
   // 渐变效果
   .fade-enter-active, .fade-leave-active {
-    transition opacity .3s
+    transition opacity 100ms
   }
   .fade-enter, .fade-leave-to {
     opacity 0
@@ -131,6 +131,9 @@
   <article class="enrollment">
     <transition name="fade">
       <membership :memberItem="memberItem" :showMembership="showMembership" @hideMemberTable="hideMemberTable()" v-show="showMembership"></membership>
+    </transition>
+    <transition name="fade">
+      <member-remarks :transferedRemarks="transferedRemarks" :isShowRemarkPad="isShowRemarkPad" v-show="isShowRemarkPad" @hideMemberRemarks="hideMemberRemarks()" ></member-remarks>
     </transition>
     <!-- 表格和会员卡图区块开始 -->
     <section class="top-block">
@@ -171,6 +174,7 @@
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
 import Membership from '../membership/membership'
+import MemberRemarks from '../memberRemarks/memberRemarks'
 import echarts from '../../base/charts/charts'
 import {getEnrollment} from '../../api/enrollmentData'
 import {concatArrays} from '../../common/js/util'
@@ -200,11 +204,15 @@ export default {
       memberItem: [],
       // 向图表中传输的数据
       transferedData: {},
+      // 备注
+      transferedRemarks: [],
+      // 是否展示备注板
+      isShowRemarkPad: false,
       // 所选择的列表的索引值
       selectedMemberData: 0,
       // 是否展示无数据板
       isShowNoDataPad: false,
-      // 无数据展板文字描述
+      // 无数据展板文字描述（对“新护理体验”的特殊处理）
       noDataDesc: ["免费体验一次", "优先特价体验一次", "无此体验", "无此体验", "无此体验"]
     }
   },
@@ -215,7 +223,7 @@ export default {
         if (res) {
           this.memberImage = res.memberImage;
           this.memberItem = this.getMemberItem(this.memberItem, res.memberUnique, res.integral, res.memberCourtesy, res.memberAct, res.memberCard);
-          console.log(this.memberItem);
+          this.transferedRemarks = res.remarks;
         }
       })
     },
@@ -237,7 +245,11 @@ export default {
     },
     // 展示备注
     showRemark() {
-      console.log('点击了备注按钮');
+      this.isShowRemarkPad = true;
+    },
+    // 隐藏备注
+    hideMemberRemarks() {
+      this.isShowRemarkPad = false;
     },
     // 向charts传输数据及添加selected类名
     sendMemberData(item, index) {
@@ -254,7 +266,8 @@ export default {
   components: {
     Scroll,
     echarts,
-    Membership
+    Membership,
+    MemberRemarks
   }
 }
 </script>

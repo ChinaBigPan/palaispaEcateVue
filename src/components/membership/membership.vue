@@ -93,50 +93,50 @@
           <td class="titled" rowspan="6">会员专属权益</td>
           <td >{{memberItem[0].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[0].data">
-            {{item}}
+            {{item}} 折
           </td>
         </tr>
         <tr>
           <td>{{memberItem[1].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[1].data">
-            {{item}}
+            {{item}} 折
           </td>
         </tr>
         <tr>
           <td>{{memberItem[2].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[2].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[3].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[3].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[4].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[4].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[5].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[5].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td class="titled" rowspan="2">储值积分</td>
           <td>{{memberItem[6].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[6].data">
-            {{item}}
+            {{item}}元1积分
           </td>
         </tr>
         <tr>
           <td>{{memberItem[7].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[7].data">
-            {{item}}
+            {{item}}元1积分
           </td>
         </tr>
         <tr>
@@ -149,13 +149,13 @@
         <tr>
           <td>{{memberItem[8].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[8].data">
-            {{item}}
+            &yen; {{item}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[9].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[9].data">
-            {{item}}
+            &yen; {{item}}
           </td>
         </tr>
         <tr>
@@ -167,25 +167,25 @@
         <tr>
           <td>{{memberItem[10].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[10].data">
-            {{item}}
+            {{item}} 倍
           </td>
         </tr>
         <tr>
           <td>{{memberItem[11].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[11].data">
-            {{item}}
+            &yen; {{item}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[12].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[12].data">
-            {{item}}
+            {{item}} 折
           </td>
         </tr>
         <tr>
           <td>{{memberItem[13].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[13].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
@@ -194,39 +194,39 @@
         <tr>
           <td>{{memberItem[14].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[14].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td class="titled" rowspan="3">会员活动</td>
           <td>{{memberItem[15].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[15].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[16].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[16].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[17].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[17].data">
-            {{item}}
+            {{formatMembershipData(item)}}
           </td>
         </tr>
         <tr>
           <td class="titled" rowspan="2">会员卡</td>
           <td>{{memberItem[18].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[18].data">
-            {{item}}
+            &yen; {{item}}
           </td>
         </tr>
         <tr>
           <td>{{memberItem[19].name}}</td>
           <td :key="index" v-for="(item, index) in memberItem[19].data">
-            {{item}}
+            {{item}} 年
           </td>
         </tr>
       </table>
@@ -236,6 +236,7 @@
 
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
+import {formatMembershipData} from '../../common/js/util'
 
 export default {
   name: 'membership',
@@ -275,6 +276,10 @@ export default {
     // 刷新滚动组件
     refreshScroll() {
       this.$refs.tablescroll && this.$refs.tablescroll.refresh();
+    },
+    // 处理一下表格的字符串数据和1,0数据
+    formatMembershipData(data) {
+      return formatMembershipData(data)
     }
   },
   components: {

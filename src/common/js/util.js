@@ -22,3 +22,18 @@ export function judgeDuration(duration) {
 export function concatArrays(array, ...targetArray) {
   return _.concat(array, ...targetArray)
 }
+
+/**
+ * 处理字符串为空时的会员卡数据，以及对1和0的处理
+ * @param {会员卡数据} data
+ */
+export function formatMembershipData(data) {
+  let isNumber = _.isNumber(data);
+  if (!data || (isNumber && data === 0)) {
+    return "—"
+  } else if (isNumber && data === 1) {
+    return "有"
+  } else {
+    return data
+  }
+}
