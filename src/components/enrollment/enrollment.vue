@@ -48,16 +48,22 @@
           justify-content center
           padding 0 5px
           position relative
-          &:after, &:before
-              content ''
-              position: absolute
-              z-index -1
-              top 50%
-              right 10px
-              bottom 0
-              left 10px
-              border-radius 100px / 10px
-              box-shadow 0 0 12px rgba(0, 0, 0, .8)
+          transition all 400ms linear
+          &.clicked
+            transform translate3d(0, 0, 100px) scale(1.2)
+            z-index 10
+            transition all 400ms linear
+          // 曲线阴影
+          // &:after, &:before
+          //     content ''
+          //     position: absolute
+          //     z-index -1
+          //     top 50%
+          //     right 10px
+          //     bottom 0
+          //     left 10px
+          //     border-radius 100px / 10px
+          //     box-shadow 0 0 10px rgba(0, 0, 0, .4)
           img
             display block
             position relative
@@ -142,7 +148,7 @@
         <div @click.stop="showRemark()" class="btn"><i class="icon-buzou"></i>备注</div>
       </div>
       <ul class="member-card">
-        <li @click="selectedCard(index)" :key="index" v-for="(item, index) in memberImage" class="card-block">
+        <li ref="cardimg" @click="selectedCard(index)" :class="{'clicked' : clickedCardIndex === index}" :key="index" v-for="(item, index) in memberImage" class="card-block">
           <img v-lazy="item" :alt="index">
         </li>
       </ul>
@@ -198,6 +204,8 @@ export default {
   },
   data() {
     return {
+      // 点击的会员卡索引
+      clickedCardIndex: '',
       // 按照会员卡分类的数据
       dataByCard: [],
       // 是否显示总表
@@ -263,6 +271,7 @@ export default {
     sendMemberData(item, index) {
       this.transferedData = item;
       this.selectedMemberData = index;
+      this.chartType = 'bar';
       if(item.subtext && item.unit === "") {
         // 显示新护理体验的无数据展板（特殊处理）
         this.isShowNoDataPad = true
@@ -272,7 +281,10 @@ export default {
     },
     // 点击会员卡图片
     selectedCard(index) {
-      console.log(index);
+      this.clickedCardIndex = index;
+      let classList = this.$refs.cardimg[index].classList;
+      classList.toggle('clicked');
+      this.chartType = 'radar';
     }
   },
   components: {

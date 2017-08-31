@@ -47,6 +47,14 @@
     }
   }
 
+  // 渐变效果
+  .fade-enter-active, .fade-leave-active {
+    transition opacity .3s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    opacity 0
+  }
+
   // 滑动效果
   .slide-enter-active, .slide-leave-active
     transition: all 0.3s
@@ -67,14 +75,18 @@
     <section @treatSuccess="loadTreatSuccess" class="treatList">
       <treatmentlist></treatmentlist>
     </section>
+    <transition name="fade">
+      <skintest @closeSkintest="closeSkintest" v-show="showSkintest"></skintest>
+    </transition>
     <loading title="正在加载护理数据..." v-show="isTreatLoad"></loading>
   </article>
 </template>
 
 <script type="text/ecmascript-6">
-import clearFloat from '../../base/clearfloat/clearfloat';
+import clearFloat from '../../base/clearfloat/clearfloat'
 import Loading from '../../base/loading/loading'
-import treatmentlist from '../treatmentlist/treatmentlist';
+import treatmentlist from '../treatmentlist/treatmentlist'
+import Skintest from '../skintest/skintest'
 import {getTreatmentBanner} from '../../api/treatmentData.js'
 
 export default {
@@ -85,7 +97,9 @@ export default {
   data() {	
     return {
       banner: "",
-      isTreatLoad: false
+      isTreatLoad: false,
+      // 是否点击了皮肤测试
+      showSkintest: false
     }
   },
   methods: {
@@ -105,13 +119,19 @@ export default {
     },
     // 前往皮肤测试
     toSkinTest() {
+      this.showSkintest = true;
       console.log('前往皮肤测试页');
+    },
+    // 关闭皮肤测试
+    closeSkintest() {
+      this.showSkintest = false;
     }
   },
   components: {
     treatmentlist,
     Loading,
-    clearFloat
+    clearFloat,
+    Skintest
   }
 }
 </script>

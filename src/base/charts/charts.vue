@@ -79,8 +79,17 @@ export default {
           this.renderChart(newVal);
         })  
       },
-      deep:true
-    }
+      deep: true
+    },
+    // 监听渲染图表类型
+    chartType: {
+      handler(newVal) {
+        setTimeout(() => {
+          console.log(newVal);
+        })
+      }
+    },
+    deep: true
   },
   methods: {
     // 监听窗口高度变化，从而改变图表尺寸
