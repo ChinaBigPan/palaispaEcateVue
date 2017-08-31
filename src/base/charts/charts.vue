@@ -58,6 +58,10 @@ export default {
           data: [5, 5, 5.5, 6.5, 7.5]
         }
       }
+    },
+    chartType: {
+      type: String,
+      default: 'bar'
     }
   },
   data() {	
@@ -119,7 +123,7 @@ export default {
         },
         series: {
           name: val.name ? val.name : "疗程折扣",
-          type: 'bar',
+          type: this.chartType,
           data: val.data ? val.data : [5, 5, 5.5, 6.5, 7.5],
           // 设置柱子宽度
           barWidth: 40,

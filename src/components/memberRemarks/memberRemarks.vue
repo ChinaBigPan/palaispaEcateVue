@@ -71,7 +71,7 @@
 </style>
 
 <template>
-  <scroll ref="remarkscroll" v-if="transferedRemarks != ''" class="member-remarks">
+  <article ref="remarkscroll" v-if="transferedRemarks != ''" class="member-remarks">
     <section v-if="isShowRemarkPad" class="remark-wrapper">
       <div @click="hideRemarks" class="close-btn">
         <i class="icon-arrowleft"></i>
@@ -88,12 +88,11 @@
         </li>
       </transition-group>
       </section>
-    </scroll>
+    </article>
 </template>
 
 <script type="text/ecmascript-6">
 import Velocity from 'velocity-animate'
-import Scroll from '../../base/scroll/scroll'
 
 export default {
   name: 'memberRemarks',
@@ -107,19 +106,11 @@ export default {
       default: false
     }
   },
-  mounted() {
-    setTimeout(() => {
-      this._initScroll();
-    }, 200)
-  },
+  mounted() {},
   data() {	
     return {}
   },
   methods: {
-    // 刷新滚动条
-    _initScroll() {
-      this.$refs.remarkscroll && this.$refs.remarkscroll.refresh();
-    },
     // 隐藏备注
     hideRemarks() {
       this.$emit('hideMemberRemarks')
@@ -148,8 +139,6 @@ export default {
       }, delay)
     }
   },
-  components: {
-    Scroll
-  }
+  components: {}
 }
 </script>

@@ -120,7 +120,7 @@
 
   // 渐变效果
   .fade-enter-active, .fade-leave-active {
-    transition opacity 100ms
+    transition opacity 200ms
   }
   .fade-enter, .fade-leave-to {
     opacity 0
@@ -142,7 +142,7 @@
         <div @click.stop="showRemark()" class="btn"><i class="icon-buzou"></i>备注</div>
       </div>
       <ul class="member-card">
-        <li :key="index" v-for="(item, index) in memberImage" class="card-block">
+        <li @click="selectedCard(index)" :key="index" v-for="(item, index) in memberImage" class="card-block">
           <img v-lazy="item" :alt="index">
         </li>
       </ul>
@@ -158,13 +158,15 @@
         </ul>
       </scroll>
       <div class="right-echart">
-        <echarts :transferedData="transferedData"></echarts>
-        <ul v-show="isShowNoDataPad" class="emptyData">
-          <li :key="index" v-for="(item, index) in memberImage">
-            <img v-lazy="item" alt="index">
-            <p>{{noDataDesc[index]}}</p>
-          </li>
-        </ul>
+        <echarts :chartType="chartType" :transferedData="transferedData"></echarts>
+        <transition name="fade">
+          <ul v-show="isShowNoDataPad" class="emptyData">
+            <li :key="index" v-for="(item, index) in memberImage">
+              <img v-lazy="item" alt="index">
+              <p>{{noDataDesc[index]}}</p>
+            </li>
+          </ul>
+        </transition>  
       </div>
     </section>
     <!-- 项目和数据视图区结束 -->
@@ -196,6 +198,8 @@ export default {
   },
   data() {
     return {
+      // 按照会员卡分类的数据
+      dataByCard: [],
       // 是否显示总表
       showMembership: false,
       // 会员卡图片
@@ -204,6 +208,8 @@ export default {
       memberItem: [],
       // 向图表中传输的数据
       transferedData: {},
+      // 图表类型：
+      chartType: 'bar',
       // 备注
       transferedRemarks: [],
       // 是否展示备注板
@@ -224,6 +230,8 @@ export default {
           this.memberImage = res.memberImage;
           this.memberItem = this.getMemberItem(this.memberItem, res.memberUnique, res.integral, res.memberCourtesy, res.memberAct, res.memberCard);
           this.transferedRemarks = res.remarks;
+          this.dataByCard = res.dataByCard;
+          console.log(this.dataByCard);
         }
       })
     },
@@ -261,6 +269,10 @@ export default {
       } else {
         this.isShowNoDataPad = false
       };
+    },
+    // 点击会员卡图片
+    selectedCard(index) {
+      console.log(index);
     }
   },
   components: {
