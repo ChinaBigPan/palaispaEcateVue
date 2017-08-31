@@ -158,7 +158,7 @@
         </ul>
       </scroll>
       <div class="right-echart">
-        <echarts :chartType="chartType" :transferedData="transferedData"></echarts>
+        <echarts :dataByCard="dataByCard" :chartType="chartType" :transferedData="transferedData"></echarts>
         <transition name="fade">
           <ul v-show="isShowNoDataPad" class="emptyData">
             <li :key="index" v-for="(item, index) in memberImage">
@@ -231,7 +231,7 @@ export default {
           this.memberItem = this.getMemberItem(this.memberItem, res.memberUnique, res.integral, res.memberCourtesy, res.memberAct, res.memberCard);
           this.transferedRemarks = res.remarks;
           this.dataByCard = res.dataByCard;
-          console.log(this.dataByCard);
+          // console.log(this.memberItem);
         }
       })
     },

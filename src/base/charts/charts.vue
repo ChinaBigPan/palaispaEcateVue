@@ -59,12 +59,15 @@ export default {
         }
       }
     },
+    dataByCard: {
+      type: Array
+    },
     chartType: {
       type: String,
       default: 'bar'
     }
   },
-  data() {	
+  data() {
     return {}
   },
   computed: {},
@@ -91,8 +94,8 @@ export default {
     },
     // 渲染图表
     renderChart(val) {
-      // 图表设置
-      let chartOption =  {
+      // 柱状图设置
+      let barChartOption =  {
         title: {
           text: val.name ? val.name : "疗程折扣"
         },
@@ -152,11 +155,113 @@ export default {
             }
           }
         }
-      };
+      }
+
+      // 雷达图设置
+      let radarChartOption = {
+        title: {
+          text: '会员卡雷达图'
+        },
+        tooltip: {},
+        legend: {
+          data: MEMBER_CATEGORY
+        },
+        color: CARD_COLOR,
+        radar: {
+            // shape: 'circle',
+            name: {
+              textStyle: {
+                color: '#fff',
+                backgroundColor: '#999',
+                borderRadius: 3,
+                padding: [3, 5]
+              }
+            },
+            indicator: [
+              { name: '疗程花费减免（%）', max: 100},
+              { name: '产品花费减免（%）', max: 100},
+              { name: '专属房间', max: 1},
+              { name: '专属用品', max: 1},
+              { name: '护理免费停车', max: 1},
+              { name: '入会充值（元/积分）', max: 10},
+              { name: '续卡充值（元/积分）', max: 5},
+              { name: '专享护理券（元）', max: 3000},
+              { name: '产品券（元）', max: 3000},
+              { name: '积分翻倍', max: 4},
+              { name: '生日护理券（元）', max: 1300},
+              { name: '生日产品花费减免（%）', max: 100},
+              { name: '生日礼', max: 1},
+              { name: '旅行护肤套装', max: 1},
+              { name: '特色旅行', max: 1},
+              { name: '珍珠会员活动', max: 1},
+              { name: '品牌活动', max: 1},
+              { name: '储值金额', max: 200000},
+              { name: '有效期', max: 3}
+            ]
+        },
+        series: [{
+            name: '会员卡数据对比',
+            type: 'radar',
+            // areaStyle: {normal: {}},
+            data : [
+              {
+                  value : this.dataByCard[0],
+                  name : MEMBER_CATEGORY[0],
+                  lineStyle: {
+                    normal: {
+                      color: CARD_COLOR[0]
+                    }
+                  }
+              },
+              {
+                  value : this.dataByCard[1],
+                  name : MEMBER_CATEGORY[1],
+                  lineStyle: {
+                    normal: {
+                      color: CARD_COLOR[1]
+                    }
+                  }
+              },
+              {
+                  value : this.dataByCard[2],
+                  name : MEMBER_CATEGORY[2],
+                  lineStyle: {
+                    normal: {
+                      color: CARD_COLOR[2]
+                    }
+                  }
+              },
+              {
+                  value : this.dataByCard[3],
+                  name : MEMBER_CATEGORY[3],
+                  lineStyle: {
+                    normal: {
+                      color: CARD_COLOR[3]
+                    }
+                  }
+              },
+              {
+                  value : this.dataByCard[4],
+                  name : MEMBER_CATEGORY[4],
+                  lineStyle: {
+                    normal: {
+                      color: CARD_COLOR[4]
+                    }
+                  }
+              } 
+            ]
+        }]
+      }
+
       // 初始化放到外面，然后这里找到DOM然后重新渲染
       let chartDom = echarts.getInstanceByDom(this.$refs.memberchart);   
       // let myChart = echarts.init(this.$refs.memberchart);
-      chartDom.setOption(chartOption);
+      if (this.chartType === 'bar') {
+        chartDom.setOption(barChartOption);
+      } else if (this.chartType === 'radar') {
+        chartDom.setOption(radarChartOption);
+      }
+      
     }
   }
 }
