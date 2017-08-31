@@ -38,14 +38,17 @@
       .list-title
         text-align center
         color $palaispa-blue
+        margin 30px auto
       .remark-list
         font-size 18px
         width 80%
         margin 10px auto
         list-style-type decimal
         line-height 2
+        // &.appear-start
+        //   background red
         li
-          margin-top 10px
+          line-height 1.5
 
   [v-cloak] {
     display: none;
@@ -62,30 +65,34 @@
   }
 
   // 列表的初始渲染动画
-  .slide-up-move {
-    transition transform 0.5s
+  .slide-fade-move {
+    transition transform 0.4s
   }
 </style>
 
 <template>
   <scroll ref="remarkscroll" v-if="transferedRemarks != ''" class="member-remarks">
-    <section class="remark-wrapper">
-      <div @click="hideRemarks()" class="close-btn">
+    <section v-if="isShowRemarkPad" class="remark-wrapper">
+      <div @click="hideRemarks" class="close-btn">
         <i class="icon-arrowleft"></i>
       </div>
       <h3 class="list-title">- 备注 -</h3>
-      <ol class="remark-list">
-        <transition-group appear name="slide-up">
-          <li :key="index" v-for="(item, index) in transferedRemarks">
-            {{ item }}
-          </li>
-        </transition-group>
-      </ol>
+      <transition-group
+        @before-enter="beforeEnter"
+        @enter="enter" 
+        @leave="leave" tag="ol" 
+        appear 
+        name="slide-fade" class="remark-list">
+        <li :key="index" :data-index="index" v-for="(item, index) in transferedRemarks">
+          {{ item }}
+        </li>
+      </transition-group>
       </section>
     </scroll>
 </template>
 
 <script type="text/ecmascript-6">
+import Velocity from 'velocity-animate'
 import Scroll from '../../base/scroll/scroll'
 
 export default {
@@ -95,7 +102,7 @@ export default {
       type: Array,
       default: []
     },
-    showMembership: {
+    isShowRemarkPad: {
       type: Boolean,
       default: false
     }
@@ -116,6 +123,29 @@ export default {
     // 隐藏备注
     hideRemarks() {
       this.$emit('hideMemberRemarks')
+    },
+    // 列表动画相关
+    beforeEnter(el) {
+      el.style.opacity = 0;
+      el.style.height = 0;
+    },
+    enter(el, done) {
+      let delay = el.dataset.index * 150
+      setTimeout(() => {
+        Velocity(el,
+          { opacity: 1, height: '65px'},
+          { complete: done }
+        )
+      }, delay)
+    },
+    leave(el, done) {
+      let delay = el.dataset.index * 150
+      setTimeout(() => {
+        Velocity(el,
+          { opacity: 0, height: 0 },
+          { complete: done }
+        )
+      }, delay)
     }
   },
   components: {
