@@ -18,11 +18,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/main/BrandSpirit'
+      redirect: '/main/brandSpirit'
     },
     {
       path: '/main',
-      redirect: '/main/BrandSpirit'
+      redirect: '/main/brandSpirit'
     },
     {
       name: 'main',
