@@ -76,7 +76,7 @@
       <treatmentlist></treatmentlist>
     </section>
     <transition name="fade">
-      <skintest @closeSkintest="closeSkintest" v-show="showSkintest"></skintest>
+      <skintest @closeSkintest="closeSkintest" :showSkintest="showSkintest" v-show="showSkintest"></skintest>
     </transition>
     <loading title="正在加载护理数据..." v-show="isTreatLoad"></loading>
   </article>
@@ -120,7 +120,6 @@ export default {
     // 前往皮肤测试
     toSkinTest() {
       this.showSkintest = true;
-      console.log('前往皮肤测试页');
     },
     // 关闭皮肤测试
     closeSkintest() {

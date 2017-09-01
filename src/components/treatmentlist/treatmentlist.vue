@@ -97,7 +97,7 @@
           .treat-thirdlist
             width 100%
             display flex
-            flex-wrap: wrap
+            flex-wrap wrap
             // 护理单项区块
             .thirdlist-item-block
               width 200px
