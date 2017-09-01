@@ -6,11 +6,14 @@ import router from './router'
 import store from './store'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
+import Element from 'element-ui'
 
 Vue.config.productionTip = false
 
 import './common/stylus/index.styl'
-
+import 'element-ui/lib/theme-default/index.css'
+// 应用element-ui
+Vue.use(Element);
 // 应用fastclick
 fastclick.attach(document.body);
 // 应用Vue-lazyload

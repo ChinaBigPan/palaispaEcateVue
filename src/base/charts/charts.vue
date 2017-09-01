@@ -82,14 +82,15 @@ export default {
       deep: true
     },
     // 监听渲染图表类型
-    chartType: {
-      handler(newVal) {
-        setTimeout(() => {
-          console.log(newVal);
-        })
-      }
-    },
-    deep: true
+    // chartType: {
+    //   handler(newVal) {
+    //     setTimeout(() => {
+    //       // console.log();
+    //       this.renderChart();
+    //     })
+    //   }
+    // },
+    // deep: true
   },
   methods: {
     // 监听窗口高度变化，从而改变图表尺寸
@@ -103,6 +104,9 @@ export default {
     },
     // 渲染图表
     renderChart(val) {
+      // 初始化放到外面，然后这里找到DOM然后重新渲染
+      let chartDom = echarts.getInstanceByDom(this.$refs.memberchart);     
+
       // 柱状图设置
       let barChartOption =  {
         title: {
@@ -141,7 +145,7 @@ export default {
           barWidth: 40,
           // 显示上部标签
           label: {
-            normal: {  
+            normal: {
               show: true,  
               position: 'top'
             }  
@@ -189,9 +193,9 @@ export default {
             indicator: [
               { name: '疗程花费减免（%）', max: 100},
               { name: '产品花费减免（%）', max: 100},
-              { name: '专属房间', max: 1},
-              { name: '专属用品', max: 1},
-              { name: '护理免费停车', max: 1},
+              // { name: '专属房间', max: 1},
+              // { name: '专属用品', max: 1},
+              // { name: '护理免费停车', max: 1},
               { name: '入会充值（元/积分）', max: 10},
               { name: '续卡充值（元/积分）', max: 5},
               { name: '专享护理券（元）', max: 3000},
@@ -199,18 +203,18 @@ export default {
               { name: '积分翻倍', max: 4},
               { name: '生日护理券（元）', max: 1300},
               { name: '生日产品花费减免（%）', max: 100},
-              { name: '生日礼', max: 1},
-              { name: '旅行护肤套装', max: 1},
-              { name: '特色旅行', max: 1},
-              { name: '珍珠会员活动', max: 1},
-              { name: '品牌活动', max: 1},
+              // { name: '生日礼', max: 1},
+              // { name: '旅行护肤套装', max: 1},
+              // { name: '特色旅行', max: 1},
+              // { name: '珍珠会员活动', max: 1},
+              // { name: '品牌活动', max: 1},
               { name: '储值金额', max: 200000},
               { name: '有效期', max: 3}
             ]
         },
         series: [{
             name: '会员卡数据对比',
-            type: 'radar',
+            type: this.chartType,
             // areaStyle: {normal: {}},
             data : [
               {
@@ -262,8 +266,7 @@ export default {
         }]
       }
 
-      // 初始化放到外面，然后这里找到DOM然后重新渲染
-      let chartDom = echarts.getInstanceByDom(this.$refs.memberchart);   
+      
       // let myChart = echarts.init(this.$refs.memberchart);
       if (this.chartType === 'bar') {
         chartDom.setOption(barChartOption);

@@ -9,7 +9,7 @@
     left: 60px;
     overflow: hidden;
     width 100%
-    background $palaispa-lightgray
+    background $white
     // 回退按钮
     .close-btn
       position absolute
@@ -33,23 +33,48 @@
   <article class="skin-test">
     <div @click="closeSkintest" class="close-btn">
       <i class="icon-arrowleft"></i>
-    </div>  
-    我是皮肤测试页
+    </div>
+     <!-- <el-radio class="radio"  label="1">备选项</el-radio> -->
   </article>
 </template>
 
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
+import {getSkintestData} from '../../api/skintest'
 
 export default {
   name: 'skintest',
+  created() {
+    this.getSkintestData();
+  },
   data() {	
-    return {}
+    return {
+      banner: "",
+      Radios: [],
+      Checkboxes: [],
+      skinTestResult: [],
+      skinAge: []
+    }
   },
   methods: {
     // 关闭皮肤测试
     closeSkintest() {
       this.$emit('closeSkintest')
+    },
+    // 获取皮肤测试数据
+    getSkintestData() {
+      getSkintestData().then((res) => {
+        this.banner = res.banner;
+        this.Radios = res.Radios;
+        this.Checkboxes = res.Checkboxes;
+        this.skinTestResult = res.skinTestResult;
+        this.skinAge = res.skinAge;
+        console.log(this.banner);
+        console.log(this.Radios);
+        console.log(this.Checkboxes);
+        console.log(this.skinTestResult);
+        console.log(this.skinAge);
+      });
     }
   }
 }

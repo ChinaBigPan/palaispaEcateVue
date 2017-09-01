@@ -5,11 +5,9 @@ import axios from 'axios';
 // 基础URL
 const BASEURL = "http://h5.palalife.com/Public/palalife/palaispaEcateVue/";
 
-/**
- * 获取enrollment页面的数据
- */
-export function getEnrollment() {
-  let enrollmentSubURL = "enrollment.php";
-  let url = BASEURL + enrollmentSubURL;
+// 获取皮肤测试数据
+export function getSkintestData() {
+  let skintestSubURL = "skintest.php";
+  let url = BASEURL + skintestSubURL;
   return jsonp(url);
 }

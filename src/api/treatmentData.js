@@ -1,4 +1,4 @@
-// 获取各个页面的数据
+// 获取护理的数据
 import jsonp from '../common/js/jsonp';
 import axios from 'axios';
 
