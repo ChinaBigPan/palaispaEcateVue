@@ -37,8 +37,11 @@
         height 171px
         box-shadow 0 1px 2px $black
         position relative
+        overflow hidden
         z-index 100
         img 
+          width 100%
+          height 100%
           display block
           margin 0 auto
 

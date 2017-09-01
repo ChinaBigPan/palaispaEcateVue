@@ -25,9 +25,9 @@
 <template>
   <article id="app" @touchmove.prevent>
     <tab-nav></tab-nav>
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+    <!-- <keep-alive> -->
+    <router-view></router-view>
+    <!-- </keep-alive> -->
     <!-- 视频播放组件开始 -->
     <transition name="fade">
       <promo-video ref="videoplayer" v-show="this.exhibitVideo"
