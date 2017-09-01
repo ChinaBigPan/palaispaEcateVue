@@ -92,14 +92,10 @@
               line-height 1.6
               font-size 18px
               display block
-              // padding-left -10px
+              white-space normal
               &:first-child
-                margin-left 15px
-              .el-checkbox__input
-                white-space normal
-              span
-                display block
-                width 100%
+                margin-left 15px  
+
             
 </style>
 
