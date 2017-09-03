@@ -116,7 +116,7 @@
           <li :key="index" v-for="(item, index) in Radios">
             <h5>{{ item.question }}</h5>
             <el-radio-group>
-              <el-radio class="radio-el" :key="subindex" v-for="(radio, subindex) in item.radio" label="index">{{ radio }}</el-radio>
+              <el-radio class="radio-el" :key="subindex" :label="radio[index]" v-for="(radio, subindex) in item.radio">{{ radio }}</el-radio>
             </el-radio-group>
           </li>
           <li :key="index" v-for="(item, index) in Checkboxes">

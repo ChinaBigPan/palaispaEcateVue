@@ -7,35 +7,38 @@
     bottom 0
     right 0
     left 60px
-    // 顶部banner图
-    .treatBanner
-      width 800px
-      height 64px
-      margin 5px 0 5px 5px
-      overflow hidden
-      border-radius 5px
-      float left
-      img
+    .treat-top-block
+      display flex
+      // 顶部banner图
+      .treatBanner
+        flex 0 0 800px
         width 100%
+        height 64px
+        margin 5px 0 5px 5px
+        overflow hidden
+        border-radius 5px
+        img
+          width 100%
+          height 100%
 
-    // 皮肤测试
-    .skinTest
-      float right
-      border none
-      background-color $palaispa-lightorange
-      color $white
-      text-align center
-      margin 5px
-      height 64px
-      padding 0 15px
-      line-height 64px
-      font-size 20px
-      border-radius 5px
-      i
-        margin-right 10px
-        font-size 25px
-        display inline-block
-        animation: pulse 1s infinite alternate
+      // 皮肤测试
+      .skinTest
+        flex 1
+        border none
+        background-color $palaispa-lightorange
+        color $white
+        text-align center
+        margin 5px
+        height 64px
+        padding 0 15px
+        line-height 64px
+        font-size 20px
+        border-radius 5px
+        i
+          margin-right 10px
+          font-size 25px
+          display inline-block
+          animation: pulse 1s infinite alternate
 
   // 悬浮动画
   @keyframes pulse {
@@ -65,12 +68,14 @@
 
 <template>
   <article class="treatment">
-    <section class="treatBanner">
-      <img @click="toPromoTreat" v-lazy="banner" alt="">
-    </section>
-    <section @click="toSkinTest" class="skinTest">
-      <i class="icon-text"></i><span>皮肤测试</span>
-    </section>
+    <article class="treat-top-block">
+      <section class="treatBanner">
+        <img @click="toPromoTreat" v-lazy="banner" alt="">
+      </section>
+      <section @click="toSkinTest" class="skinTest">
+        <i class="icon-text"></i><span>皮肤测试</span>
+      </section>
+    </article>
     <clear-float></clear-float>
     <section @treatSuccess="loadTreatSuccess" class="treatList">
       <treatmentlist></treatmentlist>

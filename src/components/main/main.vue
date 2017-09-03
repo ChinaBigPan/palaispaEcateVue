@@ -50,7 +50,7 @@
       <div v-if="sliderImages.length" class="slider-wrapper">
         <div class="slider-content">
           <slider ref="slider">
-            <div :key="index" v-for="(item, index) in sliderImages">
+            <div @click="clickMainBanner(item, index)" :key="index" v-for="(item, index) in sliderImages">
               <a href="javascript:void(0)">
                 <img @load="loadImage()" :src="item"></img>
               </a>
@@ -144,6 +144,11 @@ export default {
           this.refreshMainScroll()
         }, 20)
       }
+    },
+    // 点击轮播图推广事件
+    clickMainBanner(item, index) {
+      console.log(item)
+      console.log(index)
     },
     // 页面上下滚动的事件
     mainPageScroll() {
