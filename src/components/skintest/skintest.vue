@@ -131,7 +131,8 @@
     transition all .3s
   }
   .slide-up-enter, .slide-up-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-    transform translate3d(0, 100%, 0);
+    opacity 0
+    transform translate3d(0, 100%, 0)
   }
 </style>
 
@@ -205,7 +206,7 @@ export default {
       radioResult: [],
       checkboxResult: [[],[],[]],
       // 检查是否所有题都答过了
-      allListChecked: false
+      allListChecked: true
     }
   },
   watch: {
@@ -252,6 +253,8 @@ export default {
     checkYourSkin() {
       console.log('点击了测试皮肤按钮');
       let x = 0, y = 0, z = 0, m = 0;
+
+      
       
     }
   },
