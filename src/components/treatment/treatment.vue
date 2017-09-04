@@ -59,11 +59,13 @@
   }
 
   // 滑动效果
-  .slide-enter-active, .slide-leave-active
-    transition: all 0.3s
+  .slide-enter-active, .slide-leave-active 
+    transition all 0.3s
+    opacity 1
 
   .slide-enter, .slide-leave-to
-    transform: translate3d(100%, 0, 0)     
+    transform translate3d(100%, 0, 0)  
+    opacity 0   
 </style>
 
 <template>
