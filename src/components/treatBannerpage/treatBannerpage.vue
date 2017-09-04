@@ -1,10 +1,10 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/variable"
 
-  .popularize
+  .treatbanner-page
     position fixed
     top 0
-    left 0
+    left 60px
     bottom 0
     right 0
     z-index 100
@@ -39,7 +39,7 @@
 
   // 渐变效果
   .fade-enter-active, .fade-leave-active {
-    transition opacity .4s
+    transition opacity .3s
   }
   .fade-enter, .fade-leave-to {
     opacity 0
@@ -47,21 +47,19 @@
 </style>
 
 <template>
-  <article class="popularize">
-    <div @click="closePopularize" class="close-btn">
+  <article class="treatbanner-page">
+    <div @click="closeTreatbannerPage" class="close-btn">
       <i class="icon-arrowleft"></i>
     </div>
-    <h1>我是推广页面</h1>
+    <h1>我是护理Banner推广图</h1>
   </article>
 </template>
 
 <script type="text/ecmascript-6">
-import {mapMutations} from 'vuex'
-
 export default {
-  name: 'popularize',
+  name: 'treatbanner-page',
   props: {
-    popularizeImage: {
+    bannerImage: {
       type: String,
       default: ''
     }
@@ -71,13 +69,9 @@ export default {
   },
   methods: {
     // 关闭首页推广页
-    closePopularize() {
-      this.setShowPopularize(false);
-    },
-    // vuex方法引入
-    ...mapMutations({
-      setShowPopularize: "SET_SHOW_POPULARIZE"
-    })
+    closeTreatbannerPage() {
+      this.$emit('closeTreatbannerPage');
+    }
   }
 }
 </script>

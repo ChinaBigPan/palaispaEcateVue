@@ -80,8 +80,11 @@
     <section @treatSuccess="loadTreatSuccess" class="treatList">
       <treatmentlist></treatmentlist>
     </section>
-    <transition name="fade">
+    <transition name="slide">
       <skintest @closeSkintest="closeSkintest" :showSkintest="showSkintest" v-show="showSkintest"></skintest>
+    </transition>
+    <transition name="slide">
+      <treat-bannerpage v-show="showTreatbannerPage" @closeTreatbannerPage="closeTreatbannerPage"></treat-bannerpage>
     </transition>
     <loading title="正在加载护理数据..." v-show="isTreatLoad"></loading>
   </article>
@@ -92,6 +95,7 @@ import clearFloat from '../../base/clearfloat/clearfloat'
 import Loading from '../../base/loading/loading'
 import treatmentlist from '../treatmentlist/treatmentlist'
 import Skintest from '../skintest/skintest'
+import TreatBannerpage from '../../components/treatBannerpage/treatBannerpage'
 import {getTreatmentBanner} from '../../api/treatmentData.js'
 
 export default {
@@ -103,8 +107,10 @@ export default {
     return {
       banner: "",
       isTreatLoad: false,
-      // 是否点击了皮肤测试
-      showSkintest: false
+      // 是否打开皮肤测试
+      showSkintest: false,
+      // 是否打开Banner推广
+      showTreatbannerPage: false
     }
   },
   methods: {
@@ -120,7 +126,11 @@ export default {
     },
     // 前往推荐护理页
     toPromoTreat() {
-      console.log('点击了护理Banner');
+      this.showTreatbannerPage = true;
+    },
+    // 关闭护理推广页
+    closeTreatbannerPage() {
+      this.showTreatbannerPage = false;
     },
     // 前往皮肤测试
     toSkinTest() {
@@ -135,7 +145,8 @@ export default {
     treatmentlist,
     Loading,
     clearFloat,
-    Skintest
+    Skintest,
+    TreatBannerpage
   }
 }
 </script>

@@ -6,8 +6,8 @@ Vue.use(Router);
 // 加载各个路由，暂时先不用懒加载
 import Enrollment from '../components/enrollment/enrollment.vue';
 import Main from '../components/main/main.vue';
-import Popularize from '../components/popularize/popularize.vue';
 import Treatment from '../components/treatment/treatment.vue';
+import Palaispastore from '../components/palaispastore/palaispastore.vue';
 
 // 加载main首页的子路由
 import BrandSpirit from '../components/brandSpirit/brandSpirit.vue';
@@ -57,9 +57,9 @@ export default new Router({
       component: Enrollment
     },
     {
-      name: 'popularize',
-      path: '/popularize',
-      component: Popularize
+      name: 'palaispastore',
+      path: '/palaispastore',
+      component: Palaispastore
     }
   ]
 })

@@ -3,7 +3,7 @@
     @import "../../common/stylus/variable.styl"
 
     .side-nav-wrapper
-        display flex;
+        display flex
         flex-direction column
         width 60px
         height 100%
@@ -61,34 +61,38 @@
             <img :src="logo"></img>
             <ul class="nav-list">
                 <router-link tag="li" :to="{name: 'main'}">
-                    <div><i class="icon-wxbzhuye"></i><br />首页</div>
+                    <div>
+                        <i class="icon-wxbzhuye"></i><br />首页</div>
                 </router-link>
                 <router-link tag="li" :to="{name: 'treatment'}">
-                    <div><i class="icon-buzou"></i><br />护理</div>
+                    <div>
+                        <i class="icon-buzou"></i><br />护理</div>
                 </router-link>
                 <router-link tag="li" :to="{name: 'enrollment'}">
-                    <div><i class="icon-ruhui"></i><br />入会</div>
+                    <div>
+                        <i class="icon-ruhui"></i><br />入会</div>
                 </router-link>
-                <router-link tag="li" :to="{name: 'popularize'}">
-                    <div><i class="icon-good"></i><br />推广</div>
+                <router-link tag="li" :to="{name: 'palaispastore'}">
+                    <div>
+                        <i class="icon-store"></i><br />门店</div>
                 </router-link>
             </ul>
-        </section>    
+        </section>
     </nav>
 </template>
 
 <script type="text/ecmascript-6">
-    export default {
-        name: 'tabNav',
-        data () {
-            return {
-                logo: require("../../common/images/Palalogo.png"),
-                tabIcon: ["icon-wxbzhuye", "icon-buzou", "icon-ruhui", "icon-good"],
-                tabContent : ["首页","护理","入会","推广"]
-            }
-        },
-        methods: {
-            
+export default {
+    name: 'tabNav',
+    data() {
+        return {
+            logo: require("../../common/images/Palalogo.png"),
+            tabIcon: ["icon-wxbzhuye", "icon-buzou", "icon-ruhui", "icon-good"],
+            tabContent: ["首页", "护理", "入会", "门店"]
         }
-    };
+    },
+    methods: {
+
+    }
+};
 </script>

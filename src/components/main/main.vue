@@ -147,6 +147,7 @@ export default {
     },
     // 点击轮播图推广事件
     clickMainBanner(item, index) {
+      this.setShowPopularize(true);
       console.log(item)
       console.log(index)
     },
@@ -164,6 +165,7 @@ export default {
     },
     // 引入vuex方法
     ...mapMutations({
+      setShowPopularize: "SET_SHOW_POPULARIZE",
       setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
     })
   },

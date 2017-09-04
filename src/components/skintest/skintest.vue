@@ -57,7 +57,7 @@
           width 100%
           // height 100%
           flex-wrap wrap
-          padding-bottom 30px
+          padding-bottom 80px
           // overflow hidden
           // justify-content space-between
           li
@@ -80,7 +80,7 @@
             &:before, &:after
               width 70%
               height 55%
-              content ' '
+              content ''
               box-shadow 0 8px 16px rgba(0, 0, 0, 0.3) 
               position absolute
               bottom 10px
@@ -90,16 +90,49 @@
               font-size 18px
               line-height 1.5
               margin 10px 0
-            .radio-el,.checkbox-el
-              width 100%
-              line-height 1.6
-              font-size 18px
+            .list-item
               display block
-              white-space normal
-              &:first-child
-                margin-left 15px  
+              font-size 18px
+              margin 15px
+              line-height 1.2
+              transition all 400ms linear
+              input
+                outline none
+                display inline-block
+                vertical-align middle
+                margin-left 5px
+                margin-right 5px
+                width 18px
+                height 18px
+                
+      .check-your-skin
+        position fixed
+        bottom 0 
+        left 180px
+        right 120px
+        height 60px
+        z-index 100
+        text-align center
+        line-height 60px
+        border-radius 10px 10px 0 0
+        overflow hidden
+        box-shadow 0 -1px 2px $palaispa-gray
+        background transparent
+        a 
+          display block
+          color $palaispa-blue
+          margin 0 auto
+          width 100%
+          height 100%
+          background rgba(255,255,255,.9)
 
-            
+  // 上滑效果
+  .slide-up-enter-active, .slide-up-leave-active {
+    transition all .3s
+  }
+  .slide-up-enter, .slide-up-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    transform translate3d(0, 100%, 0);
+  }
 </style>
 
 <template>
@@ -115,18 +148,23 @@
         <ul class="skintest-list">
           <li :key="index" v-for="(item, index) in Radios">
             <h5>{{ item.question }}</h5>
-            <el-radio-group>
-              <el-radio class="radio-el" :key="subindex" :label="radio[index]" v-for="(radio, subindex) in item.radio">{{ radio }}</el-radio>
-            </el-radio-group>
+            <label class="list-item" @click.stop="selectedRadio(index, subindex)" :key="subindex" v-for="(radio, subindex) in item.radio">
+              <input :name="index" type="radio">{{ radio }}
+            </label>
           </li>
           <li :key="index" v-for="(item, index) in Checkboxes">
             <h5>{{ item.question }}</h5>
-            <el-checkbox-group>
-              <el-checkbox class="checkbox-el" :key="subindex" v-for="(checkbox, subindex) in item.checkbox">{{ checkbox }}</el-checkbox>
-            </el-checkbox-group>
+            <label class="list-item" @click.stop="selectedCheckbox()" :key="subindex" v-for="(checkbox, subindex) in item.checkbox">
+              <input v-model="checkboxResult[index][subindex]" type="checkbox">{{ checkbox }}
+            </label>
           </li>
         </ul>
       </scroll>
+      <transition name="slide-up">
+        <div v-show="allListChecked" class="check-your-skin">
+          <a href="javascript:void(0)" @click.prevent.stop="checkYourSkin()">测试一下我的皮肤</a>
+        </div>
+      </transition>
     </section>
   </article>
 </template>
@@ -162,7 +200,12 @@ export default {
       Radios: [],
       Checkboxes: [],
       skinTestResult: [],
-      skinAge: []
+      skinAge: [],
+      // 各个选项
+      radioResult: [],
+      checkboxResult: [[],[],[]],
+      // 检查是否所有题都答过了
+      allListChecked: false
     }
   },
   watch: {
@@ -189,12 +232,27 @@ export default {
         this.Checkboxes = res.Checkboxes;
         this.skinTestResult = res.skinTestResult;
         this.skinAge = res.skinAge;
-        console.log(this.banner);
-        console.log(this.Radios);
-        console.log(this.Checkboxes);
-        console.log(this.skinTestResult);
-        console.log(this.skinAge);
+        // console.log(this.Radios);
+        // console.log(this.Checkboxes);
+        // console.log(this.skinTestResult);
+        // console.log(this.skinAge);
       });
+    },
+    // 单选框选择
+    selectedRadio(index, subindex) {
+      // this.clickedRadioIndex = subindex; 
+      this.radioResult[index] = subindex;
+      console.log(this.radioResult);
+    },
+    // 复选框选择
+    selectedCheckbox() {
+      console.log(this.checkboxResult);
+    },
+    // 测试皮肤按钮点击
+    checkYourSkin() {
+      console.log('点击了测试皮肤按钮');
+      let x = 0, y = 0, z = 0, m = 0;
+      
     }
   },
   components: {

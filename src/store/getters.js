@@ -12,3 +12,5 @@ export const selectedTreatment = state => state.selectedTreatment;
 export const showTreatmentDetail = state => state.showTreatmentDetail;
 
 export const treatDetailAside = state => state.treatDetailAside;
+
+export const showPopularize = state => state.showPopularize;

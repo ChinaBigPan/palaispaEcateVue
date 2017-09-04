@@ -5,6 +5,10 @@ const mutations = {
   [types.SET_SHOULD_MAIN_SCROLL_REFRESH](state, shouldMainScrollRefresh) {
     state.shouldMainScrollRefresh = shouldMainScrollRefresh;
   },
+  // 设置是否显示首页的推广页
+  [types.SET_SHOW_POPULARIZE](state, showPopularize) {
+    state.showPopularize = showPopularize;
+  },
   // 设置当前播放的video
   [types.SET_VIDEO](state, video) {
     state.video = video;

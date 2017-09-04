@@ -45,6 +45,11 @@
          :treatmentAside="treatDetailAside"></treatment-detail>
     </transition>
     <!-- 护理详情部分结束 -->
+    <transition name="slide">
+      <popularize
+        v-show="showPopularize"
+      ></popularize>
+    </transition>
   </article>
 </template>
 
@@ -52,6 +57,7 @@
 import tabNav from './components/tabNav/tabNav'
 import promoVideo from './base/video/video'
 import treatmentDetail from './components/treatmentDetail/treatmentDetail'
+import popularize from './components/popularize/popularize'
 // 取得store数据
 import {mapGetters} from 'vuex'
 
@@ -67,7 +73,8 @@ export default {
       'exhibitVideo',
       'selectedTreatment',
       'showTreatmentDetail',
-      'treatDetailAside'
+      'treatDetailAside',
+      'showPopularize'
     ])
   },
   data() {
@@ -79,7 +86,8 @@ export default {
   components: {
     tabNav,
     promoVideo,
-    treatmentDetail
+    treatmentDetail,
+    popularize
   }
 }
 </script>
