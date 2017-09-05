@@ -59,7 +59,6 @@
         </div>
       </div>
       <!-- 轮播图组件结束 -->
-     
       <section ref="maintab">
         <maintab></maintab>
       </section>
@@ -84,12 +83,6 @@ export default {
   name: 'main',
   created() {
     this._getSliderPic(); 
-  },
-  data() {
-    return {
-      // 滚动高度
-      scrollHeight: 0
-    }
   },
   computed: {
     // vuex的getters就放到计算属性里
@@ -120,8 +113,11 @@ export default {
   },
   data() {	
     return {
+      // 滚动高度
+      scrollHeight: 0,
       bannerSlogan: "Make A Better Life",
       sliderImages: [],
+      generizeImages: [],
       notCruise: true
     }
   },
@@ -129,7 +125,9 @@ export default {
     // 获取首页轮播图数据(内部方法)
     _getSliderPic() {
       getMainSlider().then((res) => {
+        console.log(res);
         this.sliderImages = res.mainBanner;
+        this.generizeImages = res.mainBannerGenerize;
       })
     },
     // 根据路由切换,刷新main的大滚动条组件
@@ -147,9 +145,9 @@ export default {
     },
     // 点击轮播图推广事件
     clickMainBanner(item, index) {
+      let imagesToPopularize = this.generizeImages[index];
       this.setShowPopularize(true);
-      console.log(item)
-      console.log(index)
+      this.setMainBannerGenerize(imagesToPopularize);
     },
     // 页面上下滚动的事件
     mainPageScroll() {
@@ -166,7 +164,8 @@ export default {
     // 引入vuex方法
     ...mapMutations({
       setShowPopularize: "SET_SHOW_POPULARIZE",
-      setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
+      setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH',
+      setMainBannerGenerize: 'SET_MAIN_BANNER_GENERIZE'
     })
   },
   components: {

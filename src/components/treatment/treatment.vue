@@ -86,7 +86,7 @@
       <skintest @closeSkintest="closeSkintest" :showSkintest="showSkintest" v-show="showSkintest"></skintest>
     </transition>
     <transition name="slide">
-      <treat-bannerpage v-show="showTreatbannerPage" @closeTreatbannerPage="closeTreatbannerPage"></treat-bannerpage>
+      <treat-bannerpage ref="treatbannerpage" :showTreatbannerPage="showTreatbannerPage" v-show="showTreatbannerPage" :bannerImage="bannerGenerize" @closeTreatbannerPage="closeTreatbannerPage"></treat-bannerpage>
     </transition>
     <loading title="正在加载护理数据..." v-show="isTreatLoad"></loading>
   </article>
@@ -108,6 +108,7 @@ export default {
   data() {	
     return {
       banner: "",
+      bannerGenerize: [],
       isTreatLoad: false,
       // 是否打开皮肤测试
       showSkintest: false,
@@ -120,6 +121,7 @@ export default {
     getBannerPic() {
       getTreatmentBanner().then((res) => {
         this.banner = res.treatmentBanner;
+        this.bannerGenerize = res.bannerGenerize;
       })
     },
     // 护理读取成功
@@ -128,6 +130,7 @@ export default {
     },
     // 前往推荐护理页
     toPromoTreat() {
+      this.$refs.treatbannerpage._initScroll();
       this.showTreatbannerPage = true;
     },
     // 关闭护理推广页

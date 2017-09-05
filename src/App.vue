@@ -46,7 +46,7 @@
     </transition>
     <!-- 护理详情部分结束 -->
     <transition name="slide">
-      <popularize
+      <popularize :popularizeImage="mainBannerGenerize"
         v-show="showPopularize"
       ></popularize>
     </transition>
@@ -74,15 +74,14 @@ export default {
       'selectedTreatment',
       'showTreatmentDetail',
       'treatDetailAside',
-      'showPopularize'
+      'showPopularize',
+      "mainBannerGenerize"
     ])
   },
   data() {
     return {}
   },
-  methods: {
-
-  },
+  methods: {},
   components: {
     tabNav,
     promoVideo,

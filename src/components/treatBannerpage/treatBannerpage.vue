@@ -26,6 +26,12 @@
       i
         display block
         animation waggle 1s infinite alternate
+    .generize-scroll
+      width 100%
+      height 100%
+      overflow hidden
+      ul
+        width 100%
 
   // 左右晃动动画
   @keyframes waggle {
@@ -51,27 +57,63 @@
     <div @click="closeTreatbannerPage" class="close-btn">
       <i class="icon-arrowleft"></i>
     </div>
-    <h1>我是护理Banner推广图</h1>
+    <scroll ref="generizescroll" class="generize-scroll">
+      <ul>
+        <li :key="index" v-for="(item, index) in bannerImage">
+          <img :src="item" :alt="index">
+        </li>
+      </ul>
+    </scroll>
   </article>
 </template>
 
 <script type="text/ecmascript-6">
+import Scroll from '../../base/scroll/scroll'
+
 export default {
   name: 'treatbanner-page',
   props: {
     bannerImage: {
-      type: String,
-      default: ''
+      type: Array,
+      default: []
+    },
+    showTreatbannerPage: {
+      type: Boolean,
+      default: false
     }
   },
   data() {	
     return {}
   },
+  mounted() {
+    setTimeout(() => {
+      this._initScroll();
+    }, 200)
+  },
+  watch: {
+    bannerImage() {
+      setTimeout(() => {
+        this._initScroll();
+      }, 300)
+    },
+    showTreatbannerPage() {
+      setTimeout(() => {
+        this._initScroll();
+      }, 300)
+    }
+  },
   methods: {
     // 关闭首页推广页
     closeTreatbannerPage() {
       this.$emit('closeTreatbannerPage');
-    }
+    },
+    // 初始化滚动组件
+    _initScroll() {
+      this.$refs.generizescroll && this.$refs.generizescroll.refresh();
+    },
+  },
+  components: {
+    Scroll
   }
 }
 </script>

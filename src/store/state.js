@@ -3,6 +3,8 @@ const state =  {
   shouldMainScrollRefresh: false,
   // 是否显示首页的推广页
   showPopularize: false,
+  // 向首页推广区块传递的图片数组
+  mainBannerGenerize: [],
   // 当前播放的视频
   video: '',
   // 当前播放的视频的封面图

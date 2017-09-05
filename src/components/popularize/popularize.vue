@@ -26,6 +26,9 @@
       i
         display block
         animation waggle 1s infinite alternate
+    .generize-scroll
+      width 100%
+      height 100%
 
   // 左右晃动动画
   @keyframes waggle {
@@ -51,19 +54,38 @@
     <div @click="closePopularize" class="close-btn">
       <i class="icon-arrowleft"></i>
     </div>
-    <h1>我是推广页面</h1>
+    <scroll ref="generizescroll" class="generize-scroll">
+      <ul>
+        <li :key="index" v-for="(item, index) in popularizeImage">
+          <img :src="item" :alt="index">
+        </li>
+      </ul>
+    </scroll>
   </article>
 </template>
 
 <script type="text/ecmascript-6">
+import Scroll from '../../base/scroll/scroll'
 import {mapMutations} from 'vuex'
 
 export default {
   name: 'popularize',
   props: {
     popularizeImage: {
-      type: String,
-      default: ''
+      type: Array,
+      default: []
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this._initScroll();
+    }, 300)
+  },
+  watch: {
+    popularizeImage() {
+      setTimeout(() => {
+        this._initScroll();
+      }, 300)
     }
   },
   data() {	
@@ -74,10 +96,17 @@ export default {
     closePopularize() {
       this.setShowPopularize(false);
     },
+    // 初始化滚动组件
+    _initScroll() {
+      this.$refs.generizescroll && this.$refs.generizescroll.refresh();
+    },
     // vuex方法引入
     ...mapMutations({
       setShowPopularize: "SET_SHOW_POPULARIZE"
     })
+  },
+  components: {
+    Scroll
   }
 }
 </script>

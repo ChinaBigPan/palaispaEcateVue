@@ -14,3 +14,5 @@ export const showTreatmentDetail = state => state.showTreatmentDetail;
 export const treatDetailAside = state => state.treatDetailAside;
 
 export const showPopularize = state => state.showPopularize;
+
+export const mainBannerGenerize = state => state.mainBannerGenerize;

@@ -9,6 +9,10 @@ const mutations = {
   [types.SET_SHOW_POPULARIZE](state, showPopularize) {
     state.showPopularize = showPopularize;
   },
+  // 设置向推广页传递的数组
+  [types.SET_MAIN_BANNER_GENERIZE](state, mainBannerGenerize) {
+    state.mainBannerGenerize = mainBannerGenerize;
+  },
   // 设置当前播放的video
   [types.SET_VIDEO](state, video) {
     state.video = video;
