@@ -37,3 +37,12 @@ export function formatMembershipData(data) {
     return data
   }
 }
+
+/**
+ * 判定数组中的值是否是undefined
+ * @param {数组中的值} value
+ */
+export function isValueUndefined(value) {
+  let isUndefined = _.isUndefined(value);
+  return isUndefined;
+}

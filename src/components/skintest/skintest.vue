@@ -155,7 +155,7 @@
           </li>
           <li :key="index" v-for="(item, index) in Checkboxes">
             <h5>{{ item.question }}</h5>
-            <label class="list-item" @click.stop="selectedCheckbox()" :key="subindex" v-for="(checkbox, subindex) in item.checkbox">
+            <label class="list-item" @click.stop="selectCheckbox(index, subindex)" :key="subindex" v-for="(checkbox, subindex) in item.checkbox">
               <input v-model="checkboxResult[index][subindex]" type="checkbox">{{ checkbox }}
             </label>
           </li>
@@ -163,7 +163,9 @@
       </scroll>
       <transition name="slide-up">
         <div v-show="allListChecked" class="check-your-skin">
-          <a href="javascript:void(0)" @click.prevent.stop="checkYourSkin()">测试一下我的皮肤</a>
+          <a href="javascript:void(0)" @click.prevent.stop="checkYourSkin()">
+            {{ buttonDesc }}
+          </a>
         </div>
       </transition>
     </section>
@@ -173,6 +175,7 @@
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
 import {getSkintestData} from '../../api/skintest'
+import {isValueUndefined} from '../../common/js/util'
 
 export default {
   name: 'skintest',
@@ -206,7 +209,10 @@ export default {
       radioResult: [],
       checkboxResult: [[],[],[]],
       // 检查是否所有题都答过了
-      allListChecked: true
+      buttonDesc: "测试一下我的皮肤",
+      allListChecked: false,
+      skinResult: '',
+      ageResult: ''     
     }
   },
   watch: {
@@ -241,21 +247,204 @@ export default {
     },
     // 单选框选择
     selectedRadio(index, subindex) {
-      // this.clickedRadioIndex = subindex; 
       this.radioResult[index] = subindex;
-      console.log(this.radioResult);
+      let AllRadioChecked = this.checkRadioResult();
+      let AllCheckboxChecked = this.checkCheckboxResult();
+      let RadioAndCheckboxOk = (AllRadioChecked && AllCheckboxChecked);
+      if (RadioAndCheckboxOk === true) {
+        this.allListChecked = true;
+      } else {
+        this.allListChecked = false;
+      } 
+      // console.log(this.radioResult);
     },
     // 复选框选择
-    selectedCheckbox() {
-      console.log(this.checkboxResult);
+    selectCheckbox(index, subindex) {
+      
+    },
+    // 测定单选题是否已经全部答完
+    checkRadioResult() {
+      let countDefinedValue = 0;
+      let radioLength = this.Radios.length;
+      let radioResultLength = this.radioResult.length;
+      for (let i=0; i <= radioResultLength; i++) {
+        if (this.radioResult[i] || this.radioResult[i] === 0) {
+          countDefinedValue++
+        }
+      }
+      // 单选题全部答完
+      let AllRadioChecked = (countDefinedValue === radioLength);
+      return AllRadioChecked;
+    },
+    // 测定多选题是否已经全部答完
+    checkCheckboxResult() {
+
     },
     // 测试皮肤按钮点击
     checkYourSkin() {
-      console.log('点击了测试皮肤按钮');
+      // console.log('点击了测试皮肤按钮');
       let x = 0, y = 0, z = 0, m = 0;
+      // 单选
+      // radio结果
+      let radioResult = this.radioResult;
+      // 第一题
+      let q1 = radioResult[0];
+      if (q1 === 0) {
+        x += 1
+      } else {
+        x = x
+      }
+      if (q1 === 2) {
+        y += 1
+      } else {
+        y = y
+      }
+      if (q1 === 3) {
+        z += 1
+      } else {
+        z = z
+      }
+      // 第二题
+      let q2 = radioResult[1];
+      if (q2 === 0) {
+        x += 1
+		    z += 1
+      } else {
+        x = x
+        z = z
+      }
+      if (q2 === 2) {
+        y += 1
+      } else {
+        y = y
+      }
+      // 第三题
+      let q3 = radioResult[2];
+      if (q3 === 0) {
+        x += 1
+      } else {
+        x = x
+      }
+      if (q3 === 2) {
+        y += 1
+        z += 1
+      } else {
+        y = y
+        z = z
+      }
+      // 第四题
+      let q4 = radioResult[3];
+      if (q4 === 0) {
+        x += 1
+        z += 1
+      } else {
+        x = x
+        z = z
+      }
+      if (q4 === 3) {
+        y += 1
+      } else {
+        y = y
+      }
+      // 第五题
+      let q5 = radioResult[4];
+      if (q5 === 0) {
+        x += 1
+      } else {
+        x = x
+      }
+      if (q5 === 1) {
+        z += 1
+      } else {
+        z = z
+      }
+      if (q5 === 3) {
+        y += 1
+      } else {
+        y = y
+      }
+      // 多选
+      // checkbox
+      // 第六题
+      let checkboxResult = this.checkboxResult;
+      let q6 = checkboxResult[0];
+      if (q6[0] === true) {
+        m += 1
+      } else {
+        m = m
+      }
+      if (q6[1] === true) {
+        m += 2
+      } else {
+        m = m
+      }
+      if (q6[2] === true) {
+        m += 5
+      } else {
+        m = m
+      }
+      // 第七题
+      let q7 = checkboxResult[1];
+      if (q7[0] === true) {
+        m += 1
+      } else {
+        m = m
+      }
+      if (q7[1] === true) {
+        m += 2
+      } else {
+        m = m
+      }
+      if (q7[2] === true) {
+        m += 5
+      } else {
+        m = m
+      }
+      // 第八题
+      let q8 = checkboxResult[2];
+      if (q8[1] === true) {
+        m += 2
+      } else {
+        m = m
+      }
+      if (q8[2] === true) {
+        m += 5
+      } else {
+        m = m
+      }
+      console.log(`x = ${x} y=${y} z=${z} m=${m}`);
 
-      
-      
+      // 计算结果
+      if (z >= 4) {
+        x = 0; y = 0;
+        this.skinResult = this.skinTestResult[0];
+      } else if (x >= 4) {
+        y = 0; z = 0;
+        this.skinResult = this.skinTestResult[1];
+      } else if (y >= 4) {
+        x = 0; z = 0;
+        this.skinResult = this.skinTestResult[2];
+      } else {
+        if (x == y && x!=4 && y!= 4) {
+          this.skinResult = this.skinTestResult[3];
+        } else if (x > y) {
+          this.skinResult = this.skinTestResult[4];
+        } else {
+          this.skinResult = this.skinTestResult[5];
+        }
+      }
+
+      if (m === 0) {
+        this.ageResult = this.skinAge[0];
+      } else if (m > 0 && m <= 4) {
+        this.ageResult = this.skinAge[1];
+      } else if (m > 4 && m <= 15) {
+        this.ageResult = this.skinAge[2];
+      } else if (m > 15) {
+        this.ageResult = this.skinAge[3];
+      }
+
+      this.buttonDesc = `结论：您的皮肤类型为${this.skinResult}皮肤，皮肤年龄${this.ageResult}`;
     }
   },
   components: {
