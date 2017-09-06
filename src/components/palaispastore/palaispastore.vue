@@ -72,12 +72,35 @@
         .province-store-list
           display flex
           flex-wrap wrap
-          li
+          padding 5px 0
+          .store-info
             width 50%
-
-          
-            
-
+            display flex
+            margin 5px 0
+            .store-pic
+              flex 0 0 200px
+              width 200px
+              height 132px
+              img
+                display block
+                width 100%
+            .store-brief-intro
+              flex 1
+              line-height 1.5
+              padding-left 8px
+              padding-right 5px
+              overflow hidden
+              position relative
+              .store-name
+                font-weight bold
+                font-size 16px
+              .store-address
+                font-size 15px
+              .store-phone
+                font-size 16px
+                position absolute
+                bottom 0
+                right 10px
 
 </style>
 
@@ -97,8 +120,15 @@
           <li class="list-item" :key="index" v-for="(item, index) in stores">
             <p class="province-name">{{ item.provinceName }}</p>
             <ul class="province-store-list">
-              <li :key="subindex" v-for="(subitem, subindex) in item.store">
-                {{subitem}}
+              <li class="store-info" :key="subindex" v-for="(subitem, subindex) in item.store">
+                <div class="store-pic">
+                  <img v-lazy="subitem.picture[0]" :alt="subitem.name">
+                </div>
+                <div class="store-brief-intro">
+                  <h5 class="store-name">{{ subitem.name }}</h5>
+                  <p class="store-address">{{ subitem.address }}</p>
+                  <p class="store-phone">{{ subitem.phone }}</p>
+                </div>
               </li>
             </ul>
           </li>
@@ -128,7 +158,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this._initScroll();
-    }, 20) 
+    }, 20)
   },
   updated() {
     setTimeout(() => {
