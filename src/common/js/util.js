@@ -46,3 +46,12 @@ export function isValueUndefined(value) {
   let isUndefined = _.isUndefined(value);
   return isUndefined;
 }
+
+/**
+ * 判定复选框是否答题
+ * @param {checkboxResult数组} array 
+ */
+export function hasCheckboxTrue(array) {
+  let hasTrue = _.includes(array, true);
+  return hasTrue;
+}

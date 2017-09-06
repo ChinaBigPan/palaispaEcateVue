@@ -125,6 +125,9 @@
           width 100%
           height 100%
           background rgba(255,255,255,.9)
+          .important
+            color $palaispa-orange
+            font-weight 700
 
   // 上滑效果
   .slide-up-enter-active, .slide-up-leave-active {
@@ -164,7 +167,8 @@
       <transition name="slide-up">
         <div v-show="allListChecked" class="check-your-skin">
           <a href="javascript:void(0)" @click.prevent.stop="checkYourSkin()">
-            {{ buttonDesc }}
+            <p v-show="testNotYeat">{{ buttonDesc }}</p>
+            <p v-show="!testNotYeat">结论：您的皮肤类型为<span class="important">{{skinResult}}</span>皮肤，皮肤年龄<span class="important">{{ageResult}}</span></p>
           </a>
         </div>
       </transition>
@@ -175,7 +179,7 @@
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
 import {getSkintestData} from '../../api/skintest'
-import {isValueUndefined} from '../../common/js/util'
+import {isValueUndefined, hasCheckboxTrue} from '../../common/js/util'
 
 export default {
   name: 'skintest',
@@ -209,7 +213,9 @@ export default {
       radioResult: [],
       checkboxResult: [[],[],[]],
       // 检查是否所有题都答过了
+      testNotYeat: true,
       buttonDesc: "测试一下我的皮肤",
+      testResult: '',
       allListChecked: false,
       skinResult: '',
       ageResult: ''     
@@ -249,24 +255,37 @@ export default {
     selectedRadio(index, subindex) {
       this.radioResult[index] = subindex;
       let AllRadioChecked = this.checkRadioResult();
-      let AllCheckboxChecked = this.checkCheckboxResult();
-      let RadioAndCheckboxOk = (AllRadioChecked && AllCheckboxChecked);
-      if (RadioAndCheckboxOk === true) {
-        this.allListChecked = true;
-      } else {
-        this.allListChecked = false;
-      } 
-      // console.log(this.radioResult);
+      this.$nextTick(() => {
+        let AllCheckboxChecked = this.checkCheckboxResult();
+        let RadioAndCheckboxOk = (AllRadioChecked && AllCheckboxChecked);
+        if (RadioAndCheckboxOk === true) {
+          this.testNotYeat = true;
+          this.allListChecked = true;
+        } else {
+          this.allListChecked = false;
+        }
+      })     
     },
     // 复选框选择
     selectCheckbox(index, subindex) {
-      
+      let AllRadioChecked = this.checkRadioResult();
+      this.$nextTick(() => {
+        let AllCheckboxChecked = this.checkCheckboxResult();
+        let RadioAndCheckboxOk = (AllRadioChecked && AllCheckboxChecked);
+        if (RadioAndCheckboxOk === true) {
+          this.testNotYeat = true;
+          this.allListChecked = true;  
+        } else {
+          this.allListChecked = false;
+        }
+      })
     },
     // 测定单选题是否已经全部答完
     checkRadioResult() {
       let countDefinedValue = 0;
       let radioLength = this.Radios.length;
       let radioResultLength = this.radioResult.length;
+      // 数组中非undefined元素的数目
       for (let i=0; i <= radioResultLength; i++) {
         if (this.radioResult[i] || this.radioResult[i] === 0) {
           countDefinedValue++
@@ -278,7 +297,13 @@ export default {
     },
     // 测定多选题是否已经全部答完
     checkCheckboxResult() {
-
+      let checkboxResult = this.checkboxResult;  
+      let allcheckboxOK = checkboxResult.every((item) => {
+        let has = hasCheckboxTrue(item);
+        return has
+      })
+      // console.log(allcheckboxOK);
+      return allcheckboxOK;
     },
     // 测试皮肤按钮点击
     checkYourSkin() {
@@ -412,7 +437,7 @@ export default {
       } else {
         m = m
       }
-      console.log(`x = ${x} y=${y} z=${z} m=${m}`);
+      // console.log(`x = ${x} y=${y} z=${z} m=${m}`);
 
       // 计算结果
       if (z >= 4) {
@@ -444,7 +469,7 @@ export default {
         this.ageResult = this.skinAge[3];
       }
 
-      this.buttonDesc = `结论：您的皮肤类型为${this.skinResult}皮肤，皮肤年龄${this.ageResult}`;
+      this.testNotYeat = false;
     }
   },
   components: {
