@@ -18,7 +18,7 @@
 
 <script type="text/ecmascript-6">
 export default {
-  name: 'store',
+  name: 'palaispastore',
   data() {	
     return {}
   },
