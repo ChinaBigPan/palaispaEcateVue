@@ -153,7 +153,7 @@
           <li :key="index" v-for="(item, index) in Radios">
             <h5>{{ item.question }}</h5>
             <label class="list-item" @click.stop="selectedRadio(index, subindex)" :key="subindex" v-for="(radio, subindex) in item.radio">
-              <input :name="index" type="radio">{{ radio }}
+              <input ref="radioinput" :name="index" type="radio">{{ radio }}
             </label>
           </li>
           <li :key="index" v-for="(item, index) in Checkboxes">
@@ -233,9 +233,21 @@ export default {
     _initScroll() {
       this.$refs.skintestscroll && this.$refs.skintestscroll.refresh();
     },
+    // 初始化数据
+    _initData() {
+      this.radioResult = [];
+      this.checkboxResult = [[],[],[]];
+      this.$refs.radioinput.forEach((item) => {
+        item.checked = false;
+      })
+      // console.log(this.$refs.radioinput);
+      this.testNotYeat = true;
+      this.allListChecked = false;
+    },
     // 关闭皮肤测试
     closeSkintest() {
-      this.$emit('closeSkintest')
+      this.$emit('closeSkintest');
+      this._initData(); 
     },
     // 获取皮肤测试数据
     getSkintestData() {
