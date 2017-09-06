@@ -94,13 +94,24 @@
               .store-name
                 font-weight bold
                 font-size 16px
+                overflow hidden
+                display block
+                white-space nowrap
+                text-overflow ellipsis
               .store-address
                 font-size 15px
+                height 90px
+                overflow hidden
               .store-phone
                 font-size 16px
-                position absolute
-                bottom 0
-                right 10px
+                padding-right 5px
+                float right
+                .icon-phone
+                  color $palaispa-orange
+                  margin-right 5px
+                  font-size 18px
+                  vertical-align top
+                
 
 </style>
 
@@ -127,7 +138,7 @@
                 <div class="store-brief-intro">
                   <h5 class="store-name">{{ subitem.name }}</h5>
                   <p class="store-address">{{ subitem.address }}</p>
-                  <p class="store-phone">{{ subitem.phone }}</p>
+                  <p class="store-phone"><i class="icon-phone"></i>{{ subitem.phone }}</p>
                 </div>
               </li>
             </ul>
