@@ -34,6 +34,10 @@ export default {
       type: Boolean,
       default: false
     },
+    scrollX: {
+      type: Boolean,
+      default: false
+    },
     pullup: {
       type: Boolean,
       default: false
@@ -70,6 +74,7 @@ export default {
       this.scroll = new BScroll(this.$refs.wrapper, {
         probeType: this.probeType,
         click: this.click,
+        scrollX: this.scrollX,
         HWCompositing: true,
         eventPassthrough: this.direction === DIRECTION_V ? DIRECTION_H : DIRECTION_V
       })

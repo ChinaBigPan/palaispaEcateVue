@@ -301,7 +301,6 @@ export default {
       let nameIndex =  nameArray.indexOf(name);
       return nameIndex;
     },
-
     // 右侧列表滚动时触发的事件
     scrollRightList(pos) {
       this.scrollY = Math.abs(Math.round(pos.y));
