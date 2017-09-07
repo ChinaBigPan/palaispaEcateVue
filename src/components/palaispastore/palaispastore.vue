@@ -109,7 +109,7 @@
                 padding-right 5px
                 float right
                 .icon-phone
-                  color $palaispa-orange
+                  color $palaispa-blue
                   margin-right 5px
                   font-size 18px
                   vertical-align top

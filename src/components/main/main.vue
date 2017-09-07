@@ -125,7 +125,7 @@ export default {
     // 获取首页轮播图数据(内部方法)
     _getSliderPic() {
       getMainSlider().then((res) => {
-        console.log(res);
+        // console.log(res);
         this.sliderImages = res.mainBanner;
         this.generizeImages = res.mainBannerGenerize;
       })
