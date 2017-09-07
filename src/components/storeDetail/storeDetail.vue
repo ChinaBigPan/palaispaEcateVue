@@ -51,6 +51,7 @@
       border-radius 5px
       overflow hidden
       background $white
+      animation floatup 1.5s infinite alternate
       // 轮播图组件
       .slider-wrapper
         position relative
@@ -120,6 +121,15 @@
         font-size 16px
         p
           padding 15px
+
+@keyframes floatup {
+  from {
+    transform translate3d(0, 0, 0)
+  }
+  to {
+    transform translate3d(0, 4px, 0)
+  }
+}
 
 </style>
 
