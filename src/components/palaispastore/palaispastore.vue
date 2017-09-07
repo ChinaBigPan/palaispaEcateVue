@@ -130,10 +130,10 @@
     <section class="store-list-block">
       <scroll ref="storescroll" class="store-scroll">
         <ul class="scroll-list">
-          <li class="store-list-item" :key="index" v-for="(item, index) in stores">
-            <p class="province-name">{{ item.provinceName }}</p>
+          <li class="store-list-item" :key="index" v-for="(item, key, index) in stores">
+            <p @click="scrollToProvinceLabel(index, $event)" class="province-name">{{ item.provinceName }}</p>
             <ul class="province-store-list">
-              <li class="store-info" :key="subindex" v-for="(subitem, subindex) in item.store">
+              <li @click="toStoreDetail(subitem)" class="store-info" :key="subindex" v-for="(subitem, subindex) in item.store">
                 <div class="store-pic">
                   <img v-lazy="subitem.picture[0]" :alt="subitem.name">
                 </div>
@@ -154,6 +154,7 @@
 <script type="text/ecmascript-6">
 import Scroll from '../../base/scroll/scroll'
 import {getStoreData} from '../../api/palaispaStore'
+import {mapMutations} from 'vuex'
 
 export default {
   name: 'palaispastore',
@@ -187,8 +188,6 @@ export default {
           for (let key in res) {
             this.province.push(res[key].provinceName);
           }
-          console.log(this.stores);
-          console.log(this.province);
         }
       })
     },
@@ -202,11 +201,32 @@ export default {
       let el = storeList[index];
       this.$refs.storescroll.scrollToElement(el, 300);
     },
+    // 点击下部的省份名称
+    scrollToProvinceLabel(index, event) {
+      // better-scroll的event._construced属性处理
+      // if(!event._constructed) {
+      //   return;
+      // }
+      let provinceLabelList = document.getElementsByClassName("region-list-item");
+      let el = provinceLabelList[index];
+      this.$refs.regionscroll.scrollToElement(el, 300);
+    },
+    // 打开门店详情页
+    toStoreDetail(store) {
+      this.setShowStoreDetail(true);
+      this.setStoreDetail(store);
+      // console.log(store);
+    },
     // 刷新滚动组件
     _initScroll() {
       this.$refs.regionscroll && this.$refs.regionscroll.refresh();
       this.$refs.storescroll && this.$refs.storescroll.refresh();
-    }
+    },
+    // vuex
+    ...mapMutations({
+      setShowStoreDetail: "SET_SHOW_STORE_DETAIL",
+      setStoreDetail: "SET_STORE_DETAIL"
+    })
   },
   components: {
     Scroll

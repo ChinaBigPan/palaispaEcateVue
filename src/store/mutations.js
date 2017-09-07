@@ -36,6 +36,14 @@ const mutations = {
   // 设置护理详情侧边列表所显示的护理
   [types.SET_TREAT_DETAIL_ASIDE](state, treatDetailAside) {
     state.treatDetailAside = treatDetailAside;
+  },
+  // 设置是否展示门店详情
+  [types.SET_SHOW_STORE_DETAIL](state, showStoreDetail) {
+    state.showStoreDetail = showStoreDetail;
+  },
+  // 设置要展示的门店详情
+  [types.SET_STORE_DETAIL](state, storeDetail) {
+    state.storeDetail = storeDetail;
   }
 }
 

@@ -16,7 +16,11 @@ const state =  {
   // 是否展示护理详情
   showTreatmentDetail: false,
   // 护理详情的侧边列表所显示的护理
-  treatDetailAside: {}
+  treatDetailAside: {},
+  // 是否展示门店详情
+  showStoreDetail: false,
+  // 所选择的门店详情
+  storeDetail: {}
 }
 
 export default state;

@@ -45,11 +45,19 @@
          :treatmentAside="treatDetailAside"></treatment-detail>
     </transition>
     <!-- 护理详情部分结束 -->
+    <!-- 首页轮播推广开始 -->
     <transition name="slide">
       <popularize :popularizeImage="mainBannerGenerize"
         v-show="showPopularize"
       ></popularize>
     </transition>
+    <!-- 首页轮播推广结束 -->
+    <!-- 门店详情开始 -->
+    <transition name="fade">
+      <store-detail v-show="showStoreDetail" :storeDetail="storeDetail">
+      </store-detail>
+    </transition>
+    <!-- 门店详情结束 -->
   </article>
 </template>
 
@@ -58,6 +66,7 @@ import tabNav from './components/tabNav/tabNav'
 import promoVideo from './base/video/video'
 import treatmentDetail from './components/treatmentDetail/treatmentDetail'
 import popularize from './components/popularize/popularize'
+import storeDetail from './components/storeDetail/storeDetail'
 // 取得store数据
 import {mapGetters} from 'vuex'
 
@@ -75,7 +84,9 @@ export default {
       'showTreatmentDetail',
       'treatDetailAside',
       'showPopularize',
-      "mainBannerGenerize"
+      "mainBannerGenerize",
+      "showStoreDetail",
+      "storeDetail"
     ])
   },
   data() {
@@ -86,7 +97,8 @@ export default {
     tabNav,
     promoVideo,
     treatmentDetail,
-    popularize
+    popularize,
+    storeDetail
   }
 }
 </script>
