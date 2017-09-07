@@ -26,14 +26,28 @@
       i
         display block
         animation waggle 1s infinite alternate
+    // 背景图片区块
+    .background-block
+      position absolute
+      top 0 
+      left 0
+      right 0
+      bottom 0
+      img
+        display block
+        width 100%
+        height 100%
+        filter blur(10px)
 </style>
 
 <template>
-  <article class="store-detail">
+  <article  class="store-detail">
     <div @click="closeStoreDetail" class="close-btn">
       <i class="icon-arrowleft"></i>
     </div>
-    <h1>我是门店详情页</h1>
+    <div class="background-block">
+      <img v-if="storeDetail != ''" :src="storeDetail.picture[0]" :alt="storeDetail.name">
+    </div>
   </article>
 </template>
 
