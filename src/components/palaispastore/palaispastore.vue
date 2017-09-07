@@ -24,7 +24,7 @@
           display inline-block
           white-space: nowrap;
           overflow hidden
-          .list-item
+          .region-list-item
             // flex 0 0 100px
             width 100px
             display inline-block
@@ -58,7 +58,7 @@
         .scroll-list
           margin-top 3px
           padding-bottom 5px
-          .list-item
+          .store-list-item
               width 100%
               .province-name
                 display flex
@@ -81,9 +81,11 @@
               flex 0 0 200px
               width 200px
               height 132px
+              overflow hidden
               img
                 display block
                 width 100%
+                height 100%
             .store-brief-intro
               flex 1
               line-height 1.5
@@ -120,7 +122,7 @@
     <section class="region-list-block">
       <scroll ref="regionscroll" :scrollX="true" :direction="horizontal" class="region-scroll">
         <ul class="scroll-list">
-          <li class="list-item" :key="index" v-for="(item, index) in province">{{item}}</li>
+          <li @click="scrollToProvince(index, $event)" class="region-list-item" :key="index" v-for="(item, index) in province">{{item}}</li>
         </ul>
       </scroll>
       <div class="right-unknown-block"></div>
@@ -128,7 +130,7 @@
     <section class="store-list-block">
       <scroll ref="storescroll" class="store-scroll">
         <ul class="scroll-list">
-          <li class="list-item" :key="index" v-for="(item, index) in stores">
+          <li class="store-list-item" :key="index" v-for="(item, index) in stores">
             <p class="province-name">{{ item.provinceName }}</p>
             <ul class="province-store-list">
               <li class="store-info" :key="subindex" v-for="(subitem, subindex) in item.store">
@@ -155,7 +157,7 @@ import {getStoreData} from '../../api/palaispaStore'
 
 export default {
   name: 'palaispastore',
-  data() {	
+  data() {
     return {
       // 滚动方向
       horizontal: 'horizontal',
@@ -189,6 +191,16 @@ export default {
           console.log(this.province);
         }
       })
+    },
+    // 点击上部横向列表，下部滚动到相应位置
+    scrollToProvince(index, event) {
+      // better-scroll的event._construced属性处理
+      // if(!event._constructed) {
+      //   return;
+      // }
+      let storeList = document.getElementsByClassName("store-list-item");
+      let el = storeList[index];
+      this.$refs.storescroll.scrollToElement(el, 300);
     },
     // 刷新滚动组件
     _initScroll() {
