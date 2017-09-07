@@ -38,16 +38,24 @@
         width 100%
         height 100%
         filter blur(10px)
+    // 护理详情区块
+
 </style>
 
 <template>
-  <article  class="store-detail">
+  <article class="store-detail">
     <div @click="closeStoreDetail" class="close-btn">
       <i class="icon-arrowleft"></i>
     </div>
+    <!-- 背景撸多了区块 -->
     <div class="background-block">
       <img v-if="storeDetail != ''" :src="storeDetail.picture[0]" :alt="storeDetail.name">
     </div>
+    <!-- 真·护理详情区块开始 -->
+    <div class="shin-store-detail">
+      
+    </div>
+    <!-- 真·护理详情区块结束 -->
   </article>
 </template>
 
