@@ -4,6 +4,7 @@
 
   .brandHistory
     background $white
+    padding-bottom 100px
     .timeline
       position relative
       margin 0 auto
@@ -24,11 +25,14 @@
           position relative
           margin 20px 0
           float left
+          height 220px
           .time-block
             width 400px
             border 1px solid $palaispa-gray
             border-radius 5px
             padding-bottom 15px
+            position relative
+            z-index 100
             float right
             &.needleft
               float left
@@ -50,7 +54,7 @@
             position absolute
             top 5%
             left 50%
-            margin-left -30px
+            margin-left -33px
             width 40px
             height 40px
             padding 15px

@@ -8,7 +8,7 @@
     right: 0;
     left: 60px;
     overflow: hidden;
-    width 100%
+    // width 100%
     background $palaispa-lightgray
     // 回退按钮
     .close-btn
@@ -44,6 +44,12 @@
           height 100%
           display block
           margin 0 auto
+        .please-tick-all
+          display block
+          position absolute
+          right 6px
+          bottom 3px
+          color $white
 
       .skintest-scroll
         top 171px
@@ -137,6 +143,7 @@
     opacity 0
     transform translate3d(0, 100%, 0)
   }
+
 </style>
 
 <template>
@@ -147,6 +154,7 @@
     <section class="test-wrapper">
       <div class="banner">
         <img v-lazy="banner" alt="测试您的皮肤">
+        <p class="please-tick-all">注：答完所有题目才可以测试哦</p>
       </div>
       <scroll :click="false" ref="skintestscroll" class="skintest-scroll">
         <ul class="skintest-list">
@@ -167,8 +175,12 @@
       <transition name="slide-up">
         <div v-show="allListChecked" class="check-your-skin">
           <a href="javascript:void(0)" @click.prevent.stop="checkYourSkin()">
-            <p v-show="testNotYeat">{{ buttonDesc }}</p>
-            <p v-show="!testNotYeat">结论：您的皮肤类型为<span class="important">{{skinResult}}</span>皮肤，皮肤年龄<span class="important">{{ageResult}}</span></p>
+            <transition name="slide-up">
+              <p v-show="testNotYeat">{{ buttonDesc }}</p>
+            </transition>
+            <transition name="slide-up" mode="in-out">
+              <p v-show="!testNotYeat">结论：您的皮肤类型为<span class="important">{{skinResult}}</span>皮肤，皮肤年龄<span class="important">{{ageResult}}</span></p>
+            </transition>
           </a>
         </div>
       </transition>

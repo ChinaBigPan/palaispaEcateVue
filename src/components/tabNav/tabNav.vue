@@ -58,7 +58,7 @@
 <template>
     <nav class="side-nav-wrapper">
         <section id="side-nav">
-            <img :src="logo"></img>
+            <img @click="clickLogo" :src="logo"></img>
             <ul class="nav-list">
                 <router-link tag="li" :to="{name: 'main'}">
                     <div>
@@ -92,7 +92,12 @@ export default {
         }
     },
     methods: {
-
+        // 点击logo跳到主页
+        clickLogo() {
+            this.$router.push({
+                name: "main"
+            })
+        }
     }
 };
 </script>

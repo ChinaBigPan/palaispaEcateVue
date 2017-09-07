@@ -172,12 +172,12 @@ export default {
   mounted() {
     setTimeout(() => {
       this._initScroll();
-    }, 20)
+    }, 200)
   },
   updated() {
     setTimeout(() => {
       this._initScroll();
-    }, 20)
+    }, 200)
   },
   methods: {
     // 获取门店数据

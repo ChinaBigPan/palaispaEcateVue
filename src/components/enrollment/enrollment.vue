@@ -29,6 +29,11 @@
           font-size 18px
           box-shadow 0 0 2px $palaispa-gray
           border-radius 5px
+          &.total-table
+            background-color $palaispa-blue
+            color $white
+            i 
+              color $white
           i
             font-size 22px
             vertical-align top
@@ -144,7 +149,7 @@
     <!-- 表格和会员卡图区块开始 -->
     <section class="top-block">
       <div class="left">
-        <div @click.stop="showMemberTable()" class="btn"><i class="icon-biaoge1"></i>总表</div>
+        <div @click.stop="showMemberTable()" class="btn total-table"><i class="icon-biaoge1"></i>总表</div>
         <div @click.stop="showRemark()" class="btn"><i class="icon-buzou"></i>备注</div>
       </div>
       <ul class="member-card">
