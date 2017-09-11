@@ -55,3 +55,13 @@ export function hasCheckboxTrue(array) {
   let hasTrue = _.includes(array, true);
   return hasTrue;
 }
+
+/**
+ * 创建一个 throttle（节流）函数，在 wait 秒内最多执行 func 一次的函数。
+ * @param {需要防抖动的函数} func 
+ * @param {延迟秒数} wait 
+ */
+export function throttle(func, wait) {
+  let throttle = _.throttle(func, wait);
+  return throttle;
+}

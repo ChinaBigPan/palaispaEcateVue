@@ -133,8 +133,8 @@
     <scroll ref="treatkindwrapper" class="treatkind-wrapper">
       <!-- 左侧列表开始 -->
       <ul>
-        <li @click="selectTreatKind(index, $event)" class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
-          <div class="text" :class="{'current' : currentFirstIndex === index}">
+        <li class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
+          <div @click.stop="selectTreatKind(index, $event)" class="text" :class="{'current' : currentFirstIndex === index}">
             <i class="icon-wxbpinpaibao" v-show="key === 'HotRecommend'"></i>{{item.kindname}}
             <!-- {{index}} -->
           </div>
@@ -184,6 +184,7 @@
 import Scroll from '../../base/scroll/scroll'
 import {mapMutations} from 'vuex'
 import {getAllTreatment} from '../../api/treatmentData'
+import {throttle} from '../../common/js/util.js'
 
 export default {
   name: 'treatmentlist',
@@ -313,17 +314,21 @@ export default {
       // }
       let itemlistBig = document.getElementsByClassName("treatlist-item-hook");
       let el = itemlistBig[index];
-      this.$refs.treatlistwrapper.scrollToElement(el, 300);
+      setTimeout(() => {
+        this.$refs.treatlistwrapper.scrollToElement(el, 300)   
+      }, 20)
     },
     // 点击左侧小列表
     selectTreatSubKind(index, event) {
       // better-scroll的event._construced属性处理
       // if(!event._constructed) {
       //   return;
-      // }
-      let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");     
-      let el = itemlistSmall[index];
-      this.$refs.treatlistwrapper.scrollToElement(el, 300);
+      // } 
+      let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");
+      let el = itemlistSmall[index]; 
+      setTimeout(() => {
+        this.$refs.treatlistwrapper.scrollToElement(el, 300)
+      }, 20)
     },
     // 点击护理区块
     selectTreat(treat, subkind, event) {
