@@ -57,7 +57,17 @@ export default {
   mounted() {
     setTimeout(() => {
       this.setShouldMainScrollRefresh(true);
-    }, 20)
+    }, 200)
+  },
+  activated() {
+    // keep-alive组件激活时调用，这个要写到子路由里面我勒个去
+    setTimeout(() => {
+      this.setShouldMainScrollRefresh(true);
+    }, 100)
+  },
+  deactivated() {
+    // keep-alive组件离开时调用，这个要写到自路由里面我勒个去
+    this.setShouldMainScrollRefresh(false);
   },
   data() {
     return {
@@ -69,17 +79,7 @@ export default {
       exhibitVideo: false
     }
   },
-  computed: {},
-  activated() {
-    // keep-alive组件激活时调用，这个要写到子路由里面我勒个去
-    setTimeout(() => {
-      this.setShouldMainScrollRefresh(true);
-    }, 100)
-  },
-  deactivated() {
-    // keep-alive组件离开时调用，这个要写到自路由里面我勒个去
-    this.setShouldMainScrollRefresh(false);
-  },
+  computed: {}, 
   methods: {
     // 获取视频数据
     _getVideo() {
