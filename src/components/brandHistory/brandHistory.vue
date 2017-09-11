@@ -76,7 +76,7 @@
             <span>{{ timelineDesc[index] }}</span>
           </div>
           <div class="time-sign">
-            <span>{{ newYear(index) }}</span>
+            <span>{{ year[index] }}</span>
           </div>
         </li>
       </ul>
@@ -94,7 +94,7 @@ export default {
   name: 'brandHistory',
   data() {
     return {
-      foundyear: 2005,
+      year: [],
       timeline: [],
       timelineDesc: []
     }
@@ -123,6 +123,7 @@ export default {
   methods: {
     _getTimeLine() {
       getHistory().then((res) => {
+        this.year = res.yearStamp;
         this.timeline = res.timeline;
         this.timelineDesc = res.timelineDesc;
       })
@@ -132,10 +133,10 @@ export default {
       return index % 2 === 0;
     },
     // 年份随列表增加
-    newYear(index) {
-      let newyear = this.foundyear + index;
-      return newyear;
-    },
+    // newYear(index) {
+    //   let newyear = this.foundyear + index;
+    //   return newyear;
+    // },
     // vuex方法引入
     ...mapMutations({
       setShouldMainScrollRefresh: 'SET_SHOULD_MAIN_SCROLL_REFRESH'
