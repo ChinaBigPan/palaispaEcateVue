@@ -133,7 +133,7 @@
     <scroll ref="treatkindwrapper" class="treatkind-wrapper">
       <!-- 左侧列表开始 -->
       <ul>
-        <li @click.stop="selectTreatKind(index, $event)" class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
+        <li @click="selectTreatKind(index, $event)" class="treatkind-item" :key="index" v-for="(item, key, index) in treatKind">
           <div class="text" :class="{'current' : currentFirstIndex === index}">
             <i class="icon-wxbpinpaibao" v-show="key === 'HotRecommend'"></i>{{item.kindname}}
             <!-- {{index}} -->
@@ -305,7 +305,7 @@ export default {
     scrollRightList(pos) {
       this.scrollY = Math.abs(Math.round(pos.y));
     },
-    // 点击左侧大列表
+    // 点击左侧大列表  
     selectTreatKind(index, event) {
       // better-scroll的event._construced属性处理
       // if(!event._constructed) {
