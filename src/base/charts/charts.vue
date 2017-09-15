@@ -6,11 +6,16 @@
     height 100%
     background $white
     border-left 1px solid $palaispa-gray
+    position absolute
+    // overflow hidden
     .member-chart
       width 100%
       height 100%
       padding-top 20px
       padding-left 10px
+      &>div
+        width 100%
+        height 100%
 
 </style>
 

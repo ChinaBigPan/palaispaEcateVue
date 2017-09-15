@@ -61,20 +61,16 @@
             <img @click="clickLogo" :src="logo"></img>
             <ul class="nav-list">
                 <router-link tag="li" :to="{name: 'main'}">
-                    <div>
-                        <i class="icon-wxbzhuye"></i><br />首页</div>
+                    <div><i class="icon-wxbzhuye"></i><br />首页</div>
                 </router-link>
                 <router-link tag="li" :to="{name: 'treatment'}">
-                    <div>
-                        <i class="icon-buzou"></i><br />护理</div>
+                    <div><i class="icon-buzou"></i><br />护理</div>
                 </router-link>
                 <router-link tag="li" :to="{name: 'enrollment'}">
-                    <div>
-                        <i class="icon-ruhui"></i><br />入会</div>
+                    <div><i class="icon-ruhui"></i><br />入会</div>
                 </router-link>
                 <router-link tag="li" :to="{name: 'palaispastore'}">
-                    <div>
-                        <i class="icon-store"></i><br />门店</div>
+                    <div><i class="icon-store"></i><br />门店</div>
                 </router-link>
             </ul>
         </section>
