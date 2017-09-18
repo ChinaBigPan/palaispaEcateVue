@@ -32,7 +32,7 @@
 const echarts = require('echarts/lib/echarts')
 // 按需引入柱状图和雷达图组件
 require('echarts/lib/chart/bar')
-require('echarts/lib/chart/radar')
+// require('echarts/lib/chart/radar')
 // 引入提示框和图例组件
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/legend')

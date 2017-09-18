@@ -247,7 +247,7 @@ export default {
       this._initScroll();      
       this._calculateHeight();
       this._getSubkindList();
-    }, 400)
+    }, 300)
   },
   methods: {
     // 获取护理数据
@@ -310,8 +310,9 @@ export default {
     selectTreatKind(index, event) {
       // better-scroll的event._construced属性处理
       // if(!event._constructed) {
-      //   return;
+      //   return
       // }
+      // console.log('点击了大列表');
       let itemlistBig = document.getElementsByClassName("treatlist-item-hook");
       let el = itemlistBig[index];
       setTimeout(() => {
@@ -322,8 +323,9 @@ export default {
     selectTreatSubKind(index, event) {
       // better-scroll的event._construced属性处理
       // if(!event._constructed) {
-      //   return;
-      // } 
+      //   return
+      // }
+      // console.log('点击了小列表');
       let itemlistSmall = document.getElementsByClassName("treatlist-itemlist-hook");
       let el = itemlistSmall[index]; 
       setTimeout(() => {
@@ -334,7 +336,7 @@ export default {
     selectTreat(treat, subkind, event) {
       // better-scroll的event._construced属性处理
       // if(!event._constructed) {
-      //   return;
+      //   return
       // }
       this.setSelectedTreatment(treat);
       this.setShowTreatmentDetail(true);
