@@ -1,6 +1,9 @@
-# palaispaecatevue
+# palaispaEcateVue
 
 > 大锅的贝黎诗电子疗程册，采用Vue.js技术栈
+> 这个项目是专门为iPad开发的，因此需适配iPad即可
+ 
+> 全部的草稿、设计、交互、实现均由个人一人完成。算是对自己的Vue框架的掌握能力有了一个交待。
 
 ## Build Setup
 
