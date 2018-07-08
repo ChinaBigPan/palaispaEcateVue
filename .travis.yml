@@ -3,8 +3,6 @@ language: javascript
 
 # 安装前
 before_install:
-  - openssl aes-256-cbc -K $travisTokenGuo -iv $travisTokenGuo
-    -in id_rsa.enc -out ~/.ssh/id_rsa -d
   - chmod 600 ~/.ssh/id_rsa
   - ssh-add ~/.ssh/id_rsa
   - cp .travis/ssh_config ~/.ssh/config
@@ -17,5 +15,5 @@ script: npm run build
 # 成功后
 after_success:
   - ssh root@39.106.58.139
-  - scp -o StrictHostKeyChecking=no ./src/main.js :/root/palaispaEcateVue
+  - scp  StrictHostKeyChecking=no ./src/main.js :/root/palaispaEcateVue
   
