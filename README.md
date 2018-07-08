@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ChinaBigPan/palaispaEcateVue.svg?branch=master)
+![Build Status](https://travis-ci.org/ChinaBigPan/palaispaEcateVue.svg?branch=master)
 
 # palaispaEcateVue
 
