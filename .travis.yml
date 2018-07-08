@@ -1,0 +1,8 @@
+# 语言
+language: javascript
+
+# 安装
+install: npm install
+
+# 运行脚本
+script: npm run build
