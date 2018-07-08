@@ -1,3 +1,5 @@
+![Build Status](https://travis-ci.org/ChinaBigPan/palaispaEcateVue.svg?branch=master)
+
 # palaispaEcateVue
 
 > 大锅的贝黎诗电子疗程册，采用Vue.js技术栈
