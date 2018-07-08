@@ -1,19 +1,12 @@
-# 语言
 language: javascript
-
-# 安装前
 before_install:
-  - chmod 600 ~/.ssh/id_rsa
-  - ssh-add ~/.ssh/id_rsa
-  - cp .travis/ssh_config ~/.ssh/config
-# 安装
+- openssl aes-256-cbc -K $encrypted_545f1f59e3c7_key -iv $encrypted_545f1f59e3c7_iv
+  -in id_rsa.enc -out id_rsa -d
+- chmod 600 id_rsa
+- echo -e "Host 39.106.58.139\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
 install: npm install
-
-# 运行脚本
 script: npm run build
-
-# 成功后
 after_success:
-  - ssh root@39.106.58.139
-  - scp  StrictHostKeyChecking=no ./src/main.js :/root/palaispaEcateVue
-  
+- ssh root@39.106.58.139
+- scp -o StrictHostKeyChecking=no ./dist :/root/palaispaEcateVue
