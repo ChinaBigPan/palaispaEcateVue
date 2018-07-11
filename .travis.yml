@@ -9,4 +9,4 @@ install: npm install
 script: npm run build
 after_success:
 - ssh root@39.106.58.139
-- scp -o StrictHostKeyChecking=no ./dist :/root/palaispaEcateVue
+- scp -o StrictHostKeyChecking=no ./dist/ :/root/palaispaEcateVue
