@@ -10,4 +10,4 @@ before_install:
 install: npm install
 script: npm run build
 after_success:
-- scp -r ./dist/ root@39.106.58.139:/var/www/palaispaEcateVue
+- scp -r ./dist/ root@39.106.58.139:/var/www/html/palaispaEcateVue
