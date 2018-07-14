@@ -15,8 +15,8 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      './test/**/*.js',
-      './test/**/*.spec.js'
+      './test/unit/**/*.js',
+      './test/unit/**/*.spec.js'
     ],
 
 
@@ -28,6 +28,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      // 对哪些文件代码测试的覆盖率检查
+      './test/unit/**/*.js': ['coverage']
     },
 
 
@@ -36,6 +38,10 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'coverage'],
 
+    coverageReporter: {
+      type: 'html',
+      dir: './docs/coverage/'
+    },
 
     // web server port
     port: 9876,
